@@ -58,16 +58,15 @@ test-results/
 playwright-report/
 playwright/.cache/
 
-# Copied static assets (592 MB).
-# These are VERBATIM copies of the Laravel originals, reproducible via
-# `npm run assets:copy` and verifiable via `npm run assets:verify`.
-# asset-manifest.json and asset-checksums.sha256 ARE tracked — they are the
-# integrity record (contract S-6).
-public/assets/
-public/admin-assets/
-public/uploaded_files/
-public/Dandruff/
-public/hair-dandruff/
-public/enlarged-prostate/
-public/record/
-public/*.pdf
+# NOTE: public/assets/, public/admin-assets/, public/uploaded_files/,
+# public/Dandruff/, public/hair-dandruff/, public/enlarged-prostate/,
+# public/record/, and public/*.pdf were previously gitignored here (592 MB
+# of verbatim copies from the Laravel source, reproducible via
+# `npm run assets:copy` / verifiable via `npm run assets:verify`).
+# They are now committed intentionally so that Hostinger's git-based deploy
+# (which only pulls from GitHub, with no separate local Laravel source
+# available) serves the site styled and with working uploads. See git log
+# for the commit that reversed this. asset-manifest.json and
+# asset-checksums.sha256 remain tracked as the integrity record (contract
+# S-6) and can be used to verify these bytes still match the Laravel
+# originals with `npm run assets:verify`.

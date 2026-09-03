@@ -1,0 +1,18 @@
+# public/uploaded_files — VERBATIM COPY of Laravel uploads (487 MB)
+#
+# EMPTY IN MILESTONE 0. Copy is BLOCKED — see Gate Report OI-4.
+#
+# CONTRACT NN-10: no uploaded file may be deleted at any point.
+# Filenames must be preserved EXACTLY — they are stored as bare strings in
+# the database with no path column, and product-detail JS parses a fixed
+# URL segment index (blueprint R-13 / contract P-13).
+#
+# Expected contents (blueprint §14.2):
+#   products/           1,615 files
+#   post/                 549 files
+#   categories/            43 files
+#   profile/               24 files
+#   slider/                 3 files
+#   product-categories/     1 file
+#   blogs/, blog-categories/, doc/   empty
+# Copy must be checksum-verified (contract S-6).

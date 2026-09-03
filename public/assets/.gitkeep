@@ -1,0 +1,11 @@
+# public/assets — VERBATIM COPY of Laravel public/assets (26 MB)
+#
+# EMPTY IN MILESTONE 0. Copy is BLOCKED — see Gate Report OI-4.
+#
+# CONTRACT F-30 / §18.2: the original CSS ships UNCHANGED. Do not convert
+# to Tailwind/CSS-modules, do not reformat, do not tree-shake. The CSS is
+# selector-heavy and depends on descendant/sibling relationships.
+#
+# Contains: css/ (18 files), js/ (18 files), fonts/, images/ (25 files
+# including logo.png, banner1-3.jpg, and qrcode.jpg — the business-critical
+# payment QR code), plugins/.
