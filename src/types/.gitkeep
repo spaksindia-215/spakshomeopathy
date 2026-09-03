@@ -1,0 +1,4 @@
+# src/types — shared TypeScript types
+#
+# EMPTY IN MILESTONE 0 BY DESIGN.
+# Database types live in src/lib/db/schema.generated.ts (generated, not here).

@@ -1,0 +1,73 @@
+# Dependencies
+node_modules/
+.pnp
+.pnp.js
+
+# Next.js build output
+.next/
+out/
+build/
+next-env.d.ts
+
+# Testing
+coverage/
+
+# OI-12 asset audit working directories.
+# .audit-cache/  — production bytes fetched by scripts/audit-live-assets.ts (~70 MB).
+#                  Reproducible at any time by re-running the audit; the durable
+#                  record is docs/evidence/asset-audit-live.json, which IS committed.
+# .asset-backup/ — pre-change copies made by scripts/apply-live-assets.ts.
+#                  Local safety net only; nothing is ever deleted (NN-10).
+.audit-cache/
+.asset-backup/
+
+# Environment — NEVER COMMIT
+# Contract D-02 (approved): credentials must be rotated and never exposed.
+# The Laravel .env was committed to the source archive; that must not recur.
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Generated database types (regenerate with `npm run db:codegen`)
+src/lib/db/schema.generated.ts
+
+# Baseline capture artifacts (contract T-1)
+# These are large binary/HTML evidence sets. Store per the project's evidence
+# retention policy (contract G-7), not in the application repository.
+baseline/
+
+# Editor / OS
+.DS_Store
+*.pem
+.vscode/
+.idea/
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# TypeScript
+*.tsbuildinfo
+
+# Playwright
+test-results/
+playwright-report/
+playwright/.cache/
+
+# Copied static assets (592 MB).
+# These are VERBATIM copies of the Laravel originals, reproducible via
+# `npm run assets:copy` and verifiable via `npm run assets:verify`.
+# asset-manifest.json and asset-checksums.sha256 ARE tracked — they are the
+# integrity record (contract S-6).
+public/assets/
+public/admin-assets/
+public/uploaded_files/
+public/Dandruff/
+public/hair-dandruff/
+public/enlarged-prostate/
+public/record/
+public/*.pdf

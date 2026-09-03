@@ -1,0 +1,6 @@
+# src/components/admin — AdminLTE-shaped components
+#
+# EMPTY IN MILESTONE 0 BY DESIGN. Populated in Milestone 9.
+#
+# DataTable (~25 admin list pages), FormCard (~20 admin form pages),
+# StatTile (admin dashboard). See blueprint.md §4.3.

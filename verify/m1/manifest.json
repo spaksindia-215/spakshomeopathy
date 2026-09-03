@@ -1,0 +1,3291 @@
+{
+  "capturedAt": "2026-08-01T12:14:33.100Z",
+  "target": "http://localhost:3000",
+  "results": [
+    {
+      "id": "about",
+      "path": "/about",
+      "status": 200,
+      "consoleErrors": 0,
+      "consoleWarnings": 0,
+      "consoleMessages": [],
+      "requestCount": 51,
+      "failedRequests": 0,
+      "requests": [
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/about",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/images/resources/logo.png",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/images/about1.jpg",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/css/style.css",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/css/responsive.css",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit",
+          "status": 301
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/js/jquery.js",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/js/bootstrap-select.min.js",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/js/bootstrap.bundle.min.js",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/js/owl.carousel.min.js",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/js/jquery.validate.min.js",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/js/bootstrap-datepicker.min.js",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/js/wow.min.js",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/js/jquery.magnific-popup.min.js",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/js/theme.js",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/css/bootstrap.min.css",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/css/bootstrap-select.min.css",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/css/owl.carousel.css",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/css/jquery.bxslider.min.css",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/css/owl.theme.default.min.css",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/css/bootstrap-datepicker.min.css",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "https://fonts.googleapis.com/css?family=Lato:300,400,400i,700,900|Source+Sans+Pro:300,400,600,700,900&amp;display=swap",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/css/font-awesome.min.css",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/css/magnific-popup.css",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/css/material-icons.css",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/css/animate.css",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/css/swiper.min.css",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/css/hover.min.css",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "https://www.neweraeducation.in/assets/images007/social-media/fb.svg",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "https://www.neweraeducation.in/assets/images007/social-media/instagram-icon.svg",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "https://www.neweraeducation.in/assets/images007/social-media/Youtube.svg",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/css/jquery.bootstrap-touchspin.css",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/css/nouislider.css",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/plugins/clainc-icon/style.css",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/_next/static/chunks/webpack-078f6dfb37dff419.js",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/_next/static/chunks/main-app-dbc491d4aec0b21a.js",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/_next/static/chunks/255-3d881dfa8c72bc56.js",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/_next/static/chunks/4bd1b696-c023c6e3521b1417.js",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/fonts/MaterialIcons-Regular.woff2",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "https://www.gstatic.com/_/translate_http/_/ss/k=translate_http.tr.zZZZhVqDDCw.L.W.O/am=BIgABw/d=0/rs=AN8SPfoZpvrLG9RKhi_wuQUla5cHY0Z5Rg/m=el_main_css",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "https://fonts.gstatic.com/s/lato/v25/S6u9w4BMUTPHh6UVSwiPGQ.woff2",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "https://fonts.gstatic.com/s/lato/v25/S6uyw4BMUTPHjx4wXg.woff2",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "https://translate.googleapis.com/_/translate_http/_/js/k=translate_http.tr.en_GB.ibQOhLGy4YY.O/am=BIgABw/d=1/ed=1/rs=AN8SPfrdQIOvn5TG_fbqJfLnAkShr-_cDw/m=el_main",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "https://fonts.gstatic.com/s/sourcesanspro/v23/6xKydSBYKcSV-LCoeQqfX1RYOo3ig4vwlxdu.woff2",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "https://fonts.gstatic.com/s/lato/v25/S6u9w4BMUTPHh7USSwiPGQ.woff2",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/fonts/fontawesome-webfont3e6e.woff2?v=4.7.0",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "https://fonts.gstatic.com/s/i/productlogos/translate/v14/24px.svg",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "https://www.gstatic.com/images/branding/googlelogo/1x/googlelogo_color_42x16dp.png",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "https://www.gstatic.com/images/branding/product/2x/translate_24dp.png",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "https://translate-pa.googleapis.com/v1/supportedLanguages?client=te&display_language=en-GB&key=AIzaSyBWDj0QJvVIx8XOhRegXX5_SrRWxhT5Hs4&callback=callback",
+          "status": 200
+        }
+      ]
+    },
+    {
+      "id": "contact",
+      "path": "/contact",
+      "status": 200,
+      "consoleErrors": 0,
+      "consoleWarnings": 0,
+      "consoleMessages": [],
+      "requestCount": 50,
+      "failedRequests": 0,
+      "requests": [
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/contact",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "https://www.neweraeducation.in/assets/images007/social-media/fb.svg",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "https://www.neweraeducation.in/assets/images007/social-media/instagram-icon.svg",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/images/resources/logo.png",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/css/style.css",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/css/responsive.css",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "https://www.neweraeducation.in/assets/images007/social-media/Youtube.svg",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "https://fonts.googleapis.com/css?family=Lato:300,400,400i,700,900|Source+Sans+Pro:300,400,600,700,900&amp;display=swap",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/css/bootstrap.min.css",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/css/bootstrap-select.min.css",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/css/owl.carousel.css",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/css/owl.theme.default.min.css",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/css/jquery.bxslider.min.css",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/css/bootstrap-datepicker.min.css",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/css/animate.css",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/css/font-awesome.min.css",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/css/magnific-popup.css",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/css/material-icons.css",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/css/swiper.min.css",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/css/hover.min.css",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/css/nouislider.css",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/css/jquery.bootstrap-touchspin.css",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/plugins/clainc-icon/style.css",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "https://fonts.gstatic.com/s/lato/v25/S6uyw4BMUTPHjx4wXg.woff2",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "https://fonts.gstatic.com/s/lato/v25/S6u9w4BMUTPHh6UVSwiPGQ.woff2",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/js/jquery.js",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit",
+          "status": 301
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/js/bootstrap-select.min.js",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/js/jquery.validate.min.js",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/js/jquery.magnific-popup.min.js",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/js/bootstrap-datepicker.min.js",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/js/bootstrap.bundle.min.js",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/js/owl.carousel.min.js",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/_next/static/chunks/webpack-078f6dfb37dff419.js",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/js/wow.min.js",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/_next/static/chunks/main-app-dbc491d4aec0b21a.js",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/js/theme.js",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/fonts/MaterialIcons-Regular.woff2",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/_next/static/chunks/4bd1b696-c023c6e3521b1417.js",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/_next/static/chunks/255-3d881dfa8c72bc56.js",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "https://www.gstatic.com/_/translate_http/_/ss/k=translate_http.tr.zZZZhVqDDCw.L.W.O/am=BIgABw/d=0/rs=AN8SPfoZpvrLG9RKhi_wuQUla5cHY0Z5Rg/m=el_main_css",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "https://fonts.gstatic.com/s/sourcesanspro/v23/6xKydSBYKcSV-LCoeQqfX1RYOo3ig4vwlxdu.woff2",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "https://translate.googleapis.com/_/translate_http/_/js/k=translate_http.tr.en_GB.ibQOhLGy4YY.O/am=BIgABw/d=1/ed=1/rs=AN8SPfrdQIOvn5TG_fbqJfLnAkShr-_cDw/m=el_main",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/fonts/fontawesome-webfont3e6e.woff2?v=4.7.0",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/plugins/clainc-icon/fonts/clainc-icon7940.ttf?wmtxhn",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "https://fonts.gstatic.com/s/i/productlogos/translate/v14/24px.svg",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "https://www.gstatic.com/images/branding/googlelogo/1x/googlelogo_color_42x16dp.png",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "https://www.gstatic.com/images/branding/product/2x/translate_24dp.png",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "https://translate-pa.googleapis.com/v1/supportedLanguages?client=te&display_language=en-GB&key=AIzaSyBWDj0QJvVIx8XOhRegXX5_SrRWxhT5Hs4&callback=callback",
+          "status": 200
+        }
+      ]
+    },
+    {
+      "id": "terms",
+      "path": "/terms",
+      "status": 200,
+      "consoleErrors": 0,
+      "consoleWarnings": 0,
+      "consoleMessages": [],
+      "requestCount": 50,
+      "failedRequests": 0,
+      "requests": [
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/terms",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "https://www.neweraeducation.in/assets/images007/social-media/fb.svg",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/images/resources/logo.png",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/css/style.css",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/images/term.jpg",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/css/responsive.css",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "https://www.neweraeducation.in/assets/images007/social-media/instagram-icon.svg",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "https://fonts.googleapis.com/css?family=Lato:300,400,400i,700,900|Source+Sans+Pro:300,400,600,700,900&amp;display=swap",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/css/bootstrap.min.css",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/css/bootstrap-select.min.css",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/css/owl.carousel.css",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/css/owl.theme.default.min.css",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/css/jquery.bxslider.min.css",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/css/bootstrap-datepicker.min.css",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "https://www.neweraeducation.in/assets/images007/social-media/Youtube.svg",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/css/animate.css",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/css/font-awesome.min.css",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/css/magnific-popup.css",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/css/material-icons.css",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/css/swiper.min.css",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/css/hover.min.css",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/css/nouislider.css",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/css/jquery.bootstrap-touchspin.css",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/plugins/clainc-icon/style.css",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit",
+          "status": 301
+        },
+        {
+          "method": "GET",
+          "url": "https://fonts.gstatic.com/s/lato/v25/S6uyw4BMUTPHjx4wXg.woff2",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "https://fonts.gstatic.com/s/lato/v25/S6u9w4BMUTPHh6UVSwiPGQ.woff2",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/js/bootstrap-select.min.js",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/js/jquery.magnific-popup.min.js",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/js/jquery.js",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/js/bootstrap.bundle.min.js",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/js/owl.carousel.min.js",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/js/bootstrap-datepicker.min.js",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/_next/static/chunks/webpack-078f6dfb37dff419.js",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/js/jquery.validate.min.js",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/js/wow.min.js",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/js/theme.js",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/_next/static/chunks/4bd1b696-c023c6e3521b1417.js",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/_next/static/chunks/main-app-dbc491d4aec0b21a.js",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/_next/static/chunks/255-3d881dfa8c72bc56.js",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/fonts/MaterialIcons-Regular.woff2",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "https://www.gstatic.com/_/translate_http/_/ss/k=translate_http.tr.zZZZhVqDDCw.L.W.O/am=BIgABw/d=0/rs=AN8SPfoZpvrLG9RKhi_wuQUla5cHY0Z5Rg/m=el_main_css",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "https://fonts.gstatic.com/s/sourcesanspro/v23/6xKydSBYKcSV-LCoeQqfX1RYOo3ig4vwlxdu.woff2",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "https://translate.googleapis.com/_/translate_http/_/js/k=translate_http.tr.en_GB.ibQOhLGy4YY.O/am=BIgABw/d=1/ed=1/rs=AN8SPfrdQIOvn5TG_fbqJfLnAkShr-_cDw/m=el_main",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/fonts/fontawesome-webfont3e6e.woff2?v=4.7.0",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "https://fonts.gstatic.com/s/i/productlogos/translate/v14/24px.svg",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "https://www.gstatic.com/images/branding/googlelogo/1x/googlelogo_color_42x16dp.png",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "https://www.gstatic.com/images/branding/product/2x/translate_24dp.png",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "https://translate-pa.googleapis.com/v1/supportedLanguages?client=te&display_language=en-GB&key=AIzaSyBWDj0QJvVIx8XOhRegXX5_SrRWxhT5Hs4&callback=callback",
+          "status": 200
+        }
+      ]
+    },
+    {
+      "id": "privacy-policy",
+      "path": "/privacy-policy",
+      "status": 200,
+      "consoleErrors": 0,
+      "consoleWarnings": 0,
+      "consoleMessages": [],
+      "requestCount": 50,
+      "failedRequests": 0,
+      "requests": [
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/privacy-policy",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/images/resources/logo.png",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "https://www.neweraeducation.in/assets/images007/social-media/fb.svg",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/images/privacy-policy.jpg",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/css/style.css",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/css/responsive.css",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "https://www.neweraeducation.in/assets/images007/social-media/instagram-icon.svg",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "https://www.neweraeducation.in/assets/images007/social-media/Youtube.svg",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "https://fonts.googleapis.com/css?family=Lato:300,400,400i,700,900|Source+Sans+Pro:300,400,600,700,900&amp;display=swap",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/css/bootstrap.min.css",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/css/bootstrap-select.min.css",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/css/owl.carousel.css",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/css/owl.theme.default.min.css",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/css/jquery.bxslider.min.css",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/css/bootstrap-datepicker.min.css",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/css/animate.css",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/js/bootstrap.bundle.min.js",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/css/font-awesome.min.css",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/css/magnific-popup.css",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/css/material-icons.css",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit",
+          "status": 301
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/js/bootstrap-select.min.js",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/css/swiper.min.css",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/js/jquery.js",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/css/hover.min.css",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/css/nouislider.css",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/css/jquery.bootstrap-touchspin.css",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/plugins/clainc-icon/style.css",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "https://fonts.gstatic.com/s/lato/v25/S6uyw4BMUTPHjx4wXg.woff2",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "https://fonts.gstatic.com/s/lato/v25/S6u9w4BMUTPHh6UVSwiPGQ.woff2",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/js/owl.carousel.min.js",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/js/jquery.magnific-popup.min.js",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/_next/static/chunks/webpack-078f6dfb37dff419.js",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/js/bootstrap-datepicker.min.js",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/js/wow.min.js",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/js/jquery.validate.min.js",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/_next/static/chunks/4bd1b696-c023c6e3521b1417.js",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/js/theme.js",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/_next/static/chunks/main-app-dbc491d4aec0b21a.js",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/_next/static/chunks/255-3d881dfa8c72bc56.js",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/fonts/MaterialIcons-Regular.woff2",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "https://www.gstatic.com/_/translate_http/_/ss/k=translate_http.tr.zZZZhVqDDCw.L.W.O/am=BIgABw/d=0/rs=AN8SPfoZpvrLG9RKhi_wuQUla5cHY0Z5Rg/m=el_main_css",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "https://fonts.gstatic.com/s/sourcesanspro/v23/6xKydSBYKcSV-LCoeQqfX1RYOo3ig4vwlxdu.woff2",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "https://translate.googleapis.com/_/translate_http/_/js/k=translate_http.tr.en_GB.ibQOhLGy4YY.O/am=BIgABw/d=1/ed=1/rs=AN8SPfrdQIOvn5TG_fbqJfLnAkShr-_cDw/m=el_main",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/fonts/fontawesome-webfont3e6e.woff2?v=4.7.0",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "https://fonts.gstatic.com/s/i/productlogos/translate/v14/24px.svg",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "https://www.gstatic.com/images/branding/googlelogo/1x/googlelogo_color_42x16dp.png",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "https://www.gstatic.com/images/branding/product/2x/translate_24dp.png",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "https://translate-pa.googleapis.com/v1/supportedLanguages?client=te&display_language=en-GB&key=AIzaSyBWDj0QJvVIx8XOhRegXX5_SrRWxhT5Hs4&callback=callback",
+          "status": 200
+        }
+      ]
+    },
+    {
+      "id": "return-policy",
+      "path": "/return-policy",
+      "status": 200,
+      "consoleErrors": 0,
+      "consoleWarnings": 0,
+      "consoleMessages": [],
+      "requestCount": 50,
+      "failedRequests": 0,
+      "requests": [
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/return-policy",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/images/resources/logo.png",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "https://www.neweraeducation.in/assets/images007/social-media/fb.svg",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/css/style.css",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/css/responsive.css",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/images/return.jpg",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "https://www.neweraeducation.in/assets/images007/social-media/instagram-icon.svg",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "https://www.neweraeducation.in/assets/images007/social-media/Youtube.svg",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "https://fonts.googleapis.com/css?family=Lato:300,400,400i,700,900|Source+Sans+Pro:300,400,600,700,900&amp;display=swap",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/css/bootstrap.min.css",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/css/bootstrap-select.min.css",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/css/owl.carousel.css",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/css/owl.theme.default.min.css",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/css/jquery.bxslider.min.css",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/css/bootstrap-datepicker.min.css",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/css/animate.css",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/css/font-awesome.min.css",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/css/magnific-popup.css",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/css/material-icons.css",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/css/swiper.min.css",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/css/hover.min.css",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/css/nouislider.css",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/css/jquery.bootstrap-touchspin.css",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/plugins/clainc-icon/style.css",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "https://fonts.gstatic.com/s/lato/v25/S6uyw4BMUTPHjx4wXg.woff2",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "https://fonts.gstatic.com/s/lato/v25/S6u9w4BMUTPHh6UVSwiPGQ.woff2",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/js/bootstrap-select.min.js",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/js/owl.carousel.min.js",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/js/jquery.magnific-popup.min.js",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/js/bootstrap.bundle.min.js",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/js/jquery.js",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit",
+          "status": 301
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/_next/static/chunks/webpack-078f6dfb37dff419.js",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/js/bootstrap-datepicker.min.js",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/js/jquery.validate.min.js",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/js/theme.js",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/_next/static/chunks/4bd1b696-c023c6e3521b1417.js",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/js/wow.min.js",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/_next/static/chunks/main-app-dbc491d4aec0b21a.js",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/_next/static/chunks/255-3d881dfa8c72bc56.js",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/fonts/MaterialIcons-Regular.woff2",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "https://www.gstatic.com/_/translate_http/_/ss/k=translate_http.tr.zZZZhVqDDCw.L.W.O/am=BIgABw/d=0/rs=AN8SPfoZpvrLG9RKhi_wuQUla5cHY0Z5Rg/m=el_main_css",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "https://fonts.gstatic.com/s/sourcesanspro/v23/6xKydSBYKcSV-LCoeQqfX1RYOo3ig4vwlxdu.woff2",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "https://translate.googleapis.com/_/translate_http/_/js/k=translate_http.tr.en_GB.ibQOhLGy4YY.O/am=BIgABw/d=1/ed=1/rs=AN8SPfrdQIOvn5TG_fbqJfLnAkShr-_cDw/m=el_main",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/fonts/fontawesome-webfont3e6e.woff2?v=4.7.0",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "https://fonts.gstatic.com/s/i/productlogos/translate/v14/24px.svg",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "https://www.gstatic.com/images/branding/googlelogo/1x/googlelogo_color_42x16dp.png",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "https://www.gstatic.com/images/branding/product/2x/translate_24dp.png",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "https://translate-pa.googleapis.com/v1/supportedLanguages?client=te&display_language=en-GB&key=AIzaSyBWDj0QJvVIx8XOhRegXX5_SrRWxhT5Hs4&callback=callback",
+          "status": 200
+        }
+      ]
+    },
+    {
+      "id": "mother-tincture",
+      "path": "/mother-tincture",
+      "status": 200,
+      "consoleErrors": 0,
+      "consoleWarnings": 0,
+      "consoleMessages": [],
+      "requestCount": 53,
+      "failedRequests": 2,
+      "requests": [
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/mother-tincture",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "https://www.neweraeducation.in/assets/images007/social-media/fb.svg",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/css/style.css",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/css/responsive.css",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "https://www.neweraeducation.in/assets/images007/social-media/instagram-icon.svg",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/images/resources/logo.png",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "https://www.neweraeducation.in/assets/images007/social-media/Youtube.svg",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "https://fonts.googleapis.com/css?family=Lato:300,400,400i,700,900|Source+Sans+Pro:300,400,600,700,900&amp;display=swap",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/css/bootstrap.min.css",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/css/bootstrap-select.min.css",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/css/owl.carousel.css",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/css/owl.theme.default.min.css",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/css/jquery.bxslider.min.css",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/css/bootstrap-datepicker.min.css",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/css/animate.css",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/css/font-awesome.min.css",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/css/magnific-popup.css",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/css/material-icons.css",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/css/swiper.min.css",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/css/hover.min.css",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/css/nouislider.css",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/css/jquery.bootstrap-touchspin.css",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/plugins/clainc-icon/style.css",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/js/bootstrap-select.min.js",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "https://fonts.gstatic.com/s/lato/v25/S6uyw4BMUTPHjx4wXg.woff2",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "https://fonts.gstatic.com/s/lato/v25/S6u9w4BMUTPHh6UVSwiPGQ.woff2",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit",
+          "status": 301
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/js/bootstrap.bundle.min.js",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/js/jquery.js",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/js/owl.carousel.min.js",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/js/jquery.magnific-popup.min.js",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/js/wow.min.js",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/js/bootstrap-datepicker.min.js",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/js/jquery.validate.min.js",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/js/theme.js",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/_next/static/chunks/webpack-078f6dfb37dff419.js",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/_next/static/chunks/main-app-dbc491d4aec0b21a.js",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/_next/static/chunks/255-3d881dfa8c72bc56.js",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/_next/static/chunks/4bd1b696-c023c6e3521b1417.js",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/fonts/MaterialIcons-Regular.woff2",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/Mother-Tincture-Price-list.pdf",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/Mother-Tincture-Price-list.pdf",
+          "failed": true
+        },
+        {
+          "method": "GET",
+          "url": "https://www.gstatic.com/_/translate_http/_/ss/k=translate_http.tr.zZZZhVqDDCw.L.W.O/am=BIgABw/d=0/rs=AN8SPfoZpvrLG9RKhi_wuQUla5cHY0Z5Rg/m=el_main_css",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "https://fonts.gstatic.com/s/sourcesanspro/v23/6xKydSBYKcSV-LCoeQqfX1RYOo3ig4vwlxdu.woff2",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "https://translate.googleapis.com/_/translate_http/_/js/k=translate_http.tr.en_GB.ibQOhLGy4YY.O/am=BIgABw/d=1/ed=1/rs=AN8SPfrdQIOvn5TG_fbqJfLnAkShr-_cDw/m=el_main",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/fonts/fontawesome-webfont3e6e.woff2?v=4.7.0",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/Mother-Tincture-Price-list.pdf",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/Mother-Tincture-Price-list.pdf",
+          "failed": true
+        },
+        {
+          "method": "GET",
+          "url": "https://fonts.gstatic.com/s/i/productlogos/translate/v14/24px.svg",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "https://www.gstatic.com/images/branding/googlelogo/1x/googlelogo_color_42x16dp.png",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "https://www.gstatic.com/images/branding/product/2x/translate_24dp.png",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "https://translate-pa.googleapis.com/v1/supportedLanguages?client=te&display_language=en-GB&key=AIzaSyBWDj0QJvVIx8XOhRegXX5_SrRWxhT5Hs4&callback=callback",
+          "status": 200
+        }
+      ]
+    },
+    {
+      "id": "details",
+      "path": "/details",
+      "status": 200,
+      "consoleErrors": 0,
+      "consoleWarnings": 0,
+      "consoleMessages": [],
+      "requestCount": 77,
+      "failedRequests": 0,
+      "requests": [
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/details",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/images/resources/logo.png",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/images/kit.png",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/css/style.css",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/images/producth.png",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/css/responsive.css",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "https://www.neweraeducation.in/assets/images007/social-media/fb.svg",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "https://www.neweraeducation.in/assets/images007/social-media/instagram-icon.svg",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "https://www.neweraeducation.in/assets/images007/social-media/Youtube.svg",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "https://fonts.googleapis.com/css?family=Lato:300,400,400i,700,900|Source+Sans+Pro:300,400,600,700,900&amp;display=swap",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/css/bootstrap.min.css",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/css/bootstrap-select.min.css",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/css/owl.carousel.css",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/css/owl.theme.default.min.css",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/css/jquery.bxslider.min.css",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/css/bootstrap-datepicker.min.css",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/css/animate.css",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/css/font-awesome.min.css",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/css/magnific-popup.css",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/css/material-icons.css",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/css/swiper.min.css",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/css/hover.min.css",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/css/nouislider.css",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/css/jquery.bootstrap-touchspin.css",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/plugins/clainc-icon/style.css",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit",
+          "status": 301
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/js/jquery.js",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/images/cap.png",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "https://fonts.gstatic.com/s/lato/v25/S6uyw4BMUTPHjx4wXg.woff2",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "https://fonts.gstatic.com/s/lato/v25/S6u9w4BMUTPHh6UVSwiPGQ.woff2",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/uploaded_files/categories/30720-heart.jpg",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/uploaded_files/categories/34a6c-Lifestyle.jpg",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/uploaded_files/categories/c4852-Infectious.jpg",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://www.spakshomeopathy.com/uploaded_files/categories/3c97d-Bones.jpg",
+          "status": 301
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/js/bootstrap.bundle.min.js",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/js/bootstrap-select.min.js",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/js/owl.carousel.min.js",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/js/jquery.magnific-popup.min.js",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/js/bootstrap-datepicker.min.js",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/js/wow.min.js",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/js/jquery.validate.min.js",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/_next/static/chunks/webpack-078f6dfb37dff419.js",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/js/theme.js",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/uploaded_files/categories/8f0cf-Liver.jpg",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://www.spakshomeopathy.com/uploaded_files/categories/ddb94-Brain.jpg",
+          "status": 301
+        },
+        {
+          "method": "GET",
+          "url": "http://www.spakshomeopathy.com/uploaded_files/categories/6598e-Ear.jpg",
+          "status": 301
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/uploaded_files/categories/aa85f-male.jpg",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://www.spakshomeopathy.com/uploaded_files/categories/9f29b-Cancer.jpg",
+          "status": 301
+        },
+        {
+          "method": "GET",
+          "url": "http://www.spakshomeopathy.com/uploaded_files/categories/3802b-Children-Disease.jpg",
+          "status": 301
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/fonts/MaterialIcons-Regular.woff2",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/uploaded_files/categories/17ae2-Mouth-and-tongue.jpg",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://www.spakshomeopathy.com/uploaded_files/categories/5224f-Eye.jpg",
+          "status": 301
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/_next/static/chunks/4bd1b696-c023c6e3521b1417.js",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/_next/static/chunks/main-app-dbc491d4aec0b21a.js",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/_next/static/chunks/255-3d881dfa8c72bc56.js",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "https://www.gstatic.com/_/translate_http/_/ss/k=translate_http.tr.zZZZhVqDDCw.L.W.O/am=BIgABw/d=0/rs=AN8SPfoZpvrLG9RKhi_wuQUla5cHY0Z5Rg/m=el_main_css",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "https://fonts.gstatic.com/s/sourcesanspro/v23/6xKydSBYKcSV-LCoeQqfX1RYOo3ig4vwlxdu.woff2",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "https://www.spakshomeopathy.com/uploaded_files/categories/5224f-Eye.jpg",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "https://translate.googleapis.com/_/translate_http/_/js/k=translate_http.tr.en_GB.ibQOhLGy4YY.O/am=BIgABw/d=1/ed=1/rs=AN8SPfrdQIOvn5TG_fbqJfLnAkShr-_cDw/m=el_main",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/fonts/fontawesome-webfont3e6e.woff2?v=4.7.0",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "https://fonts.gstatic.com/s/lato/v25/S6uyw4BMUTPHjxAwXjeu.woff2",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "https://www.spakshomeopathy.com/uploaded_files/categories/3c97d-Bones.jpg",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "https://www.spakshomeopathy.com/uploaded_files/categories/ddb94-Brain.jpg",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "https://www.spakshomeopathy.com/uploaded_files/categories/9f29b-Cancer.jpg",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "https://www.spakshomeopathy.com/uploaded_files/categories/6598e-Ear.jpg",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://www.spakshomeopathy.com/uploaded_files/categories/08b48-Female.jpg",
+          "status": 301
+        },
+        {
+          "method": "GET",
+          "url": "http://www.spakshomeopathy.com/uploaded_files/categories/3194b-gall-bladder.jpg",
+          "status": 301
+        },
+        {
+          "method": "GET",
+          "url": "https://www.spakshomeopathy.com/uploaded_files/categories/3802b-Children-Disease.jpg",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://www.spakshomeopathy.com/uploaded_files/categories/f83af-Hair-disease.jpg",
+          "status": 301
+        },
+        {
+          "method": "GET",
+          "url": "https://www.spakshomeopathy.com/uploaded_files/categories/08b48-Female.jpg",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "https://www.spakshomeopathy.com/uploaded_files/categories/3194b-gall-bladder.jpg",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "https://www.spakshomeopathy.com/uploaded_files/categories/f83af-Hair-disease.jpg",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "https://fonts.gstatic.com/s/i/productlogos/translate/v14/24px.svg",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "https://www.gstatic.com/images/branding/googlelogo/1x/googlelogo_color_42x16dp.png",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "https://www.gstatic.com/images/branding/product/2x/translate_24dp.png",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "https://translate-pa.googleapis.com/v1/supportedLanguages?client=te&display_language=en-GB&key=AIzaSyBWDj0QJvVIx8XOhRegXX5_SrRWxhT5Hs4&callback=callback",
+          "status": 200
+        }
+      ]
+    },
+    {
+      "id": "video",
+      "path": "/video",
+      "status": 200,
+      "consoleErrors": 2,
+      "consoleWarnings": 2,
+      "consoleMessages": [
+        {
+          "type": "warning",
+          "text": "Unrecognized feature: 'web-share'."
+        },
+        {
+          "type": "error",
+          "text": "Permissions policy violation: compute-pressure is not allowed in this document."
+        },
+        {
+          "type": "error",
+          "text": "Permissions policy violation: compute-pressure is not allowed in this document."
+        },
+        {
+          "type": "warning",
+          "text": "No available adapters."
+        }
+      ],
+      "requestCount": 157,
+      "failedRequests": 6,
+      "requests": [
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/video",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "https://www.neweraeducation.in/assets/images007/social-media/fb.svg",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "https://www.neweraeducation.in/assets/images007/social-media/instagram-icon.svg",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/images/resources/logo.png",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/css/style.css",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/css/responsive.css",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "https://www.neweraeducation.in/assets/images007/social-media/Youtube.svg",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "https://fonts.googleapis.com/css?family=Lato:300,400,400i,700,900|Source+Sans+Pro:300,400,600,700,900&amp;display=swap",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/css/bootstrap.min.css",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/css/bootstrap-select.min.css",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/css/owl.carousel.css",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/js/bootstrap-select.min.js",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/js/bootstrap.bundle.min.js",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/js/jquery.js",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/js/jquery.magnific-popup.min.js",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/js/owl.carousel.min.js",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit",
+          "status": 301
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/css/owl.theme.default.min.css",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/css/jquery.bxslider.min.css",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/css/bootstrap-datepicker.min.css",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/js/bootstrap-datepicker.min.js",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/css/animate.css",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/css/font-awesome.min.css",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/css/magnific-popup.css",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/css/material-icons.css",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/css/swiper.min.css",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/css/hover.min.css",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/css/nouislider.css",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/css/jquery.bootstrap-touchspin.css",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/plugins/clainc-icon/style.css",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "https://fonts.gstatic.com/s/lato/v25/S6uyw4BMUTPHjx4wXg.woff2",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "https://fonts.gstatic.com/s/lato/v25/S6u9w4BMUTPHh6UVSwiPGQ.woff2",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/_next/static/chunks/webpack-078f6dfb37dff419.js",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/_next/static/chunks/255-3d881dfa8c72bc56.js",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/js/wow.min.js",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/js/theme.js",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/js/jquery.validate.min.js",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/_next/static/chunks/main-app-dbc491d4aec0b21a.js",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/_next/static/chunks/4bd1b696-c023c6e3521b1417.js",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/fonts/MaterialIcons-Regular.woff2",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "https://www.gstatic.com/_/translate_http/_/ss/k=translate_http.tr.zZZZhVqDDCw.L.W.O/am=BIgABw/d=0/rs=AN8SPfoZpvrLG9RKhi_wuQUla5cHY0Z5Rg/m=el_main_css",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "https://fonts.gstatic.com/s/sourcesanspro/v23/6xKydSBYKcSV-LCoeQqfX1RYOo3ig4vwlxdu.woff2",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "https://translate.googleapis.com/_/translate_http/_/js/k=translate_http.tr.en_GB.ibQOhLGy4YY.O/am=BIgABw/d=1/ed=1/rs=AN8SPfrdQIOvn5TG_fbqJfLnAkShr-_cDw/m=el_main",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/fonts/fontawesome-webfont3e6e.woff2?v=4.7.0",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "https://www.youtube.com/embed/kRhNIVf6qUg",
+          "failed": true
+        },
+        {
+          "method": "GET",
+          "url": "https://www.youtube.com/embed/_ev-w9J347g",
+          "failed": true
+        },
+        {
+          "method": "GET",
+          "url": "https://www.youtube.com/embed/-cyfQkEp510",
+          "failed": true
+        },
+        {
+          "method": "GET",
+          "url": "https://www.youtube.com/embed/ABYZYvUdiZo",
+          "failed": true
+        },
+        {
+          "method": "GET",
+          "url": "https://www.youtube.com/embed/wEJkVFnOBgo",
+          "failed": true
+        },
+        {
+          "method": "GET",
+          "url": "https://www.youtube.com/embed/F9B4kcXNt1Q",
+          "failed": true
+        },
+        {
+          "method": "GET",
+          "url": "https://fonts.gstatic.com/s/i/productlogos/translate/v14/24px.svg",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "https://www.gstatic.com/images/branding/googlelogo/1x/googlelogo_color_42x16dp.png",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "https://www.gstatic.com/images/branding/product/2x/translate_24dp.png",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "https://www.youtube.com/embed/kRhNIVf6qUg",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "https://www.youtube.com/embed/-cyfQkEp510",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "https://fonts.gstatic.com/s/roboto/v48/KFO7CnqEu92Fr1ME7kSn66aGLdTylUAMa3yUBA.woff2",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "https://fonts.gstatic.com/s/roboto/v48/KFO7CnqEu92Fr1ME7kSn66aGLdTylUAMa3yUBA.woff2",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "https://www.youtube.com/embed/_ev-w9J347g",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "https://www.youtube.com/embed/ABYZYvUdiZo",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "https://www.youtube.com/embed/wEJkVFnOBgo",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "https://translate-pa.googleapis.com/v1/supportedLanguages?client=te&display_language=en-GB&key=AIzaSyBWDj0QJvVIx8XOhRegXX5_SrRWxhT5Hs4&callback=callback",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "https://fonts.gstatic.com/s/roboto/v48/KFO7CnqEu92Fr1ME7kSn66aGLdTylUAMa3yUBA.woff2",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "https://fonts.gstatic.com/s/roboto/v48/KFO7CnqEu92Fr1ME7kSn66aGLdTylUAMa3yUBA.woff2",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "https://www.youtube.com/embed/F9B4kcXNt1Q",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "https://www.youtube.com/s/player/bed7a914/www-player.css",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "https://www.youtube.com/s/_/ytembeds/_/ss/k=ytembeds.base.430j8FckcQk.L.W.O/am=AAAAgA/d=1/br=1/rs=AGKMywE3CyVmHxrh-HE0d_hCpz5z26DciQ/m=root,base",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "https://www.youtube.com/s/player/bed7a914/www-player.css",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "https://www.youtube.com/s/_/ytembeds/_/ss/k=ytembeds.base.430j8FckcQk.L.W.O/am=AAAAgA/d=1/br=1/rs=AGKMywE3CyVmHxrh-HE0d_hCpz5z26DciQ/m=root,base",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "https://www.youtube.com/s/player/bed7a914/www-player.css",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "https://www.youtube.com/s/_/ytembeds/_/ss/k=ytembeds.base.430j8FckcQk.L.W.O/am=AAAAgA/d=1/br=1/rs=AGKMywE3CyVmHxrh-HE0d_hCpz5z26DciQ/m=root,base",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "https://www.youtube.com/s/player/bed7a914/www-player.css",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "https://www.youtube.com/s/player/bed7a914/www-player.css",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "https://fonts.gstatic.com/s/roboto/v48/KFO7CnqEu92Fr1ME7kSn66aGLdTylUAMa3yUBA.woff2",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "https://www.youtube.com/s/_/ytembeds/_/ss/k=ytembeds.base.430j8FckcQk.L.W.O/am=AAAAgA/d=0/br=1/rs=AGKMywE3CyVmHxrh-HE0d_hCpz5z26DciQ",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "https://www.youtube.com/s/_/ytembeds/_/ss/k=ytembeds.base.430j8FckcQk.L.W.O/am=AAAAgA/d=0/br=1/rs=AGKMywE3CyVmHxrh-HE0d_hCpz5z26DciQ",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "https://www.youtube.com/s/player/bed7a914/www-player.css",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "https://www.youtube.com/s/_/ytembeds/_/ss/k=ytembeds.base.430j8FckcQk.L.W.O/am=AAAAgA/d=0/br=1/rs=AGKMywE3CyVmHxrh-HE0d_hCpz5z26DciQ",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "https://www.youtube.com/s/_/ytembeds/_/js/k=ytembeds.base.en_US.BoxVKzmkHGA.es5.O/am=AAAAgA/d=1/excm=base,root/br=1/rs=AGKMywGHekHnYFTUP7cRaRpXzNW-xAquUg/m=root,base",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "https://www.youtube.com/s/_/ytembeds/_/js/k=ytembeds.base.en_US.BoxVKzmkHGA.es5.O/am=AAAAgA/d=1/excm=base,root/br=1/rs=AGKMywGHekHnYFTUP7cRaRpXzNW-xAquUg/m=root,base",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "https://www.youtube.com/s/_/ytembeds/_/js/k=ytembeds.base.en_US.BoxVKzmkHGA.es5.O/am=AAAAgA/d=1/excm=base,root/br=1/rs=AGKMywGHekHnYFTUP7cRaRpXzNW-xAquUg/m=root,base",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "https://www.youtube.com/s/_/ytembeds/_/js/k=ytembeds.base.en_US.BoxVKzmkHGA.es5.O/am=AAAAgA/d=1/br=1/rs=AGKMywGHekHnYFTUP7cRaRpXzNW-xAquUg/m=root,base",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "https://www.youtube.com/s/player/bed7a914/player_embed.vflset/en_US/base.js",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "https://www.youtube.com/s/player/bed7a914/player_embed.vflset/en_US/base.js",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "https://www.youtube.com/s/player/bed7a914/player_embed.vflset/en_US/base.js",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "https://www.youtube.com/s/player/bed7a914/player_embed.vflset/en_US/base.js",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "https://fonts.gstatic.com/s/roboto/v48/KFO7CnqEu92Fr1ME7kSn66aGLdTylUAMa3yUBA.woff2",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "https://www.youtube.com/s/_/ytembeds/_/js/k=ytembeds.base.en_US.BoxVKzmkHGA.es5.O/am=AAAAgA/d=1/br=1/rs=AGKMywGHekHnYFTUP7cRaRpXzNW-xAquUg/m=root,base",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "https://www.youtube.com/s/_/ytembeds/_/js/k=ytembeds.base.en_US.BoxVKzmkHGA.es5.O/am=AAAAgA/d=1/br=1/rs=AGKMywGHekHnYFTUP7cRaRpXzNW-xAquUg/m=root,base",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "https://www.youtube.com/s/player/bed7a914/player_embed.vflset/en_US/base.js",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "https://www.youtube.com/s/player/bed7a914/player_embed.vflset/en_US/base.js",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "https://static.doubleclick.net/instream/ad_status.js",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "https://static.doubleclick.net/instream/ad_status.js",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "https://static.doubleclick.net/instream/ad_status.js",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "https://googleads.g.doubleclick.net/pagead/id",
+          "status": 302
+        },
+        {
+          "method": "GET",
+          "url": "https://static.doubleclick.net/instream/ad_status.js",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "https://www.youtube.com/s/_/ytembeds/_/js/k=ytembeds.base.en_US.BoxVKzmkHGA.es5.O/ck=ytembeds.base.430j8FckcQk.L.W.O/am=AAAAgA/d=1/exm=base,root/excm=base,root/ed=1/br=1/rs=AGKMywE2-nanfopjYh4kKdw8leYQdm3GYA/m=r78Drb",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "https://static.doubleclick.net/instream/ad_status.js",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "https://www.youtube.com/s/_/ytembeds/_/js/k=ytembeds.base.en_US.BoxVKzmkHGA.es5.O/ck=ytembeds.base.430j8FckcQk.L.W.O/am=AAAAgA/d=1/exm=base,root/excm=base,root/ed=1/br=1/rs=AGKMywE2-nanfopjYh4kKdw8leYQdm3GYA/m=r78Drb",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "https://static.doubleclick.net/instream/ad_status.js",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "https://www.youtube.com/s/_/ytembeds/_/js/k=ytembeds.base.en_US.BoxVKzmkHGA.es5.O/ck=ytembeds.base.430j8FckcQk.L.W.O/am=AAAAgA/d=1/exm=base,root/excm=base,root/ed=1/br=1/rs=AGKMywE2-nanfopjYh4kKdw8leYQdm3GYA/m=r78Drb",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "https://googleads.g.doubleclick.net/pagead/id",
+          "status": 302
+        },
+        {
+          "method": "GET",
+          "url": "https://googleads.g.doubleclick.net/pagead/id?slf_rd=1",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "https://googleads.g.doubleclick.net/pagead/id",
+          "status": 302
+        },
+        {
+          "method": "GET",
+          "url": "https://www.youtube.com/s/_/ytembeds/_/js/k=ytembeds.base.en_US.BoxVKzmkHGA.es5.O/am=AAAAgA/d=1/exm=base,root/ed=1/br=1/rs=AGKMywGHekHnYFTUP7cRaRpXzNW-xAquUg/m=r78Drb",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "https://www.youtube.com/s/_/ytembeds/_/js/k=ytembeds.base.en_US.BoxVKzmkHGA.es5.O/am=AAAAgA/d=1/exm=base,root/ed=1/br=1/rs=AGKMywGHekHnYFTUP7cRaRpXzNW-xAquUg/m=r78Drb",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "https://www.youtube.com/s/_/ytembeds/_/js/k=ytembeds.base.en_US.BoxVKzmkHGA.es5.O/am=AAAAgA/d=1/exm=base,root/ed=1/br=1/rs=AGKMywGHekHnYFTUP7cRaRpXzNW-xAquUg/m=r78Drb",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "https://googleads.g.doubleclick.net/pagead/id",
+          "status": 302
+        },
+        {
+          "method": "GET",
+          "url": "https://googleads.g.doubleclick.net/pagead/id",
+          "status": 302
+        },
+        {
+          "method": "GET",
+          "url": "https://googleads.g.doubleclick.net/pagead/id",
+          "status": 302
+        },
+        {
+          "method": "GET",
+          "url": "https://googleads.g.doubleclick.net/pagead/id?slf_rd=1",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "https://i.ytimg.com/vi_webp/-cyfQkEp510/sddefault.webp",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "https://yt3.ggpht.com/7wFUPdMwEkF6WfzVO-s9lmedq14VSlNbon3YmDss253wAqK3P-_ua_GTiABD9eMiTuLwKVpsiXI=s68-c-k-c0x00ffffff-no-rj",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "https://googleads.g.doubleclick.net/pagead/id?slf_rd=1",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "https://i.ytimg.com/vi/wEJkVFnOBgo/sddefault.jpg",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "https://yt3.ggpht.com/7wFUPdMwEkF6WfzVO-s9lmedq14VSlNbon3YmDss253wAqK3P-_ua_GTiABD9eMiTuLwKVpsiXI=s68-c-k-c0x00ffffff-no-rj",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "https://www.google.com/js/th/dsg6gWNjAraYwI_E1-ncR3KxLlty7EmJITzDbmdJWso.js",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "https://googleads.g.doubleclick.net/pagead/id?slf_rd=1",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "https://yt3.ggpht.com/7wFUPdMwEkF6WfzVO-s9lmedq14VSlNbon3YmDss253wAqK3P-_ua_GTiABD9eMiTuLwKVpsiXI=s68-c-k-c0x00ffffff-no-rj",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "https://www.google.com/js/th/dsg6gWNjAraYwI_E1-ncR3KxLlty7EmJITzDbmdJWso.js",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "https://www.google.com/js/th/dsg6gWNjAraYwI_E1-ncR3KxLlty7EmJITzDbmdJWso.js",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "https://www.google.com/js/th/01AiCETFFd6JcPNvLAmNzIcaK3IQuU1nW0oz_tCEHBk.js",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "https://googleads.g.doubleclick.net/pagead/id?slf_rd=1",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "https://googleads.g.doubleclick.net/pagead/id?slf_rd=1",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "https://www.google.com/js/th/dsg6gWNjAraYwI_E1-ncR3KxLlty7EmJITzDbmdJWso.js",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "https://www.google.com/js/th/dsg6gWNjAraYwI_E1-ncR3KxLlty7EmJITzDbmdJWso.js",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "https://fonts.gstatic.com/s/roboto/v48/KFO7CnqEu92Fr1ME7kSn66aGLdTylUAMaxKUBGEe.woff2",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "https://www.gstatic.com/youtube/img/icons/mweb/youtube_fill/logo/v2/67px.svg",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "https://i.ytimg.com/vi_webp/kRhNIVf6qUg/sddefault.webp",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "https://i.ytimg.com/vi_webp/ABYZYvUdiZo/sddefault.webp",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "https://yt3.ggpht.com/7wFUPdMwEkF6WfzVO-s9lmedq14VSlNbon3YmDss253wAqK3P-_ua_GTiABD9eMiTuLwKVpsiXI=s68-c-k-c0x00ffffff-no-rj",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "https://yt3.ggpht.com/7wFUPdMwEkF6WfzVO-s9lmedq14VSlNbon3YmDss253wAqK3P-_ua_GTiABD9eMiTuLwKVpsiXI=s68-c-k-c0x00ffffff-no-rj",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "https://yt3.ggpht.com/7wFUPdMwEkF6WfzVO-s9lmedq14VSlNbon3YmDss253wAqK3P-_ua_GTiABD9eMiTuLwKVpsiXI=s68-c-k-c0x00ffffff-no-rj",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "https://i.ytimg.com/vi_webp/_ev-w9J347g/sddefault.webp",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "https://www.gstatic.com/youtube/img/icons/mweb/youtube_fill/logo/v2/67px.svg",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "https://www.gstatic.com/youtube/img/icons/mweb/youtube_fill/logo/v2/67px.svg",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "https://fonts.gstatic.com/s/i/youtube_outline_experimental/info_circle/v10/24px.svg",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "https://www.gstatic.com/youtube/img/icons/mweb/youtube_fill/logo/v2/67px.svg",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "https://www.gstatic.com/youtube/img/icons/mweb/youtube_fill/logo/v2/67px.svg",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "https://i.ytimg.com/vi_webp/F9B4kcXNt1Q/sddefault.webp",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "https://www.gstatic.com/youtube/img/icons/mweb/youtube_fill/logo/v2/67px.svg",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "https://www.youtube.com/generate_204?8BtHbg",
+          "status": 204
+        },
+        {
+          "method": "GET",
+          "url": "https://www.youtube.com/generate_204?i4fGWA",
+          "status": 204
+        },
+        {
+          "method": "GET",
+          "url": "https://www.youtube.com/generate_204?hLGalA",
+          "status": 204
+        },
+        {
+          "method": "GET",
+          "url": "https://www.youtube.com/generate_204?zI2SRw",
+          "status": 204
+        },
+        {
+          "method": "GET",
+          "url": "https://www.youtube.com/generate_204?toyyUA",
+          "status": 204
+        },
+        {
+          "method": "GET",
+          "url": "https://www.youtube.com/generate_204?7gg_1w",
+          "status": 204
+        },
+        {
+          "method": "POST",
+          "url": "https://jnn-pa.googleapis.com/$rpc/google.internal.waa.v1.Waa/GenerateIT",
+          "status": 200
+        },
+        {
+          "method": "POST",
+          "url": "https://jnn-pa.googleapis.com/$rpc/google.internal.waa.v1.Waa/GenerateIT",
+          "status": 200
+        },
+        {
+          "method": "POST",
+          "url": "https://jnn-pa.googleapis.com/$rpc/google.internal.waa.v1.Waa/GenerateIT",
+          "status": 200
+        },
+        {
+          "method": "POST",
+          "url": "https://jnn-pa.googleapis.com/$rpc/google.internal.waa.v1.Waa/GenerateIT",
+          "status": 200
+        },
+        {
+          "method": "POST",
+          "url": "https://www.youtube.com/youtubei/v1/log_event?alt=json",
+          "status": 200
+        },
+        {
+          "method": "POST",
+          "url": "https://jnn-pa.googleapis.com/$rpc/google.internal.waa.v1.Waa/GenerateIT",
+          "status": 200
+        },
+        {
+          "method": "POST",
+          "url": "https://www.youtube.com/youtubei/v1/log_event?alt=json",
+          "status": 200
+        },
+        {
+          "method": "POST",
+          "url": "https://www.youtube.com/youtubei/v1/log_event?alt=json",
+          "status": 200
+        },
+        {
+          "method": "POST",
+          "url": "https://jnn-pa.googleapis.com/$rpc/google.internal.waa.v1.Waa/GenerateIT",
+          "status": 200
+        },
+        {
+          "method": "POST",
+          "url": "https://www.youtube.com/youtubei/v1/log_event?alt=json",
+          "status": 200
+        }
+      ]
+    },
+    {
+      "id": "videos-broken",
+      "path": "/videos",
+      "status": 200,
+      "consoleErrors": 0,
+      "consoleWarnings": 0,
+      "consoleMessages": [],
+      "requestCount": 49,
+      "failedRequests": 0,
+      "requests": [
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/videos",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "https://www.neweraeducation.in/assets/images007/social-media/fb.svg",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/images/resources/logo.png",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "https://www.neweraeducation.in/assets/images007/social-media/instagram-icon.svg",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/css/style.css",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/css/responsive.css",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "https://www.neweraeducation.in/assets/images007/social-media/Youtube.svg",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "https://fonts.googleapis.com/css?family=Lato:300,400,400i,700,900|Source+Sans+Pro:300,400,600,700,900&amp;display=swap",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/css/bootstrap.min.css",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/css/bootstrap-select.min.css",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/css/owl.carousel.css",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/js/jquery.js",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/css/owl.theme.default.min.css",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/css/jquery.bxslider.min.css",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/css/bootstrap-datepicker.min.css",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/css/animate.css",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/css/font-awesome.min.css",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/css/magnific-popup.css",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/css/material-icons.css",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/css/swiper.min.css",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/css/hover.min.css",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/css/nouislider.css",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/css/jquery.bootstrap-touchspin.css",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/plugins/clainc-icon/style.css",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit",
+          "status": 301
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/js/bootstrap-select.min.js",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "https://fonts.gstatic.com/s/lato/v25/S6uyw4BMUTPHjx4wXg.woff2",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "https://fonts.gstatic.com/s/lato/v25/S6u9w4BMUTPHh6UVSwiPGQ.woff2",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/js/bootstrap.bundle.min.js",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/js/jquery.magnific-popup.min.js",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/js/owl.carousel.min.js",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/js/bootstrap-datepicker.min.js",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/js/jquery.validate.min.js",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/_next/static/chunks/webpack-078f6dfb37dff419.js",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/js/wow.min.js",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/js/theme.js",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/_next/static/chunks/main-app-dbc491d4aec0b21a.js",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/_next/static/chunks/255-3d881dfa8c72bc56.js",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/_next/static/chunks/4bd1b696-c023c6e3521b1417.js",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/fonts/MaterialIcons-Regular.woff2",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "https://www.gstatic.com/_/translate_http/_/ss/k=translate_http.tr.zZZZhVqDDCw.L.W.O/am=BIgABw/d=0/rs=AN8SPfoZpvrLG9RKhi_wuQUla5cHY0Z5Rg/m=el_main_css",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "https://fonts.gstatic.com/s/sourcesanspro/v23/6xKydSBYKcSV-LCoeQqfX1RYOo3ig4vwlxdu.woff2",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://localhost:3000/assets/fonts/fontawesome-webfont3e6e.woff2?v=4.7.0",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "https://translate.googleapis.com/_/translate_http/_/js/k=translate_http.tr.en_GB.ibQOhLGy4YY.O/am=BIgABw/d=1/ed=1/rs=AN8SPfrdQIOvn5TG_fbqJfLnAkShr-_cDw/m=el_main",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "https://fonts.gstatic.com/s/i/productlogos/translate/v14/24px.svg",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "https://www.gstatic.com/images/branding/googlelogo/1x/googlelogo_color_42x16dp.png",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "https://www.gstatic.com/images/branding/product/2x/translate_24dp.png",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "https://translate-pa.googleapis.com/v1/supportedLanguages?client=te&display_language=en-GB&key=AIzaSyBWDj0QJvVIx8XOhRegXX5_SrRWxhT5Hs4&callback=callback",
+          "status": 200
+        }
+      ]
+    }
+  ],
+  "consoleDiffs": [
+    {
+      "id": "about",
+      "baselineCount": 0,
+      "verifyCount": 0,
+      "newMessages": [],
+      "missingMessages": []
+    },
+    {
+      "id": "contact",
+      "baselineCount": 0,
+      "verifyCount": 0,
+      "newMessages": [],
+      "missingMessages": []
+    },
+    {
+      "id": "terms",
+      "baselineCount": 0,
+      "verifyCount": 0,
+      "newMessages": [],
+      "missingMessages": []
+    },
+    {
+      "id": "privacy-policy",
+      "baselineCount": 0,
+      "verifyCount": 0,
+      "newMessages": [],
+      "missingMessages": []
+    },
+    {
+      "id": "return-policy",
+      "baselineCount": 0,
+      "verifyCount": 0,
+      "newMessages": [],
+      "missingMessages": []
+    },
+    {
+      "id": "mother-tincture",
+      "baselineCount": 0,
+      "verifyCount": 0,
+      "newMessages": [],
+      "missingMessages": []
+    },
+    {
+      "id": "details",
+      "baselineCount": 0,
+      "verifyCount": 0,
+      "newMessages": [],
+      "missingMessages": []
+    },
+    {
+      "id": "video",
+      "baselineCount": 1,
+      "verifyCount": 4,
+      "newMessages": [
+        "error:Permissions policy violation: compute-pressure is not allowed in this document.",
+        "warning:No available adapters."
+      ],
+      "missingMessages": []
+    },
+    {
+      "id": "videos-broken",
+      "baselineCount": 0,
+      "verifyCount": 0,
+      "newMessages": [],
+      "missingMessages": []
+    }
+  ],
+  "networkDiffs": [
+    {
+      "id": "about",
+      "baselineAppPathCount": 31,
+      "verifyAppPathCount": 35,
+      "missingFromVerify": [
+        "[3P] GET https://bharathomeopathy.com/images/header-img.jpg"
+      ],
+      "unexpectedInVerify": [
+        "GET /_next/static/chunks/webpack-078f6dfb37dff419.js",
+        "GET /_next/static/chunks/main-app-dbc491d4aec0b21a.js",
+        "GET /_next/static/chunks/255-3d881dfa8c72bc56.js",
+        "GET /_next/static/chunks/4bd1b696-c023c6e3521b1417.js",
+        "[3P] GET http://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"
+      ]
+    },
+    {
+      "id": "contact",
+      "baselineAppPathCount": 31,
+      "verifyAppPathCount": 35,
+      "missingFromVerify": [
+        "[3P] GET https://bharathomeopathy.com/images/header-img.jpg"
+      ],
+      "unexpectedInVerify": [
+        "GET /_next/static/chunks/webpack-078f6dfb37dff419.js",
+        "GET /_next/static/chunks/main-app-dbc491d4aec0b21a.js",
+        "GET /_next/static/chunks/4bd1b696-c023c6e3521b1417.js",
+        "GET /_next/static/chunks/255-3d881dfa8c72bc56.js",
+        "[3P] GET http://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"
+      ]
+    },
+    {
+      "id": "terms",
+      "baselineAppPathCount": 31,
+      "verifyAppPathCount": 35,
+      "missingFromVerify": [
+        "[3P] GET https://bharathomeopathy.com/images/header-img.jpg"
+      ],
+      "unexpectedInVerify": [
+        "GET /_next/static/chunks/webpack-078f6dfb37dff419.js",
+        "GET /_next/static/chunks/4bd1b696-c023c6e3521b1417.js",
+        "GET /_next/static/chunks/main-app-dbc491d4aec0b21a.js",
+        "GET /_next/static/chunks/255-3d881dfa8c72bc56.js",
+        "[3P] GET http://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"
+      ]
+    },
+    {
+      "id": "privacy-policy",
+      "baselineAppPathCount": 31,
+      "verifyAppPathCount": 35,
+      "missingFromVerify": [
+        "[3P] GET https://bharathomeopathy.com/images/header-img.jpg"
+      ],
+      "unexpectedInVerify": [
+        "GET /_next/static/chunks/webpack-078f6dfb37dff419.js",
+        "GET /_next/static/chunks/4bd1b696-c023c6e3521b1417.js",
+        "GET /_next/static/chunks/main-app-dbc491d4aec0b21a.js",
+        "GET /_next/static/chunks/255-3d881dfa8c72bc56.js",
+        "[3P] GET http://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"
+      ]
+    },
+    {
+      "id": "return-policy",
+      "baselineAppPathCount": 31,
+      "verifyAppPathCount": 35,
+      "missingFromVerify": [
+        "[3P] GET https://bharathomeopathy.com/images/header-img.jpg"
+      ],
+      "unexpectedInVerify": [
+        "GET /_next/static/chunks/webpack-078f6dfb37dff419.js",
+        "GET /_next/static/chunks/4bd1b696-c023c6e3521b1417.js",
+        "GET /_next/static/chunks/main-app-dbc491d4aec0b21a.js",
+        "GET /_next/static/chunks/255-3d881dfa8c72bc56.js",
+        "[3P] GET http://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"
+      ]
+    },
+    {
+      "id": "mother-tincture",
+      "baselineAppPathCount": 31,
+      "verifyAppPathCount": 35,
+      "missingFromVerify": [
+        "[3P] GET https://bharathomeopathy.com/images/header-img.jpg"
+      ],
+      "unexpectedInVerify": [
+        "GET /_next/static/chunks/webpack-078f6dfb37dff419.js",
+        "GET /_next/static/chunks/main-app-dbc491d4aec0b21a.js",
+        "GET /_next/static/chunks/255-3d881dfa8c72bc56.js",
+        "GET /_next/static/chunks/4bd1b696-c023c6e3521b1417.js",
+        "[3P] GET http://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"
+      ]
+    },
+    {
+      "id": "details",
+      "baselineAppPathCount": 48,
+      "verifyAppPathCount": 52,
+      "missingFromVerify": [
+        "[3P] GET https://bharathomeopathy.com/images/header-img.jpg"
+      ],
+      "unexpectedInVerify": [
+        "GET /_next/static/chunks/webpack-078f6dfb37dff419.js",
+        "GET /_next/static/chunks/4bd1b696-c023c6e3521b1417.js",
+        "GET /_next/static/chunks/main-app-dbc491d4aec0b21a.js",
+        "GET /_next/static/chunks/255-3d881dfa8c72bc56.js",
+        "[3P] GET http://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"
+      ]
+    },
+    {
+      "id": "video",
+      "baselineAppPathCount": 30,
+      "verifyAppPathCount": 34,
+      "missingFromVerify": [
+        "[3P] GET https://bharathomeopathy.com/images/header-img.jpg",
+        "[3P] GET https://www.youtube.com/s/player/bed7a914/player_embed.vflset/en_GB/base.js",
+        "[3P] GET https://www.google.com/js/th/BqwiuXiTrL0bwYW5SB-cwQj7qzGJ3Kism8rwzToklM0.js",
+        "[3P] GET https://www.google.com/js/th/g61xwxRUdgnoODgVu2UoAEK0VI1_n9LeS1IrUX7osRg.js",
+        "[3P] GET https://www.youtube.com/generate_204?FlWrow",
+        "[3P] GET https://www.youtube.com/generate_204?IMgYpw",
+        "[3P] GET https://www.youtube.com/generate_204?-zQxFw",
+        "[3P] GET https://www.youtube.com/generate_204?Le_KsA",
+        "[3P] GET https://www.youtube.com/generate_204?fu8-Yg",
+        "[3P] GET https://www.youtube.com/generate_204?aVlRyA"
+      ],
+      "unexpectedInVerify": [
+        "GET /_next/static/chunks/webpack-078f6dfb37dff419.js",
+        "GET /_next/static/chunks/255-3d881dfa8c72bc56.js",
+        "GET /_next/static/chunks/main-app-dbc491d4aec0b21a.js",
+        "GET /_next/static/chunks/4bd1b696-c023c6e3521b1417.js",
+        "[3P] GET http://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit",
+        "[3P] GET https://www.youtube.com/s/_/ytembeds/_/ss/k=ytembeds.base.430j8FckcQk.L.W.O/am=AAAAgA/d=1/br=1/rs=AGKMywE3CyVmHxrh-HE0d_hCpz5z26DciQ/m=root,base",
+        "[3P] GET https://www.youtube.com/s/_/ytembeds/_/js/k=ytembeds.base.en_US.BoxVKzmkHGA.es5.O/am=AAAAgA/d=1/excm=base,root/br=1/rs=AGKMywGHekHnYFTUP7cRaRpXzNW-xAquUg/m=root,base",
+        "[3P] GET https://www.youtube.com/s/player/bed7a914/player_embed.vflset/en_US/base.js",
+        "[3P] GET https://www.youtube.com/s/_/ytembeds/_/js/k=ytembeds.base.en_US.BoxVKzmkHGA.es5.O/ck=ytembeds.base.430j8FckcQk.L.W.O/am=AAAAgA/d=1/exm=base,root/excm=base,root/ed=1/br=1/rs=AGKMywE2-nanfopjYh4kKdw8leYQdm3GYA/m=r78Drb",
+        "[3P] GET https://www.google.com/js/th/01AiCETFFd6JcPNvLAmNzIcaK3IQuU1nW0oz_tCEHBk.js",
+        "[3P] GET https://www.youtube.com/generate_204?8BtHbg",
+        "[3P] GET https://www.youtube.com/generate_204?i4fGWA",
+        "[3P] GET https://www.youtube.com/generate_204?hLGalA",
+        "[3P] GET https://www.youtube.com/generate_204?zI2SRw",
+        "[3P] GET https://www.youtube.com/generate_204?toyyUA",
+        "[3P] GET https://www.youtube.com/generate_204?7gg_1w"
+      ]
+    },
+    {
+      "id": "videos-broken",
+      "baselineAppPathCount": 30,
+      "verifyAppPathCount": 34,
+      "missingFromVerify": [
+        "[3P] GET https://bharathomeopathy.com/images/header-img.jpg"
+      ],
+      "unexpectedInVerify": [
+        "GET /_next/static/chunks/webpack-078f6dfb37dff419.js",
+        "GET /_next/static/chunks/main-app-dbc491d4aec0b21a.js",
+        "GET /_next/static/chunks/255-3d881dfa8c72bc56.js",
+        "GET /_next/static/chunks/4bd1b696-c023c6e3521b1417.js",
+        "[3P] GET http://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"
+      ]
+    }
+  ]
+}

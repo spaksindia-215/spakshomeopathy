@@ -1,0 +1,11 @@
+# src/components/interactive — client components wrapping jQuery widgets
+#
+# EMPTY IN MILESTONE 0 BY DESIGN. Populated in Milestones 3, 5, 6.
+#
+# CONTRACT F-23: these widgets must NOT be reimplemented in React.
+# Keep the ORIGINAL libraries (bxSlider, Owl Carousel, Fancybox, Isotope,
+# Swiper, noUiSlider, TouchSpin) and initialize them in useEffect.
+# Reimplementation guarantees behavioral drift that is invisible in review.
+#
+# Planned: BxSlider, OwlCarousel, Fancybox, PriceCheckboxCalculator,
+# CartQtyUpdater, CheckoutPaymentToggle, DatePicker, GoogleTranslate.

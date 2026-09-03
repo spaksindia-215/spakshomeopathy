@@ -1,0 +1,43 @@
+# Build output
+.next/
+out/
+coverage/
+node_modules/
+
+# MIGRATION CONTRACT §5.4 / F-30:
+# Static assets are copied VERBATIM from the Laravel application.
+# Formatting them would alter bytes that must remain identical.
+# The original CSS is selector-heavy and must never be reformatted.
+public/
+
+# Captured production baselines are evidence artifacts (contract T-1).
+# They must never be reformatted — they are compared byte-for-byte.
+baseline/
+
+# OI-12 asset audit working directories. `.audit-cache/` contains bytes fetched
+# verbatim from live production and `.asset-backup/` pre-change copies of
+# replaced assets. Both are byte-exact evidence (T-2/G-9); reformatting them
+# would destroy the very thing they prove.
+.audit-cache/
+.asset-backup/
+
+# Project documentation: Gate Reports, Change Requests, captured baselines,
+# and the Milestone 2 asset manifest. These are contractual/evidence records
+# (contract G-7, G-9). Prettier's markdown reflowing would alter tables and
+# line breaks in documents that are read, cited, and signed off by the owner.
+docs/
+
+# Generated database types
+src/lib/db/schema.generated.ts
+
+# Lockfile
+package-lock.json
+
+# Generated integrity records — machine-written, compared byte-for-byte
+asset-manifest.json
+asset-checksums.sha256
+test-results/
+playwright-report/
+
+# M1 verification output — generated evidence, compared programmatically
+verify/

@@ -1,0 +1,6 @@
+# src/components/cards — card components
+#
+# EMPTY IN MILESTONE 0 BY DESIGN. Populated in Milestone 3.
+#
+# DiseaseCard (blueprint.md §4.3, reused in index/diseases-list/product-detail)
+# ProductCard (reused in products/all-products/top-products/main-category-products)

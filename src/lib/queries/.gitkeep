@@ -1,0 +1,10 @@
+# src/lib/queries — database query functions
+#
+# EMPTY IN MILESTONE 0 BY DESIGN. Populated from Milestone 3 onward.
+#
+# Mechanical extraction of Laravel inline DB::table() calls (contract §5.2).
+#
+# CONTRACT §5.2 CRITICAL CONSTRAINT: do NOT consolidate similar-looking
+# queries. Near-duplicates in this codebase differ subtly — differing
+# orderBy direction (ASC vs desc) and differing paginate() sizes
+# (8/10/20/24/60/75). Each call site is ported INDEPENDENTLY.

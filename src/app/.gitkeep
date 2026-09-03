@@ -1,0 +1,10 @@
+# src/app — Next.js App Router
+#
+# EMPTY IN MILESTONE 0 BY DESIGN.
+# No pages, layouts, or routes exist yet.
+#
+# Milestone 1 adds: (public)/layout.tsx, admin/layout.tsx, static pages.
+#
+# CONTRACT NN-3: every route path must match the Laravel URL EXACTLY,
+# including misspellings (top-poducts, category-poducts, poducts-list,
+# enquires-list, cart-remove-iteam). See blueprint.md §3.

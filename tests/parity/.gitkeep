@@ -1,0 +1,9 @@
+# tests/parity — 1:1 parity verification
+#
+# EMPTY IN MILESTONE 0 BY DESIGN.
+#
+# Covers contract Part 5 verification categories V-01 (UI parity),
+# V-05 (DB writes), V-06 (DB reads), V-07 (forms), V-08 (validation).
+#
+# CONTRACT T-9: tests are written against OBSERVED PHP BEHAVIOR,
+# never against the blueprint's description of it.

@@ -1,0 +1,10 @@
+# tests/regression — preserved-defect regression suite
+#
+# EMPTY IN MILESTONE 0 BY DESIGN.
+#
+# Covers contract V-12. Asserts that all 17 BROKEN items (contract §9.2,
+# B-01..B-17) still FAIL identically, and that the 18 Preserved Defects
+# (contract §9.4, P-01..P-18) still misbehave identically.
+#
+# CONTRACT T-6 / G-8: a previously broken item that now WORKS is a
+# CONTRACT VIOLATION, not a success. These tests assert failure.

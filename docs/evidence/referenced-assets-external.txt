@@ -1,0 +1,17 @@
+# Third-party assets referenced by production.
+# NOT shipped by us. Listed because V-14 requires the new app to make the
+# SAME third-party requests (see P-13/R-14 hot-linking).
+
+  29  https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit
+  29  https://www.neweraeducation.in/assets/images007/social-media/fb.svg
+  29  https://www.neweraeducation.in/assets/images007/social-media/instagram-icon.svg
+  29  https://www.neweraeducation.in/assets/images007/social-media/Linkdin.svg
+  29  https://www.neweraeducation.in/assets/images007/social-media/Twitter.svg
+  29  https://www.neweraeducation.in/assets/images007/social-media/Youtube.svg
+   3  https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css
+   3  https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js
+   2  https://cdnjs.cloudflare.com/ajax/libs/bxslider/4.2.5/jquery.bxslider.css
+   2  https://cdnjs.cloudflare.com/ajax/libs/bxslider/4.2.5/jquery.bxslider.min.js
+   2  https://www.googletagmanager.com/gtm.js?id=GTM-M7TG8NJ7
+   1  https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js
+   1  https://code.jquery.com/jquery-3.6.1.min.js

@@ -1,0 +1,9 @@
+# src/components/ui — reusable UI primitives
+#
+# EMPTY IN MILESTONE 0 BY DESIGN. Populated in Milestone 1.
+#
+# Extracts patterns that Laravel copy-pastes inline (blueprint.md §4.3):
+# Breadcrumb, InnerBanner, FlashAlert, ValidationErrors, Pagination.
+#
+# CONTRACT §10.4: Pagination must reproduce Laravel 5.8 Bootstrap-4
+# paginator markup exactly.

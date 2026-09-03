@@ -1,0 +1,2161 @@
+{
+  "summary": {
+    "generatedAt": "2026-08-10T06:50:58.554Z",
+    "origin": "https://spakshomeopathy.com",
+    "audited": 236,
+    "identical": 213,
+    "drifted": 0,
+    "missingLocal": 0,
+    "missingRemote": 0,
+    "fetchError": 23
+  },
+  "rows": [
+    {
+      "path": "admin-assets/bower_components/bootstrap/dist/css/bootstrap.min.css",
+      "status": "IDENTICAL",
+      "localBytes": 121461,
+      "remoteBytes": 121461,
+      "localSha": "9538e2b21130fd553a510d7c72fe55a9fa7b2e88dbeb19162942dc6a6b2a842a",
+      "remoteSha": "9538e2b21130fd553a510d7c72fe55a9fa7b2e88dbeb19162942dc6a6b2a842a",
+      "lastModified": "Wed, 07 Jan 2026 05:54:05 GMT"
+    },
+    {
+      "path": "admin-assets/bower_components/bootstrap/dist/js/bootstrap.min.js",
+      "status": "IDENTICAL",
+      "localBytes": 39680,
+      "remoteBytes": 39680,
+      "localSha": "9ee2fcff6709e4d0d24b09ca0fc56aade12b4961ed9c43fd13b03248bfb57afe",
+      "remoteSha": "9ee2fcff6709e4d0d24b09ca0fc56aade12b4961ed9c43fd13b03248bfb57afe",
+      "lastModified": "Wed, 07 Jan 2026 05:54:05 GMT"
+    },
+    {
+      "path": "admin-assets/bower_components/font-awesome/css/font-awesome.min.css",
+      "status": "IDENTICAL",
+      "localBytes": 31024,
+      "remoteBytes": 31024,
+      "localSha": "1fd4c882b277b1733f27be78e59f2318df771113cfc3981f4c4ad1b287238880",
+      "remoteSha": "1fd4c882b277b1733f27be78e59f2318df771113cfc3981f4c4ad1b287238880",
+      "lastModified": "Wed, 07 Jan 2026 05:52:49 GMT"
+    },
+    {
+      "path": "admin-assets/bower_components/Ionicons/css/ionicons.min.css",
+      "status": "IDENTICAL",
+      "localBytes": 51304,
+      "remoteBytes": 51304,
+      "localSha": "3debd85f04a1dcc0474e0a8df4ce512283e1e29900f0a54d3e25188bed85f3d6",
+      "remoteSha": "3debd85f04a1dcc0474e0a8df4ce512283e1e29900f0a54d3e25188bed85f3d6",
+      "lastModified": "Wed, 07 Jan 2026 05:52:50 GMT"
+    },
+    {
+      "path": "admin-assets/bower_components/jquery/dist/jquery.min.js",
+      "status": "IDENTICAL",
+      "localBytes": 86927,
+      "remoteBytes": 86927,
+      "localSha": "160a426ff2894252cd7cebbdd6d6b7da8fcd319c65b70468f10b6690c45d02ef",
+      "remoteSha": "160a426ff2894252cd7cebbdd6d6b7da8fcd319c65b70468f10b6690c45d02ef",
+      "lastModified": "Wed, 07 Jan 2026 05:52:50 GMT"
+    },
+    {
+      "path": "admin-assets/dist/css/AdminLTE.min.css",
+      "status": "IDENTICAL",
+      "localBytes": 92482,
+      "remoteBytes": 92482,
+      "localSha": "e40c15bcca13d90476ab12996065e8997bd0a579e722b7c002412b3b115d56a3",
+      "remoteSha": "e40c15bcca13d90476ab12996065e8997bd0a579e722b7c002412b3b115d56a3",
+      "lastModified": "Wed, 07 Jan 2026 05:49:35 GMT"
+    },
+    {
+      "path": "admin-assets/plugins/iCheck/icheck.min.js",
+      "status": "IDENTICAL",
+      "localBytes": 4516,
+      "remoteBytes": 4516,
+      "localSha": "6102d725c22f9bf27ef542ceae070843153f3e0926b89820a75f29b107e33cb2",
+      "remoteSha": "6102d725c22f9bf27ef542ceae070843153f3e0926b89820a75f29b107e33cb2",
+      "lastModified": "Wed, 07 Jan 2026 05:49:35 GMT"
+    },
+    {
+      "path": "admin-assets/plugins/iCheck/square/blue.css",
+      "status": "IDENTICAL",
+      "localBytes": 1613,
+      "remoteBytes": 1613,
+      "localSha": "9f67a00649136f7e9a0dfaaf5db3fdfe4300a8e039abefb743bde6369fe52b93",
+      "remoteSha": "9f67a00649136f7e9a0dfaaf5db3fdfe4300a8e039abefb743bde6369fe52b93",
+      "lastModified": "Wed, 07 Jan 2026 05:52:52 GMT"
+    },
+    {
+      "path": "assets/css/bootstrap.min.css",
+      "status": "IDENTICAL",
+      "localBytes": 153182,
+      "remoteBytes": 153182,
+      "localSha": "6b3bef53dc4a96ec07149d02a60b5fd026332bbce0b4ece79f3c55e3ddb85f5c",
+      "remoteSha": "6b3bef53dc4a96ec07149d02a60b5fd026332bbce0b4ece79f3c55e3ddb85f5c",
+      "lastModified": "Wed, 07 Jan 2026 05:48:23 GMT"
+    },
+    {
+      "path": "assets/css/default.css",
+      "status": "FETCH_ERROR",
+      "localBytes": null,
+      "remoteBytes": null,
+      "localSha": null,
+      "remoteSha": null,
+      "lastModified": null,
+      "note": "local absent; remote HTTP 404"
+    },
+    {
+      "path": "assets/css/font-awesome.min.css",
+      "status": "IDENTICAL",
+      "localBytes": 31024,
+      "remoteBytes": 31024,
+      "localSha": "1fd4c882b277b1733f27be78e59f2318df771113cfc3981f4c4ad1b287238880",
+      "remoteSha": "1fd4c882b277b1733f27be78e59f2318df771113cfc3981f4c4ad1b287238880",
+      "lastModified": "Wed, 07 Jan 2026 05:48:23 GMT"
+    },
+    {
+      "path": "assets/css/linear-icon.css",
+      "status": "FETCH_ERROR",
+      "localBytes": null,
+      "remoteBytes": null,
+      "localSha": null,
+      "remoteSha": null,
+      "lastModified": null,
+      "note": "local absent; remote HTTP 404"
+    },
+    {
+      "path": "assets/css/plugins.css",
+      "status": "FETCH_ERROR",
+      "localBytes": null,
+      "remoteBytes": null,
+      "localSha": null,
+      "remoteSha": null,
+      "lastModified": null,
+      "note": "local absent; remote HTTP 404"
+    },
+    {
+      "path": "assets/css/responsive.css",
+      "status": "IDENTICAL",
+      "localBytes": 29165,
+      "remoteBytes": 29165,
+      "localSha": "08699bc8295bb547a1c7818a35465a1e9b268b407c347be11af5bd3bb124ac72",
+      "remoteSha": "08699bc8295bb547a1c7818a35465a1e9b268b407c347be11af5bd3bb124ac72",
+      "lastModified": "Wed, 07 Jan 2026 05:48:23 GMT"
+    },
+    {
+      "path": "assets/css/style.css",
+      "status": "IDENTICAL",
+      "localBytes": 188980,
+      "remoteBytes": 188980,
+      "localSha": "1fc50362882f5eb85950757053c50bde4bbdb80ae3d552742f19fb9ae05c1ebc",
+      "remoteSha": "1fc50362882f5eb85950757053c50bde4bbdb80ae3d552742f19fb9ae05c1ebc",
+      "lastModified": "Thu, 05 Mar 2026 07:04:54 GMT"
+    },
+    {
+      "path": "assets/images/about1.jpg",
+      "status": "IDENTICAL",
+      "localBytes": 44585,
+      "remoteBytes": 44585,
+      "localSha": "7fc271a14d4f9fd8f5af16449c2b87a661cc2b51cdfbc2a75ee832265389459f",
+      "remoteSha": "7fc271a14d4f9fd8f5af16449c2b87a661cc2b51cdfbc2a75ee832265389459f",
+      "lastModified": "Wed, 07 Jan 2026 05:48:24 GMT"
+    },
+    {
+      "path": "assets/images/banner1.jpg",
+      "status": "IDENTICAL",
+      "localBytes": 235466,
+      "remoteBytes": 235466,
+      "localSha": "ffb5e356b61738145898720c5098bd838e30ccf1bb5132b79a74b37a2bed4a38",
+      "remoteSha": "ffb5e356b61738145898720c5098bd838e30ccf1bb5132b79a74b37a2bed4a38",
+      "lastModified": "Wed, 07 Jan 2026 05:48:24 GMT"
+    },
+    {
+      "path": "assets/images/banner2.jpg",
+      "status": "IDENTICAL",
+      "localBytes": 251016,
+      "remoteBytes": 251016,
+      "localSha": "a4a4ab1ee3c4fe4f9486ea4cb53e767e7cc2f9f658ee0b08b3e64c8bea40cdf3",
+      "remoteSha": "a4a4ab1ee3c4fe4f9486ea4cb53e767e7cc2f9f658ee0b08b3e64c8bea40cdf3",
+      "lastModified": "Wed, 07 Jan 2026 05:48:24 GMT"
+    },
+    {
+      "path": "assets/images/banner3.jpg",
+      "status": "IDENTICAL",
+      "localBytes": 237065,
+      "remoteBytes": 237065,
+      "localSha": "132a5b44ad38e34b95352d9bb8dd2c446198f02593a54f2194c10a7e7cfa532e",
+      "remoteSha": "132a5b44ad38e34b95352d9bb8dd2c446198f02593a54f2194c10a7e7cfa532e",
+      "lastModified": "Wed, 07 Jan 2026 05:48:25 GMT"
+    },
+    {
+      "path": "assets/images/cap.png",
+      "status": "IDENTICAL",
+      "localBytes": 425385,
+      "remoteBytes": 425385,
+      "localSha": "b10f9fb8e9fe21e5fc41f6f1107eb9c0bca2720e71f6099bc3f7f0b2fe9829e8",
+      "remoteSha": "b10f9fb8e9fe21e5fc41f6f1107eb9c0bca2720e71f6099bc3f7f0b2fe9829e8",
+      "lastModified": "Wed, 07 Jan 2026 05:48:25 GMT"
+    },
+    {
+      "path": "assets/images/home-video.mp4",
+      "status": "IDENTICAL",
+      "localBytes": 543483,
+      "remoteBytes": 543483,
+      "localSha": "aad50bb4f645477e47657184ce8ebc68cfe37dc513881bfb8f5f842f5be5c268",
+      "remoteSha": "aad50bb4f645477e47657184ce8ebc68cfe37dc513881bfb8f5f842f5be5c268",
+      "lastModified": "Wed, 07 Jan 2026 05:48:25 GMT"
+    },
+    {
+      "path": "assets/images/kit.png",
+      "status": "IDENTICAL",
+      "localBytes": 283772,
+      "remoteBytes": 283772,
+      "localSha": "ba68364c934281ff2b10617bdf7458f54c4176ac0cc2d032daaf007bab4a132c",
+      "remoteSha": "ba68364c934281ff2b10617bdf7458f54c4176ac0cc2d032daaf007bab4a132c",
+      "lastModified": "Wed, 07 Jan 2026 05:48:25 GMT"
+    },
+    {
+      "path": "assets/images/privacy-policy.jpg",
+      "status": "IDENTICAL",
+      "localBytes": 175123,
+      "remoteBytes": 175123,
+      "localSha": "158cfd1d5568234dc26124c1c2e58d9185ed75c43fbc8b46fa82fc05f30399a1",
+      "remoteSha": "158cfd1d5568234dc26124c1c2e58d9185ed75c43fbc8b46fa82fc05f30399a1",
+      "lastModified": "Wed, 07 Jan 2026 05:48:25 GMT"
+    },
+    {
+      "path": "assets/images/producth.png",
+      "status": "IDENTICAL",
+      "localBytes": 262095,
+      "remoteBytes": 262095,
+      "localSha": "91ea6c0e2e90e6fb0a505727586da56dce124d2cdf2e96b04dddfb04c58dea50",
+      "remoteSha": "91ea6c0e2e90e6fb0a505727586da56dce124d2cdf2e96b04dddfb04c58dea50",
+      "lastModified": "Wed, 07 Jan 2026 05:48:25 GMT"
+    },
+    {
+      "path": "assets/images/resources/logo.png",
+      "status": "IDENTICAL",
+      "localBytes": 6704,
+      "remoteBytes": 6704,
+      "localSha": "1e6d33eca0ee3902460821976f2ce760c2255b2cc667a01f4013c468d8520869",
+      "remoteSha": "1e6d33eca0ee3902460821976f2ce760c2255b2cc667a01f4013c468d8520869",
+      "lastModified": "Wed, 07 Jan 2026 05:49:39 GMT"
+    },
+    {
+      "path": "assets/images/return.jpg",
+      "status": "IDENTICAL",
+      "localBytes": 207468,
+      "remoteBytes": 207468,
+      "localSha": "96be4a41e08ba537174b77d31e7bb4e52d186367c58145e58c24d748a2235d76",
+      "remoteSha": "96be4a41e08ba537174b77d31e7bb4e52d186367c58145e58c24d748a2235d76",
+      "lastModified": "Wed, 07 Jan 2026 05:48:25 GMT"
+    },
+    {
+      "path": "assets/images/term.jpg",
+      "status": "IDENTICAL",
+      "localBytes": 161877,
+      "remoteBytes": 161877,
+      "localSha": "f9775c2da4eb43c306f592d491d4c43fec7d98e077c14d28e01a917107e3304a",
+      "remoteSha": "f9775c2da4eb43c306f592d491d4c43fec7d98e077c14d28e01a917107e3304a",
+      "lastModified": "Wed, 07 Jan 2026 05:48:26 GMT"
+    },
+    {
+      "path": "assets/img/banner/category-image.jpg",
+      "status": "FETCH_ERROR",
+      "localBytes": null,
+      "remoteBytes": null,
+      "localSha": null,
+      "remoteSha": null,
+      "lastModified": null,
+      "note": "local absent; remote HTTP 404"
+    },
+    {
+      "path": "assets/img/icon/favicon.jpg",
+      "status": "FETCH_ERROR",
+      "localBytes": null,
+      "remoteBytes": null,
+      "localSha": null,
+      "remoteSha": null,
+      "lastModified": null,
+      "note": "local absent; remote HTTP 404"
+    },
+    {
+      "path": "assets/js/ajax-mail.js",
+      "status": "FETCH_ERROR",
+      "localBytes": null,
+      "remoteBytes": null,
+      "localSha": null,
+      "remoteSha": null,
+      "lastModified": null,
+      "note": "local absent; remote HTTP 404"
+    },
+    {
+      "path": "assets/js/bootstrap-datepicker.min.js",
+      "status": "IDENTICAL",
+      "localBytes": 33693,
+      "remoteBytes": 33693,
+      "localSha": "6ea55ea86749ee1fe560fabac6b3effd81b33046fa74dc657e24d41d28110a9f",
+      "remoteSha": "6ea55ea86749ee1fe560fabac6b3effd81b33046fa74dc657e24d41d28110a9f",
+      "lastModified": "Wed, 07 Jan 2026 05:48:32 GMT"
+    },
+    {
+      "path": "assets/js/bootstrap-select.min.js",
+      "status": "IDENTICAL",
+      "localBytes": 47706,
+      "remoteBytes": 47706,
+      "localSha": "c3db02cb30ca400f272a2b71e4e53dbfb883a624d23afc740998d080457ebf90",
+      "remoteSha": "c3db02cb30ca400f272a2b71e4e53dbfb883a624d23afc740998d080457ebf90",
+      "lastModified": "Wed, 07 Jan 2026 05:48:35 GMT"
+    },
+    {
+      "path": "assets/js/bootstrap.bundle.min.js",
+      "status": "IDENTICAL",
+      "localBytes": 76308,
+      "remoteBytes": 76308,
+      "localSha": "3126158d682bafa50bffd7907d0bcecadebf82cc5be9da70235cea3390db2c2b",
+      "remoteSha": "3126158d682bafa50bffd7907d0bcecadebf82cc5be9da70235cea3390db2c2b",
+      "lastModified": "Wed, 07 Jan 2026 05:48:35 GMT"
+    },
+    {
+      "path": "assets/js/bootstrap.min.js",
+      "status": "FETCH_ERROR",
+      "localBytes": null,
+      "remoteBytes": null,
+      "localSha": null,
+      "remoteSha": null,
+      "lastModified": null,
+      "note": "local absent; remote HTTP 404"
+    },
+    {
+      "path": "assets/js/isotope.js",
+      "status": "IDENTICAL",
+      "localBytes": 37779,
+      "remoteBytes": 37779,
+      "localSha": "4fa72a8e292674529c8c0fdc8b0ccb7974e214d83e862316e91743ed7453b1c6",
+      "remoteSha": "4fa72a8e292674529c8c0fdc8b0ccb7974e214d83e862316e91743ed7453b1c6",
+      "lastModified": "Wed, 07 Jan 2026 05:48:35 GMT"
+    },
+    {
+      "path": "assets/js/jquery.bootstrap-touchspin.js",
+      "status": "IDENTICAL",
+      "localBytes": 11068,
+      "remoteBytes": 11068,
+      "localSha": "8795881c2dbac3c9cf3f6b3fe8a7bea64d6a6d679a30aacedcd5f4a39235f51b",
+      "remoteSha": "8795881c2dbac3c9cf3f6b3fe8a7bea64d6a6d679a30aacedcd5f4a39235f51b",
+      "lastModified": "Wed, 07 Jan 2026 05:48:35 GMT"
+    },
+    {
+      "path": "assets/js/jquery.js",
+      "status": "IDENTICAL",
+      "localBytes": 97168,
+      "remoteBytes": 97168,
+      "localSha": "27d92130c0321dad5a03760fd5ac98a3d04ed4c94d88418fe6d50da1f7fc5cbe",
+      "remoteSha": "27d92130c0321dad5a03760fd5ac98a3d04ed4c94d88418fe6d50da1f7fc5cbe",
+      "lastModified": "Wed, 07 Jan 2026 05:48:35 GMT"
+    },
+    {
+      "path": "assets/js/jquery.magnific-popup.min.js",
+      "status": "IDENTICAL",
+      "localBytes": 20216,
+      "remoteBytes": 20216,
+      "localSha": "3fddc6d28aba3c13d64cfd4847c333ff48c71d4a5a58bd1a0494ca6ae8ac1bb4",
+      "remoteSha": "3fddc6d28aba3c13d64cfd4847c333ff48c71d4a5a58bd1a0494ca6ae8ac1bb4",
+      "lastModified": "Wed, 07 Jan 2026 05:48:35 GMT"
+    },
+    {
+      "path": "assets/js/jquery.validate.min.js",
+      "status": "IDENTICAL",
+      "localBytes": 21090,
+      "remoteBytes": 21090,
+      "localSha": "2e3e3b2660cbfaac5febf7a50b31d0494159989626a84102b2c3792cffe27d13",
+      "remoteSha": "2e3e3b2660cbfaac5febf7a50b31d0494159989626a84102b2c3792cffe27d13",
+      "lastModified": "Wed, 07 Jan 2026 05:48:35 GMT"
+    },
+    {
+      "path": "assets/js/main.js",
+      "status": "FETCH_ERROR",
+      "localBytes": null,
+      "remoteBytes": null,
+      "localSha": null,
+      "remoteSha": null,
+      "lastModified": null,
+      "note": "local absent; remote HTTP 404"
+    },
+    {
+      "path": "assets/js/nouislider.js",
+      "status": "IDENTICAL",
+      "localBytes": 13675,
+      "remoteBytes": 13675,
+      "localSha": "16129cf19ca1cabbc5a4d454651bbb475d55923f7026f4890afb9aa9cb5ee5d2",
+      "remoteSha": "16129cf19ca1cabbc5a4d454651bbb475d55923f7026f4890afb9aa9cb5ee5d2",
+      "lastModified": "Wed, 07 Jan 2026 05:48:35 GMT"
+    },
+    {
+      "path": "assets/js/owl.carousel.min.js",
+      "status": "IDENTICAL",
+      "localBytes": 40401,
+      "remoteBytes": 40401,
+      "localSha": "83553d22ccd56e5576d544f6ba93475c712b3c02d312893eea2acc16de5fcf91",
+      "remoteSha": "83553d22ccd56e5576d544f6ba93475c712b3c02d312893eea2acc16de5fcf91",
+      "lastModified": "Wed, 07 Jan 2026 05:48:35 GMT"
+    },
+    {
+      "path": "assets/js/plugins.js",
+      "status": "FETCH_ERROR",
+      "localBytes": null,
+      "remoteBytes": null,
+      "localSha": null,
+      "remoteSha": null,
+      "lastModified": null,
+      "note": "local absent; remote HTTP 404"
+    },
+    {
+      "path": "assets/js/popper.min.js",
+      "status": "FETCH_ERROR",
+      "localBytes": null,
+      "remoteBytes": null,
+      "localSha": null,
+      "remoteSha": null,
+      "lastModified": null,
+      "note": "local absent; remote HTTP 404"
+    },
+    {
+      "path": "assets/js/swiper.min.js",
+      "status": "IDENTICAL",
+      "localBytes": 127934,
+      "remoteBytes": 127934,
+      "localSha": "b9c90c601bc81ad71ed8be557ff9b095de5aae947926e84011e2728cf65250a6",
+      "remoteSha": "b9c90c601bc81ad71ed8be557ff9b095de5aae947926e84011e2728cf65250a6",
+      "lastModified": "Wed, 07 Jan 2026 05:48:35 GMT"
+    },
+    {
+      "path": "assets/js/theme.js",
+      "status": "IDENTICAL",
+      "localBytes": 16006,
+      "remoteBytes": 16006,
+      "localSha": "0989b9e3cd6f5109bf67dea9fa6bc2d24012cdeefb27ea6a8ae043e19b19d2d7",
+      "remoteSha": "0989b9e3cd6f5109bf67dea9fa6bc2d24012cdeefb27ea6a8ae043e19b19d2d7",
+      "lastModified": "Wed, 07 Jan 2026 05:48:35 GMT"
+    },
+    {
+      "path": "assets/js/vendor/jquery-1.12.4.min.js",
+      "status": "FETCH_ERROR",
+      "localBytes": null,
+      "remoteBytes": null,
+      "localSha": null,
+      "remoteSha": null,
+      "lastModified": null,
+      "note": "local absent; remote HTTP 404"
+    },
+    {
+      "path": "assets/js/vendor/modernizr-3.5.0.min.js",
+      "status": "FETCH_ERROR",
+      "localBytes": null,
+      "remoteBytes": null,
+      "localSha": null,
+      "remoteSha": null,
+      "lastModified": null,
+      "note": "local absent; remote HTTP 404"
+    },
+    {
+      "path": "assets/js/wow.min.js",
+      "status": "IDENTICAL",
+      "localBytes": 8415,
+      "remoteBytes": 8415,
+      "localSha": "0ec632e6ab02d4fdd514da7f5edc74aa28c9d4c71af76f1c8b93a1fba85bcc69",
+      "remoteSha": "0ec632e6ab02d4fdd514da7f5edc74aa28c9d4c71af76f1c8b93a1fba85bcc69",
+      "lastModified": "Wed, 07 Jan 2026 05:48:35 GMT"
+    },
+    {
+      "path": "catalogue-list.pdf",
+      "status": "IDENTICAL",
+      "localBytes": 8999040,
+      "remoteBytes": 8999040,
+      "localSha": "63e3507638d4c1884aeabfe22302d2081b8105b89e3b708925f6526714208dc9",
+      "remoteSha": "63e3507638d4c1884aeabfe22302d2081b8105b89e3b708925f6526714208dc9",
+      "lastModified": "Wed, 07 Jan 2026 05:47:00 GMT"
+    },
+    {
+      "path": "cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js",
+      "status": "FETCH_ERROR",
+      "localBytes": null,
+      "remoteBytes": null,
+      "localSha": null,
+      "remoteSha": null,
+      "lastModified": null,
+      "note": "local absent; remote HTTP 404"
+    },
+    {
+      "path": "Dandruff/after-slide.js",
+      "status": "FETCH_ERROR",
+      "localBytes": null,
+      "remoteBytes": null,
+      "localSha": null,
+      "remoteSha": null,
+      "lastModified": null,
+      "note": "local absent; remote HTTP 404"
+    },
+    {
+      "path": "Dandruff/assets/css/after-slide.css",
+      "status": "IDENTICAL",
+      "localBytes": 3708,
+      "remoteBytes": 3708,
+      "localSha": "2bd0fff81e4235ba4f6d2fb4454fa022c77190425663ba6abc1146d47725bb89",
+      "remoteSha": "2bd0fff81e4235ba4f6d2fb4454fa022c77190425663ba6abc1146d47725bb89",
+      "lastModified": "Wed, 07 Jan 2026 05:51:40 GMT"
+    },
+    {
+      "path": "Dandruff/assets/css/aos.css",
+      "status": "IDENTICAL",
+      "localBytes": 26053,
+      "remoteBytes": 26053,
+      "localSha": "1aa8845fd06e475aefe733d4e55b36a92fcd487975049c8172341827ac9cc03e",
+      "remoteSha": "1aa8845fd06e475aefe733d4e55b36a92fcd487975049c8172341827ac9cc03e",
+      "lastModified": "Wed, 07 Jan 2026 05:51:40 GMT"
+    },
+    {
+      "path": "Dandruff/assets/css/bootstrap.min.css",
+      "status": "IDENTICAL",
+      "localBytes": 194885,
+      "remoteBytes": 194885,
+      "localSha": "b8861efb079f0c5658671ea395dcc3cdae411163a11dc477d5c108652a7bdafc",
+      "remoteSha": "b8861efb079f0c5658671ea395dcc3cdae411163a11dc477d5c108652a7bdafc",
+      "lastModified": "Wed, 07 Jan 2026 05:51:40 GMT"
+    },
+    {
+      "path": "Dandruff/assets/css/dark-theme.css",
+      "status": "IDENTICAL",
+      "localBytes": 12282,
+      "remoteBytes": 12282,
+      "localSha": "ec63ad2f4149edb49f7ba35de86148c76dc041afb63646650d22ff0af81a54ee",
+      "remoteSha": "ec63ad2f4149edb49f7ba35de86148c76dc041afb63646650d22ff0af81a54ee",
+      "lastModified": "Wed, 07 Jan 2026 05:51:40 GMT"
+    },
+    {
+      "path": "Dandruff/assets/css/fancybox.css",
+      "status": "IDENTICAL",
+      "localBytes": 13058,
+      "remoteBytes": 13058,
+      "localSha": "c7cb4986749326c569f3242febe1ca3e3b86cc3215b57976de6df9c632124e59",
+      "remoteSha": "c7cb4986749326c569f3242febe1ca3e3b86cc3215b57976de6df9c632124e59",
+      "lastModified": "Wed, 07 Jan 2026 05:51:40 GMT"
+    },
+    {
+      "path": "Dandruff/assets/css/flaticon.css",
+      "status": "IDENTICAL",
+      "localBytes": 6949,
+      "remoteBytes": 6949,
+      "localSha": "128c058892422fbc3e2fc1c75de7ff2b2a4f513a68911f9dd831d91547b40404",
+      "remoteSha": "128c058892422fbc3e2fc1c75de7ff2b2a4f513a68911f9dd831d91547b40404",
+      "lastModified": "Wed, 07 Jan 2026 05:51:40 GMT"
+    },
+    {
+      "path": "Dandruff/assets/css/odometer.min.css",
+      "status": "IDENTICAL",
+      "localBytes": 3123,
+      "remoteBytes": 3123,
+      "localSha": "de4852787adeccdbf98fbd828daa10e3ff7733dbecd8a94ae9f297e5f907049b",
+      "remoteSha": "de4852787adeccdbf98fbd828daa10e3ff7733dbecd8a94ae9f297e5f907049b",
+      "lastModified": "Wed, 07 Jan 2026 05:51:40 GMT"
+    },
+    {
+      "path": "Dandruff/assets/css/owl.carousel.min.css",
+      "status": "IDENTICAL",
+      "localBytes": 3352,
+      "remoteBytes": 3352,
+      "localSha": "aa7e59e6ec8871088cfeb47bac59a6475c815357deef042c61a5c3c965390546",
+      "remoteSha": "aa7e59e6ec8871088cfeb47bac59a6475c815357deef042c61a5c3c965390546",
+      "lastModified": "Wed, 07 Jan 2026 05:51:40 GMT"
+    },
+    {
+      "path": "Dandruff/assets/css/remixicon.css",
+      "status": "IDENTICAL",
+      "localBytes": 96423,
+      "remoteBytes": 96423,
+      "localSha": "9ccdc5254a2a2fbdf78c49b6b1ba3d68d9c2783c576089e2fa846bf2a9d41419",
+      "remoteSha": "9ccdc5254a2a2fbdf78c49b6b1ba3d68d9c2783c576089e2fa846bf2a9d41419",
+      "lastModified": "Wed, 07 Jan 2026 05:51:40 GMT"
+    },
+    {
+      "path": "Dandruff/assets/css/responsive.css",
+      "status": "IDENTICAL",
+      "localBytes": 57561,
+      "remoteBytes": 57561,
+      "localSha": "027cfe7b17bf7021e57a86893e40b7a6238ca0d57517273476f4dcd75b79cd95",
+      "remoteSha": "027cfe7b17bf7021e57a86893e40b7a6238ca0d57517273476f4dcd75b79cd95",
+      "lastModified": "Wed, 07 Jan 2026 05:51:40 GMT"
+    },
+    {
+      "path": "Dandruff/assets/css/style.css",
+      "status": "IDENTICAL",
+      "localBytes": 172402,
+      "remoteBytes": 172402,
+      "localSha": "e248f7f48bd88cf6ea40387926ec99383b1e91caa757862d483a6b6bc00b43cf",
+      "remoteSha": "e248f7f48bd88cf6ea40387926ec99383b1e91caa757862d483a6b6bc00b43cf",
+      "lastModified": "Wed, 07 Jan 2026 05:51:40 GMT"
+    },
+    {
+      "path": "Dandruff/assets/img/call-icon-gif.webp",
+      "status": "IDENTICAL",
+      "localBytes": 4832,
+      "remoteBytes": 4832,
+      "localSha": "1690fb4d9297048a6083f8cd2d17e5c2651ba2ef22e6456351d05d917660298a",
+      "remoteSha": "1690fb4d9297048a6083f8cd2d17e5c2651ba2ef22e6456351d05d917660298a",
+      "lastModified": "Wed, 07 Jan 2026 05:51:41 GMT"
+    },
+    {
+      "path": "Dandruff/assets/img/certified-doctor.png",
+      "status": "IDENTICAL",
+      "localBytes": 3657,
+      "remoteBytes": 3657,
+      "localSha": "4cb8e82c874c393fc47ce3830bc3f9114e2bbbf826fa6997be1f6b83bc2d0e66",
+      "remoteSha": "4cb8e82c874c393fc47ce3830bc3f9114e2bbbf826fa6997be1f6b83bc2d0e66",
+      "lastModified": "Wed, 07 Jan 2026 05:51:41 GMT"
+    },
+    {
+      "path": "Dandruff/assets/img/download.png",
+      "status": "IDENTICAL",
+      "localBytes": 1479,
+      "remoteBytes": 1479,
+      "localSha": "ccc792ff49030b25838d1350025c027536b8b5a798d93a5f84241d016cc16705",
+      "remoteSha": "ccc792ff49030b25838d1350025c027536b8b5a798d93a5f84241d016cc16705",
+      "lastModified": "Wed, 07 Jan 2026 05:51:41 GMT"
+    },
+    {
+      "path": "Dandruff/assets/img/fevicon.jpg",
+      "status": "FETCH_ERROR",
+      "localBytes": null,
+      "remoteBytes": null,
+      "localSha": null,
+      "remoteSha": null,
+      "lastModified": null,
+      "note": "local absent; remote HTTP 404"
+    },
+    {
+      "path": "Dandruff/assets/img/fill-form.png",
+      "status": "IDENTICAL",
+      "localBytes": 37584,
+      "remoteBytes": 37584,
+      "localSha": "a4e6e57295ed14f31a6c533e1cc968592122c561b5f6c288ca7fdd0d19b924c4",
+      "remoteSha": "a4e6e57295ed14f31a6c533e1cc968592122c561b5f6c288ca7fdd0d19b924c4",
+      "lastModified": "Wed, 07 Jan 2026 05:51:41 GMT"
+    },
+    {
+      "path": "Dandruff/assets/img/HAIR DROP-B.png",
+      "status": "IDENTICAL",
+      "localBytes": 105024,
+      "remoteBytes": 105024,
+      "localSha": "4fd33f6345be264e7ce066087d814ea0359b9d1b53adbe20559d3dcba8cc22d4",
+      "remoteSha": "4fd33f6345be264e7ce066087d814ea0359b9d1b53adbe20559d3dcba8cc22d4",
+      "lastModified": "Wed, 07 Jan 2026 05:51:41 GMT"
+    },
+    {
+      "path": "Dandruff/assets/img/HAIR DROP.png",
+      "status": "IDENTICAL",
+      "localBytes": 105553,
+      "remoteBytes": 105553,
+      "localSha": "06fd979606f810b3552e25f6b72306b61734e2928bc628e3925caba07f571dc3",
+      "remoteSha": "06fd979606f810b3552e25f6b72306b61734e2928bc628e3925caba07f571dc3",
+      "lastModified": "Wed, 07 Jan 2026 05:51:41 GMT"
+    },
+    {
+      "path": "Dandruff/assets/img/hair oil2.png",
+      "status": "IDENTICAL",
+      "localBytes": 237017,
+      "remoteBytes": 237017,
+      "localSha": "9a7faab6fb907d1824e2e7a512786a95cf73db45f1c03d263d190f4a3287a03f",
+      "remoteSha": "9a7faab6fb907d1824e2e7a512786a95cf73db45f1c03d263d190f4a3287a03f",
+      "lastModified": "Wed, 07 Jan 2026 05:51:41 GMT"
+    },
+    {
+      "path": "Dandruff/assets/img/hair wash2.png",
+      "status": "IDENTICAL",
+      "localBytes": 286301,
+      "remoteBytes": 286301,
+      "localSha": "35b65c18127eb34ea1b3c2077268f2cbf6f328e8a5a0345963f770d3c949cd7e",
+      "remoteSha": "35b65c18127eb34ea1b3c2077268f2cbf6f328e8a5a0345963f770d3c949cd7e",
+      "lastModified": "Wed, 07 Jan 2026 05:51:41 GMT"
+    },
+    {
+      "path": "Dandruff/assets/img/hair.jpg",
+      "status": "IDENTICAL",
+      "localBytes": 40797,
+      "remoteBytes": 40797,
+      "localSha": "f61c8072491560ac008dc931c660cf57ee7484c903ad53a849e16fbe623adcb5",
+      "remoteSha": "f61c8072491560ac008dc931c660cf57ee7484c903ad53a849e16fbe623adcb5",
+      "lastModified": "Wed, 07 Jan 2026 05:51:41 GMT"
+    },
+    {
+      "path": "Dandruff/assets/img/happy-patients.png",
+      "status": "IDENTICAL",
+      "localBytes": 5694,
+      "remoteBytes": 5694,
+      "localSha": "05e6497f26d02ed3eb8a4e416abbfa58cb9942b53e736adab3537e5031e827a0",
+      "remoteSha": "05e6497f26d02ed3eb8a4e416abbfa58cb9942b53e736adab3537e5031e827a0",
+      "lastModified": "Wed, 07 Jan 2026 05:51:41 GMT"
+    },
+    {
+      "path": "Dandruff/assets/img/images.jpeg",
+      "status": "IDENTICAL",
+      "localBytes": 14313,
+      "remoteBytes": 14313,
+      "localSha": "0faccf9d67f3c80e5ec0c6d661e31730ec31a7921891e7eb42b8ea28e3225f48",
+      "remoteSha": "0faccf9d67f3c80e5ec0c6d661e31730ec31a7921891e7eb42b8ea28e3225f48",
+      "lastModified": "Wed, 07 Jan 2026 05:51:41 GMT"
+    },
+    {
+      "path": "Dandruff/assets/img/logo-white.png",
+      "status": "FETCH_ERROR",
+      "localBytes": null,
+      "remoteBytes": null,
+      "localSha": null,
+      "remoteSha": null,
+      "lastModified": null,
+      "note": "local absent; remote HTTP 404"
+    },
+    {
+      "path": "Dandruff/assets/img/logo.png",
+      "status": "FETCH_ERROR",
+      "localBytes": null,
+      "remoteBytes": null,
+      "localSha": null,
+      "remoteSha": null,
+      "lastModified": null,
+      "note": "local absent; remote HTTP 404"
+    },
+    {
+      "path": "Dandruff/assets/img/no-side-effects.webp",
+      "status": "IDENTICAL",
+      "localBytes": 5042,
+      "remoteBytes": 5042,
+      "localSha": "28580fe03fe0844d21ac0fbdf93573fcce0862cd9cf656e80770e7e0a65f16ae",
+      "remoteSha": "28580fe03fe0844d21ac0fbdf93573fcce0862cd9cf656e80770e7e0a65f16ae",
+      "lastModified": "Wed, 07 Jan 2026 05:51:41 GMT"
+    },
+    {
+      "path": "Dandruff/assets/img/product list 1 hair.png",
+      "status": "IDENTICAL",
+      "localBytes": 17179011,
+      "remoteBytes": 17179011,
+      "localSha": "3c067bc77eb57da15712acbc9010e3a6295b7fd234dcacb1d9b7b6ba77a2106b",
+      "remoteSha": "3c067bc77eb57da15712acbc9010e3a6295b7fd234dcacb1d9b7b6ba77a2106b",
+      "lastModified": "Wed, 07 Jan 2026 05:51:45 GMT"
+    },
+    {
+      "path": "Dandruff/assets/img/safe-natural.webp",
+      "status": "IDENTICAL",
+      "localBytes": 14024,
+      "remoteBytes": 14024,
+      "localSha": "4f0e3ec480c07aa8ffbf923d677201c04e02095f20edf5e552bbeac04d261ad7",
+      "remoteSha": "4f0e3ec480c07aa8ffbf923d677201c04e02095f20edf5e552bbeac04d261ad7",
+      "lastModified": "Wed, 07 Jan 2026 05:51:41 GMT"
+    },
+    {
+      "path": "Dandruff/assets/img/whatsapp.webp",
+      "status": "IDENTICAL",
+      "localBytes": 80040,
+      "remoteBytes": 80040,
+      "localSha": "0ef6e14eddbeabb706205f2c80a028d57ee52f6f12d6dddaad322521790960bd",
+      "remoteSha": "0ef6e14eddbeabb706205f2c80a028d57ee52f6f12d6dddaad322521790960bd",
+      "lastModified": "Wed, 07 Jan 2026 05:51:42 GMT"
+    },
+    {
+      "path": "Dandruff/assets/js/aos.js",
+      "status": "IDENTICAL",
+      "localBytes": 14243,
+      "remoteBytes": 14243,
+      "localSha": "4460f1596174d06cca957fdaca2c71e1a377cf1d6f07ee4c75ffb3bf3fc97a03",
+      "remoteSha": "4460f1596174d06cca957fdaca2c71e1a377cf1d6f07ee4c75ffb3bf3fc97a03",
+      "lastModified": "Wed, 07 Jan 2026 05:51:42 GMT"
+    },
+    {
+      "path": "Dandruff/assets/js/bootstrap.bundle.min.js",
+      "status": "IDENTICAL",
+      "localBytes": 80371,
+      "remoteBytes": 80371,
+      "localSha": "0d739c3c2b3e17d073a65f1381e8467fd731b6375a3e9e7bc494846df5fb3262",
+      "remoteSha": "0d739c3c2b3e17d073a65f1381e8467fd731b6375a3e9e7bc494846df5fb3262",
+      "lastModified": "Wed, 07 Jan 2026 05:51:42 GMT"
+    },
+    {
+      "path": "Dandruff/assets/js/contact-form-script.js",
+      "status": "IDENTICAL",
+      "localBytes": 895,
+      "remoteBytes": 895,
+      "localSha": "01f88dcee3ea695865770808ba43f18d9b0a0db51696c39d69ea2a607c108e78",
+      "remoteSha": "01f88dcee3ea695865770808ba43f18d9b0a0db51696c39d69ea2a607c108e78",
+      "lastModified": "Wed, 07 Jan 2026 05:51:42 GMT"
+    },
+    {
+      "path": "Dandruff/assets/js/fancybox.js",
+      "status": "IDENTICAL",
+      "localBytes": 68446,
+      "remoteBytes": 68446,
+      "localSha": "c563abe9b3e16a2461415597e352e306678e093e2078d6f3b9618d902b1ad2c7",
+      "remoteSha": "c563abe9b3e16a2461415597e352e306678e093e2078d6f3b9618d902b1ad2c7",
+      "lastModified": "Wed, 07 Jan 2026 05:51:42 GMT"
+    },
+    {
+      "path": "Dandruff/assets/js/form-validator.min.js",
+      "status": "IDENTICAL",
+      "localBytes": 6055,
+      "remoteBytes": 6055,
+      "localSha": "385e6c0ef7bf029072b35df53935b15f41b8f290be76e2e92f9bbaceeb0275ce",
+      "remoteSha": "385e6c0ef7bf029072b35df53935b15f41b8f290be76e2e92f9bbaceeb0275ce",
+      "lastModified": "Wed, 07 Jan 2026 05:51:42 GMT"
+    },
+    {
+      "path": "Dandruff/assets/js/jquery.appear.js",
+      "status": "IDENTICAL",
+      "localBytes": 1198,
+      "remoteBytes": 1198,
+      "localSha": "b57506318dccce1f06d2545f2db1bead5d46acb07df071aee7651d2c3013105d",
+      "remoteSha": "b57506318dccce1f06d2545f2db1bead5d46acb07df071aee7651d2c3013105d",
+      "lastModified": "Wed, 07 Jan 2026 05:51:42 GMT"
+    },
+    {
+      "path": "Dandruff/assets/js/jquery.min.js",
+      "status": "IDENTICAL",
+      "localBytes": 89663,
+      "remoteBytes": 89663,
+      "localSha": "131c0d82967fed05e1920e519e0ea6ec91ab97b7c40480f72f8af8680bba1f0a",
+      "remoteSha": "131c0d82967fed05e1920e519e0ea6ec91ab97b7c40480f72f8af8680bba1f0a",
+      "lastModified": "Wed, 07 Jan 2026 05:51:42 GMT"
+    },
+    {
+      "path": "Dandruff/assets/js/main.js",
+      "status": "IDENTICAL",
+      "localBytes": 13087,
+      "remoteBytes": 13087,
+      "localSha": "bf8e2821b068be6b896c923f4d5acb2e6a698a8bd6f820bce165505446a84095",
+      "remoteSha": "bf8e2821b068be6b896c923f4d5acb2e6a698a8bd6f820bce165505446a84095",
+      "lastModified": "Wed, 07 Jan 2026 05:51:42 GMT"
+    },
+    {
+      "path": "Dandruff/assets/js/odometer.min.js",
+      "status": "IDENTICAL",
+      "localBytes": 10263,
+      "remoteBytes": 10263,
+      "localSha": "981edc2c368c79ffac0376dd41ff6bef2b6c0abe2918b91ec16f49efc8ff1396",
+      "remoteSha": "981edc2c368c79ffac0376dd41ff6bef2b6c0abe2918b91ec16f49efc8ff1396",
+      "lastModified": "Wed, 07 Jan 2026 05:51:42 GMT"
+    },
+    {
+      "path": "Dandruff/assets/js/owl.carousel.min.js",
+      "status": "IDENTICAL",
+      "localBytes": 44342,
+      "remoteBytes": 44342,
+      "localSha": "a53c43f834b32309b084ea9314df8307e9c78cee2202c6e07f216ae4ae5b704d",
+      "remoteSha": "a53c43f834b32309b084ea9314df8307e9c78cee2202c6e07f216ae4ae5b704d",
+      "lastModified": "Wed, 07 Jan 2026 05:51:42 GMT"
+    },
+    {
+      "path": "Dandruff/assets/js/tweenmax.min.js",
+      "status": "IDENTICAL",
+      "localBytes": 144222,
+      "remoteBytes": 144222,
+      "localSha": "473ec6af8aa2f17eab77cf31bc4e007a9f48ba0195549ea62265232fb4bf8d63",
+      "remoteSha": "473ec6af8aa2f17eab77cf31bc4e007a9f48ba0195549ea62265232fb4bf8d63",
+      "lastModified": "Wed, 07 Jan 2026 05:51:42 GMT"
+    },
+    {
+      "path": "enlarged-prostate/after-slide.js",
+      "status": "FETCH_ERROR",
+      "localBytes": null,
+      "remoteBytes": null,
+      "localSha": null,
+      "remoteSha": null,
+      "lastModified": null,
+      "note": "local absent; remote HTTP 404"
+    },
+    {
+      "path": "enlarged-prostate/assets/css/after-slide.css",
+      "status": "IDENTICAL",
+      "localBytes": 3708,
+      "remoteBytes": 3708,
+      "localSha": "2bd0fff81e4235ba4f6d2fb4454fa022c77190425663ba6abc1146d47725bb89",
+      "remoteSha": "2bd0fff81e4235ba4f6d2fb4454fa022c77190425663ba6abc1146d47725bb89",
+      "lastModified": "Wed, 07 Jan 2026 05:51:42 GMT"
+    },
+    {
+      "path": "enlarged-prostate/assets/css/aos.css",
+      "status": "IDENTICAL",
+      "localBytes": 26053,
+      "remoteBytes": 26053,
+      "localSha": "1aa8845fd06e475aefe733d4e55b36a92fcd487975049c8172341827ac9cc03e",
+      "remoteSha": "1aa8845fd06e475aefe733d4e55b36a92fcd487975049c8172341827ac9cc03e",
+      "lastModified": "Wed, 07 Jan 2026 05:51:42 GMT"
+    },
+    {
+      "path": "enlarged-prostate/assets/css/bootstrap.min.css",
+      "status": "IDENTICAL",
+      "localBytes": 194885,
+      "remoteBytes": 194885,
+      "localSha": "b8861efb079f0c5658671ea395dcc3cdae411163a11dc477d5c108652a7bdafc",
+      "remoteSha": "b8861efb079f0c5658671ea395dcc3cdae411163a11dc477d5c108652a7bdafc",
+      "lastModified": "Wed, 07 Jan 2026 05:51:42 GMT"
+    },
+    {
+      "path": "enlarged-prostate/assets/css/dark-theme.css",
+      "status": "IDENTICAL",
+      "localBytes": 12282,
+      "remoteBytes": 12282,
+      "localSha": "ec63ad2f4149edb49f7ba35de86148c76dc041afb63646650d22ff0af81a54ee",
+      "remoteSha": "ec63ad2f4149edb49f7ba35de86148c76dc041afb63646650d22ff0af81a54ee",
+      "lastModified": "Wed, 07 Jan 2026 05:51:43 GMT"
+    },
+    {
+      "path": "enlarged-prostate/assets/css/fancybox.css",
+      "status": "IDENTICAL",
+      "localBytes": 13058,
+      "remoteBytes": 13058,
+      "localSha": "c7cb4986749326c569f3242febe1ca3e3b86cc3215b57976de6df9c632124e59",
+      "remoteSha": "c7cb4986749326c569f3242febe1ca3e3b86cc3215b57976de6df9c632124e59",
+      "lastModified": "Wed, 07 Jan 2026 05:51:43 GMT"
+    },
+    {
+      "path": "enlarged-prostate/assets/css/flaticon.css",
+      "status": "IDENTICAL",
+      "localBytes": 6949,
+      "remoteBytes": 6949,
+      "localSha": "128c058892422fbc3e2fc1c75de7ff2b2a4f513a68911f9dd831d91547b40404",
+      "remoteSha": "128c058892422fbc3e2fc1c75de7ff2b2a4f513a68911f9dd831d91547b40404",
+      "lastModified": "Wed, 07 Jan 2026 05:51:43 GMT"
+    },
+    {
+      "path": "enlarged-prostate/assets/css/odometer.min.css",
+      "status": "IDENTICAL",
+      "localBytes": 3123,
+      "remoteBytes": 3123,
+      "localSha": "de4852787adeccdbf98fbd828daa10e3ff7733dbecd8a94ae9f297e5f907049b",
+      "remoteSha": "de4852787adeccdbf98fbd828daa10e3ff7733dbecd8a94ae9f297e5f907049b",
+      "lastModified": "Wed, 07 Jan 2026 05:51:43 GMT"
+    },
+    {
+      "path": "enlarged-prostate/assets/css/owl.carousel.min.css",
+      "status": "IDENTICAL",
+      "localBytes": 3352,
+      "remoteBytes": 3352,
+      "localSha": "aa7e59e6ec8871088cfeb47bac59a6475c815357deef042c61a5c3c965390546",
+      "remoteSha": "aa7e59e6ec8871088cfeb47bac59a6475c815357deef042c61a5c3c965390546",
+      "lastModified": "Wed, 07 Jan 2026 05:51:43 GMT"
+    },
+    {
+      "path": "enlarged-prostate/assets/css/remixicon.css",
+      "status": "IDENTICAL",
+      "localBytes": 96423,
+      "remoteBytes": 96423,
+      "localSha": "9ccdc5254a2a2fbdf78c49b6b1ba3d68d9c2783c576089e2fa846bf2a9d41419",
+      "remoteSha": "9ccdc5254a2a2fbdf78c49b6b1ba3d68d9c2783c576089e2fa846bf2a9d41419",
+      "lastModified": "Wed, 07 Jan 2026 05:51:43 GMT"
+    },
+    {
+      "path": "enlarged-prostate/assets/css/responsive.css",
+      "status": "IDENTICAL",
+      "localBytes": 57561,
+      "remoteBytes": 57561,
+      "localSha": "027cfe7b17bf7021e57a86893e40b7a6238ca0d57517273476f4dcd75b79cd95",
+      "remoteSha": "027cfe7b17bf7021e57a86893e40b7a6238ca0d57517273476f4dcd75b79cd95",
+      "lastModified": "Wed, 07 Jan 2026 05:51:43 GMT"
+    },
+    {
+      "path": "enlarged-prostate/assets/css/style.css",
+      "status": "IDENTICAL",
+      "localBytes": 172297,
+      "remoteBytes": 172297,
+      "localSha": "929b21744bcfb6e250a8b8d0014bf0ed244756a76ce53fd88e8f618d84ed5ad7",
+      "remoteSha": "929b21744bcfb6e250a8b8d0014bf0ed244756a76ce53fd88e8f618d84ed5ad7",
+      "lastModified": "Wed, 07 Jan 2026 05:51:43 GMT"
+    },
+    {
+      "path": "enlarged-prostate/assets/img/call-icon-gif.webp",
+      "status": "IDENTICAL",
+      "localBytes": 4832,
+      "remoteBytes": 4832,
+      "localSha": "1690fb4d9297048a6083f8cd2d17e5c2651ba2ef22e6456351d05d917660298a",
+      "remoteSha": "1690fb4d9297048a6083f8cd2d17e5c2651ba2ef22e6456351d05d917660298a",
+      "lastModified": "Wed, 07 Jan 2026 05:51:44 GMT"
+    },
+    {
+      "path": "enlarged-prostate/assets/img/certified-doctor.png",
+      "status": "IDENTICAL",
+      "localBytes": 3657,
+      "remoteBytes": 3657,
+      "localSha": "4cb8e82c874c393fc47ce3830bc3f9114e2bbbf826fa6997be1f6b83bc2d0e66",
+      "remoteSha": "4cb8e82c874c393fc47ce3830bc3f9114e2bbbf826fa6997be1f6b83bc2d0e66",
+      "lastModified": "Wed, 07 Jan 2026 05:51:44 GMT"
+    },
+    {
+      "path": "enlarged-prostate/assets/img/download.png",
+      "status": "IDENTICAL",
+      "localBytes": 1479,
+      "remoteBytes": 1479,
+      "localSha": "ccc792ff49030b25838d1350025c027536b8b5a798d93a5f84241d016cc16705",
+      "remoteSha": "ccc792ff49030b25838d1350025c027536b8b5a798d93a5f84241d016cc16705",
+      "lastModified": "Wed, 07 Jan 2026 05:51:44 GMT"
+    },
+    {
+      "path": "enlarged-prostate/assets/img/fevicon.jpg",
+      "status": "FETCH_ERROR",
+      "localBytes": null,
+      "remoteBytes": null,
+      "localSha": null,
+      "remoteSha": null,
+      "lastModified": null,
+      "note": "local absent; remote HTTP 404"
+    },
+    {
+      "path": "enlarged-prostate/assets/img/fill-form.png",
+      "status": "IDENTICAL",
+      "localBytes": 37584,
+      "remoteBytes": 37584,
+      "localSha": "a4e6e57295ed14f31a6c533e1cc968592122c561b5f6c288ca7fdd0d19b924c4",
+      "remoteSha": "a4e6e57295ed14f31a6c533e1cc968592122c561b5f6c288ca7fdd0d19b924c4",
+      "lastModified": "Wed, 07 Jan 2026 05:51:44 GMT"
+    },
+    {
+      "path": "enlarged-prostate/assets/img/happy-patients.png",
+      "status": "IDENTICAL",
+      "localBytes": 5694,
+      "remoteBytes": 5694,
+      "localSha": "05e6497f26d02ed3eb8a4e416abbfa58cb9942b53e736adab3537e5031e827a0",
+      "remoteSha": "05e6497f26d02ed3eb8a4e416abbfa58cb9942b53e736adab3537e5031e827a0",
+      "lastModified": "Wed, 07 Jan 2026 05:51:44 GMT"
+    },
+    {
+      "path": "enlarged-prostate/assets/img/images.jpeg",
+      "status": "IDENTICAL",
+      "localBytes": 14313,
+      "remoteBytes": 14313,
+      "localSha": "0faccf9d67f3c80e5ec0c6d661e31730ec31a7921891e7eb42b8ea28e3225f48",
+      "remoteSha": "0faccf9d67f3c80e5ec0c6d661e31730ec31a7921891e7eb42b8ea28e3225f48",
+      "lastModified": "Wed, 07 Jan 2026 05:51:44 GMT"
+    },
+    {
+      "path": "enlarged-prostate/assets/img/kideny-kt.jpg",
+      "status": "IDENTICAL",
+      "localBytes": 48057,
+      "remoteBytes": 48057,
+      "localSha": "2c8991f602e53454cc2d637c74348748afe5a0660d342ec68d838a3603bc647f",
+      "remoteSha": "2c8991f602e53454cc2d637c74348748afe5a0660d342ec68d838a3603bc647f",
+      "lastModified": "Wed, 07 Jan 2026 05:51:44 GMT"
+    },
+    {
+      "path": "enlarged-prostate/assets/img/logo-white.png",
+      "status": "FETCH_ERROR",
+      "localBytes": null,
+      "remoteBytes": null,
+      "localSha": null,
+      "remoteSha": null,
+      "lastModified": null,
+      "note": "local absent; remote HTTP 404"
+    },
+    {
+      "path": "enlarged-prostate/assets/img/logo.png",
+      "status": "FETCH_ERROR",
+      "localBytes": null,
+      "remoteBytes": null,
+      "localSha": null,
+      "remoteSha": null,
+      "lastModified": null,
+      "note": "local absent; remote HTTP 404"
+    },
+    {
+      "path": "enlarged-prostate/assets/img/no-side-effects.webp",
+      "status": "IDENTICAL",
+      "localBytes": 5042,
+      "remoteBytes": 5042,
+      "localSha": "28580fe03fe0844d21ac0fbdf93573fcce0862cd9cf656e80770e7e0a65f16ae",
+      "remoteSha": "28580fe03fe0844d21ac0fbdf93573fcce0862cd9cf656e80770e7e0a65f16ae",
+      "lastModified": "Wed, 07 Jan 2026 05:51:44 GMT"
+    },
+    {
+      "path": "enlarged-prostate/assets/img/prostate.jpeg",
+      "status": "IDENTICAL",
+      "localBytes": 8293,
+      "remoteBytes": 8293,
+      "localSha": "a5fe8c94e44152369646ff071d001b319aa3b3eefbdf0b6ecc4db76a94302286",
+      "remoteSha": "a5fe8c94e44152369646ff071d001b319aa3b3eefbdf0b6ecc4db76a94302286",
+      "lastModified": "Wed, 07 Jan 2026 05:51:44 GMT"
+    },
+    {
+      "path": "enlarged-prostate/assets/img/safe-natural.webp",
+      "status": "IDENTICAL",
+      "localBytes": 14024,
+      "remoteBytes": 14024,
+      "localSha": "4f0e3ec480c07aa8ffbf923d677201c04e02095f20edf5e552bbeac04d261ad7",
+      "remoteSha": "4f0e3ec480c07aa8ffbf923d677201c04e02095f20edf5e552bbeac04d261ad7",
+      "lastModified": "Wed, 07 Jan 2026 05:51:44 GMT"
+    },
+    {
+      "path": "enlarged-prostate/assets/img/whatsapp.webp",
+      "status": "IDENTICAL",
+      "localBytes": 80040,
+      "remoteBytes": 80040,
+      "localSha": "0ef6e14eddbeabb706205f2c80a028d57ee52f6f12d6dddaad322521790960bd",
+      "remoteSha": "0ef6e14eddbeabb706205f2c80a028d57ee52f6f12d6dddaad322521790960bd",
+      "lastModified": "Wed, 07 Jan 2026 05:51:45 GMT"
+    },
+    {
+      "path": "enlarged-prostate/assets/js/aos.js",
+      "status": "IDENTICAL",
+      "localBytes": 14243,
+      "remoteBytes": 14243,
+      "localSha": "4460f1596174d06cca957fdaca2c71e1a377cf1d6f07ee4c75ffb3bf3fc97a03",
+      "remoteSha": "4460f1596174d06cca957fdaca2c71e1a377cf1d6f07ee4c75ffb3bf3fc97a03",
+      "lastModified": "Wed, 07 Jan 2026 05:51:45 GMT"
+    },
+    {
+      "path": "enlarged-prostate/assets/js/bootstrap.bundle.min.js",
+      "status": "IDENTICAL",
+      "localBytes": 80371,
+      "remoteBytes": 80371,
+      "localSha": "0d739c3c2b3e17d073a65f1381e8467fd731b6375a3e9e7bc494846df5fb3262",
+      "remoteSha": "0d739c3c2b3e17d073a65f1381e8467fd731b6375a3e9e7bc494846df5fb3262",
+      "lastModified": "Wed, 07 Jan 2026 05:51:45 GMT"
+    },
+    {
+      "path": "enlarged-prostate/assets/js/contact-form-script.js",
+      "status": "IDENTICAL",
+      "localBytes": 895,
+      "remoteBytes": 895,
+      "localSha": "01f88dcee3ea695865770808ba43f18d9b0a0db51696c39d69ea2a607c108e78",
+      "remoteSha": "01f88dcee3ea695865770808ba43f18d9b0a0db51696c39d69ea2a607c108e78",
+      "lastModified": "Wed, 07 Jan 2026 05:51:45 GMT"
+    },
+    {
+      "path": "enlarged-prostate/assets/js/fancybox.js",
+      "status": "IDENTICAL",
+      "localBytes": 68446,
+      "remoteBytes": 68446,
+      "localSha": "c563abe9b3e16a2461415597e352e306678e093e2078d6f3b9618d902b1ad2c7",
+      "remoteSha": "c563abe9b3e16a2461415597e352e306678e093e2078d6f3b9618d902b1ad2c7",
+      "lastModified": "Wed, 07 Jan 2026 05:51:45 GMT"
+    },
+    {
+      "path": "enlarged-prostate/assets/js/form-validator.min.js",
+      "status": "IDENTICAL",
+      "localBytes": 6055,
+      "remoteBytes": 6055,
+      "localSha": "385e6c0ef7bf029072b35df53935b15f41b8f290be76e2e92f9bbaceeb0275ce",
+      "remoteSha": "385e6c0ef7bf029072b35df53935b15f41b8f290be76e2e92f9bbaceeb0275ce",
+      "lastModified": "Wed, 07 Jan 2026 05:51:45 GMT"
+    },
+    {
+      "path": "enlarged-prostate/assets/js/jquery.appear.js",
+      "status": "IDENTICAL",
+      "localBytes": 1198,
+      "remoteBytes": 1198,
+      "localSha": "b57506318dccce1f06d2545f2db1bead5d46acb07df071aee7651d2c3013105d",
+      "remoteSha": "b57506318dccce1f06d2545f2db1bead5d46acb07df071aee7651d2c3013105d",
+      "lastModified": "Wed, 07 Jan 2026 05:51:45 GMT"
+    },
+    {
+      "path": "enlarged-prostate/assets/js/jquery.min.js",
+      "status": "IDENTICAL",
+      "localBytes": 89663,
+      "remoteBytes": 89663,
+      "localSha": "131c0d82967fed05e1920e519e0ea6ec91ab97b7c40480f72f8af8680bba1f0a",
+      "remoteSha": "131c0d82967fed05e1920e519e0ea6ec91ab97b7c40480f72f8af8680bba1f0a",
+      "lastModified": "Wed, 07 Jan 2026 05:51:45 GMT"
+    },
+    {
+      "path": "enlarged-prostate/assets/js/main.js",
+      "status": "IDENTICAL",
+      "localBytes": 13087,
+      "remoteBytes": 13087,
+      "localSha": "bf8e2821b068be6b896c923f4d5acb2e6a698a8bd6f820bce165505446a84095",
+      "remoteSha": "bf8e2821b068be6b896c923f4d5acb2e6a698a8bd6f820bce165505446a84095",
+      "lastModified": "Wed, 07 Jan 2026 05:51:45 GMT"
+    },
+    {
+      "path": "enlarged-prostate/assets/js/odometer.min.js",
+      "status": "IDENTICAL",
+      "localBytes": 10263,
+      "remoteBytes": 10263,
+      "localSha": "981edc2c368c79ffac0376dd41ff6bef2b6c0abe2918b91ec16f49efc8ff1396",
+      "remoteSha": "981edc2c368c79ffac0376dd41ff6bef2b6c0abe2918b91ec16f49efc8ff1396",
+      "lastModified": "Wed, 07 Jan 2026 05:51:45 GMT"
+    },
+    {
+      "path": "enlarged-prostate/assets/js/owl.carousel.min.js",
+      "status": "IDENTICAL",
+      "localBytes": 44342,
+      "remoteBytes": 44342,
+      "localSha": "a53c43f834b32309b084ea9314df8307e9c78cee2202c6e07f216ae4ae5b704d",
+      "remoteSha": "a53c43f834b32309b084ea9314df8307e9c78cee2202c6e07f216ae4ae5b704d",
+      "lastModified": "Wed, 07 Jan 2026 05:51:45 GMT"
+    },
+    {
+      "path": "enlarged-prostate/assets/js/tweenmax.min.js",
+      "status": "IDENTICAL",
+      "localBytes": 144222,
+      "remoteBytes": 144222,
+      "localSha": "473ec6af8aa2f17eab77cf31bc4e007a9f48ba0195549ea62265232fb4bf8d63",
+      "remoteSha": "473ec6af8aa2f17eab77cf31bc4e007a9f48ba0195549ea62265232fb4bf8d63",
+      "lastModified": "Wed, 07 Jan 2026 05:51:45 GMT"
+    },
+    {
+      "path": "hair-dandruff/after-slide.js",
+      "status": "FETCH_ERROR",
+      "localBytes": null,
+      "remoteBytes": null,
+      "localSha": null,
+      "remoteSha": null,
+      "lastModified": null,
+      "note": "local absent; remote HTTP 404"
+    },
+    {
+      "path": "hair-dandruff/assets/css/after-slide.css",
+      "status": "IDENTICAL",
+      "localBytes": 3708,
+      "remoteBytes": 3708,
+      "localSha": "2bd0fff81e4235ba4f6d2fb4454fa022c77190425663ba6abc1146d47725bb89",
+      "remoteSha": "2bd0fff81e4235ba4f6d2fb4454fa022c77190425663ba6abc1146d47725bb89",
+      "lastModified": "Wed, 21 Jan 2026 11:27:33 GMT"
+    },
+    {
+      "path": "hair-dandruff/assets/css/aos.css",
+      "status": "IDENTICAL",
+      "localBytes": 26053,
+      "remoteBytes": 26053,
+      "localSha": "1aa8845fd06e475aefe733d4e55b36a92fcd487975049c8172341827ac9cc03e",
+      "remoteSha": "1aa8845fd06e475aefe733d4e55b36a92fcd487975049c8172341827ac9cc03e",
+      "lastModified": "Wed, 21 Jan 2026 11:27:33 GMT"
+    },
+    {
+      "path": "hair-dandruff/assets/css/bootstrap.min.css",
+      "status": "IDENTICAL",
+      "localBytes": 194885,
+      "remoteBytes": 194885,
+      "localSha": "b8861efb079f0c5658671ea395dcc3cdae411163a11dc477d5c108652a7bdafc",
+      "remoteSha": "b8861efb079f0c5658671ea395dcc3cdae411163a11dc477d5c108652a7bdafc",
+      "lastModified": "Wed, 21 Jan 2026 11:27:34 GMT"
+    },
+    {
+      "path": "hair-dandruff/assets/css/dark-theme.css",
+      "status": "IDENTICAL",
+      "localBytes": 12282,
+      "remoteBytes": 12282,
+      "localSha": "ec63ad2f4149edb49f7ba35de86148c76dc041afb63646650d22ff0af81a54ee",
+      "remoteSha": "ec63ad2f4149edb49f7ba35de86148c76dc041afb63646650d22ff0af81a54ee",
+      "lastModified": "Wed, 21 Jan 2026 11:27:34 GMT"
+    },
+    {
+      "path": "hair-dandruff/assets/css/fancybox.css",
+      "status": "IDENTICAL",
+      "localBytes": 13058,
+      "remoteBytes": 13058,
+      "localSha": "c7cb4986749326c569f3242febe1ca3e3b86cc3215b57976de6df9c632124e59",
+      "remoteSha": "c7cb4986749326c569f3242febe1ca3e3b86cc3215b57976de6df9c632124e59",
+      "lastModified": "Wed, 21 Jan 2026 11:27:34 GMT"
+    },
+    {
+      "path": "hair-dandruff/assets/css/flaticon.css",
+      "status": "IDENTICAL",
+      "localBytes": 6949,
+      "remoteBytes": 6949,
+      "localSha": "128c058892422fbc3e2fc1c75de7ff2b2a4f513a68911f9dd831d91547b40404",
+      "remoteSha": "128c058892422fbc3e2fc1c75de7ff2b2a4f513a68911f9dd831d91547b40404",
+      "lastModified": "Wed, 21 Jan 2026 11:27:34 GMT"
+    },
+    {
+      "path": "hair-dandruff/assets/css/odometer.min.css",
+      "status": "IDENTICAL",
+      "localBytes": 3123,
+      "remoteBytes": 3123,
+      "localSha": "de4852787adeccdbf98fbd828daa10e3ff7733dbecd8a94ae9f297e5f907049b",
+      "remoteSha": "de4852787adeccdbf98fbd828daa10e3ff7733dbecd8a94ae9f297e5f907049b",
+      "lastModified": "Wed, 21 Jan 2026 11:27:34 GMT"
+    },
+    {
+      "path": "hair-dandruff/assets/css/owl.carousel.min.css",
+      "status": "IDENTICAL",
+      "localBytes": 3352,
+      "remoteBytes": 3352,
+      "localSha": "aa7e59e6ec8871088cfeb47bac59a6475c815357deef042c61a5c3c965390546",
+      "remoteSha": "aa7e59e6ec8871088cfeb47bac59a6475c815357deef042c61a5c3c965390546",
+      "lastModified": "Wed, 21 Jan 2026 11:27:34 GMT"
+    },
+    {
+      "path": "hair-dandruff/assets/css/remixicon.css",
+      "status": "IDENTICAL",
+      "localBytes": 96423,
+      "remoteBytes": 96423,
+      "localSha": "9ccdc5254a2a2fbdf78c49b6b1ba3d68d9c2783c576089e2fa846bf2a9d41419",
+      "remoteSha": "9ccdc5254a2a2fbdf78c49b6b1ba3d68d9c2783c576089e2fa846bf2a9d41419",
+      "lastModified": "Wed, 21 Jan 2026 11:27:34 GMT"
+    },
+    {
+      "path": "hair-dandruff/assets/css/responsive.css",
+      "status": "IDENTICAL",
+      "localBytes": 57561,
+      "remoteBytes": 57561,
+      "localSha": "027cfe7b17bf7021e57a86893e40b7a6238ca0d57517273476f4dcd75b79cd95",
+      "remoteSha": "027cfe7b17bf7021e57a86893e40b7a6238ca0d57517273476f4dcd75b79cd95",
+      "lastModified": "Wed, 21 Jan 2026 11:27:34 GMT"
+    },
+    {
+      "path": "hair-dandruff/assets/css/style.css",
+      "status": "IDENTICAL",
+      "localBytes": 172485,
+      "remoteBytes": 172485,
+      "localSha": "e54a746bf1bcc2a7bee7a8f6143c1475c4b6456457559d517ee91f6fa1e43492",
+      "remoteSha": "e54a746bf1bcc2a7bee7a8f6143c1475c4b6456457559d517ee91f6fa1e43492",
+      "lastModified": "Wed, 21 Jan 2026 11:27:34 GMT"
+    },
+    {
+      "path": "hair-dandruff/assets/img/call-icon-gif.webp",
+      "status": "IDENTICAL",
+      "localBytes": 4832,
+      "remoteBytes": 4832,
+      "localSha": "1690fb4d9297048a6083f8cd2d17e5c2651ba2ef22e6456351d05d917660298a",
+      "remoteSha": "1690fb4d9297048a6083f8cd2d17e5c2651ba2ef22e6456351d05d917660298a",
+      "lastModified": "Wed, 21 Jan 2026 11:27:34 GMT"
+    },
+    {
+      "path": "hair-dandruff/assets/img/certified-doctor.png",
+      "status": "IDENTICAL",
+      "localBytes": 3657,
+      "remoteBytes": 3657,
+      "localSha": "4cb8e82c874c393fc47ce3830bc3f9114e2bbbf826fa6997be1f6b83bc2d0e66",
+      "remoteSha": "4cb8e82c874c393fc47ce3830bc3f9114e2bbbf826fa6997be1f6b83bc2d0e66",
+      "lastModified": "Wed, 21 Jan 2026 11:27:34 GMT"
+    },
+    {
+      "path": "hair-dandruff/assets/img/download.png",
+      "status": "IDENTICAL",
+      "localBytes": 1479,
+      "remoteBytes": 1479,
+      "localSha": "ccc792ff49030b25838d1350025c027536b8b5a798d93a5f84241d016cc16705",
+      "remoteSha": "ccc792ff49030b25838d1350025c027536b8b5a798d93a5f84241d016cc16705",
+      "lastModified": "Wed, 21 Jan 2026 11:27:34 GMT"
+    },
+    {
+      "path": "hair-dandruff/assets/img/fevicon.jpg",
+      "status": "FETCH_ERROR",
+      "localBytes": null,
+      "remoteBytes": null,
+      "localSha": null,
+      "remoteSha": null,
+      "lastModified": null,
+      "note": "local absent; remote HTTP 404"
+    },
+    {
+      "path": "hair-dandruff/assets/img/fill-form.png",
+      "status": "IDENTICAL",
+      "localBytes": 37584,
+      "remoteBytes": 37584,
+      "localSha": "a4e6e57295ed14f31a6c533e1cc968592122c561b5f6c288ca7fdd0d19b924c4",
+      "remoteSha": "a4e6e57295ed14f31a6c533e1cc968592122c561b5f6c288ca7fdd0d19b924c4",
+      "lastModified": "Wed, 21 Jan 2026 11:27:34 GMT"
+    },
+    {
+      "path": "hair-dandruff/assets/img/HAIR DROP-B.png",
+      "status": "IDENTICAL",
+      "localBytes": 105024,
+      "remoteBytes": 105024,
+      "localSha": "4fd33f6345be264e7ce066087d814ea0359b9d1b53adbe20559d3dcba8cc22d4",
+      "remoteSha": "4fd33f6345be264e7ce066087d814ea0359b9d1b53adbe20559d3dcba8cc22d4",
+      "lastModified": "Wed, 21 Jan 2026 11:27:34 GMT"
+    },
+    {
+      "path": "hair-dandruff/assets/img/HAIR DROP.png",
+      "status": "IDENTICAL",
+      "localBytes": 105553,
+      "remoteBytes": 105553,
+      "localSha": "06fd979606f810b3552e25f6b72306b61734e2928bc628e3925caba07f571dc3",
+      "remoteSha": "06fd979606f810b3552e25f6b72306b61734e2928bc628e3925caba07f571dc3",
+      "lastModified": "Wed, 21 Jan 2026 11:27:34 GMT"
+    },
+    {
+      "path": "hair-dandruff/assets/img/hair oil2.png",
+      "status": "IDENTICAL",
+      "localBytes": 237017,
+      "remoteBytes": 237017,
+      "localSha": "9a7faab6fb907d1824e2e7a512786a95cf73db45f1c03d263d190f4a3287a03f",
+      "remoteSha": "9a7faab6fb907d1824e2e7a512786a95cf73db45f1c03d263d190f4a3287a03f",
+      "lastModified": "Wed, 21 Jan 2026 11:27:34 GMT"
+    },
+    {
+      "path": "hair-dandruff/assets/img/hair wash2.png",
+      "status": "IDENTICAL",
+      "localBytes": 286301,
+      "remoteBytes": 286301,
+      "localSha": "35b65c18127eb34ea1b3c2077268f2cbf6f328e8a5a0345963f770d3c949cd7e",
+      "remoteSha": "35b65c18127eb34ea1b3c2077268f2cbf6f328e8a5a0345963f770d3c949cd7e",
+      "lastModified": "Wed, 21 Jan 2026 11:27:34 GMT"
+    },
+    {
+      "path": "hair-dandruff/assets/img/hair.jpg",
+      "status": "IDENTICAL",
+      "localBytes": 40797,
+      "remoteBytes": 40797,
+      "localSha": "f61c8072491560ac008dc931c660cf57ee7484c903ad53a849e16fbe623adcb5",
+      "remoteSha": "f61c8072491560ac008dc931c660cf57ee7484c903ad53a849e16fbe623adcb5",
+      "lastModified": "Wed, 21 Jan 2026 11:27:34 GMT"
+    },
+    {
+      "path": "hair-dandruff/assets/img/happy-patients.png",
+      "status": "IDENTICAL",
+      "localBytes": 5694,
+      "remoteBytes": 5694,
+      "localSha": "05e6497f26d02ed3eb8a4e416abbfa58cb9942b53e736adab3537e5031e827a0",
+      "remoteSha": "05e6497f26d02ed3eb8a4e416abbfa58cb9942b53e736adab3537e5031e827a0",
+      "lastModified": "Wed, 21 Jan 2026 11:27:34 GMT"
+    },
+    {
+      "path": "hair-dandruff/assets/img/images.jpeg",
+      "status": "IDENTICAL",
+      "localBytes": 14313,
+      "remoteBytes": 14313,
+      "localSha": "0faccf9d67f3c80e5ec0c6d661e31730ec31a7921891e7eb42b8ea28e3225f48",
+      "remoteSha": "0faccf9d67f3c80e5ec0c6d661e31730ec31a7921891e7eb42b8ea28e3225f48",
+      "lastModified": "Wed, 21 Jan 2026 11:27:34 GMT"
+    },
+    {
+      "path": "hair-dandruff/assets/img/logo.jpg",
+      "status": "IDENTICAL",
+      "localBytes": 23649,
+      "remoteBytes": 23649,
+      "localSha": "62abcd27fae43c9be866b7c86aca10be732a47486a4ca77449776c2c579a6185",
+      "remoteSha": "62abcd27fae43c9be866b7c86aca10be732a47486a4ca77449776c2c579a6185",
+      "lastModified": "Wed, 21 Jan 2026 11:27:34 GMT"
+    },
+    {
+      "path": "hair-dandruff/assets/img/no-side-effects.webp",
+      "status": "IDENTICAL",
+      "localBytes": 5042,
+      "remoteBytes": 5042,
+      "localSha": "28580fe03fe0844d21ac0fbdf93573fcce0862cd9cf656e80770e7e0a65f16ae",
+      "remoteSha": "28580fe03fe0844d21ac0fbdf93573fcce0862cd9cf656e80770e7e0a65f16ae",
+      "lastModified": "Wed, 21 Jan 2026 11:27:34 GMT"
+    },
+    {
+      "path": "hair-dandruff/assets/img/product list 1 hair.png",
+      "status": "IDENTICAL",
+      "localBytes": 17179011,
+      "remoteBytes": 17179011,
+      "localSha": "3c067bc77eb57da15712acbc9010e3a6295b7fd234dcacb1d9b7b6ba77a2106b",
+      "remoteSha": "3c067bc77eb57da15712acbc9010e3a6295b7fd234dcacb1d9b7b6ba77a2106b",
+      "lastModified": "Wed, 21 Jan 2026 11:27:37 GMT"
+    },
+    {
+      "path": "hair-dandruff/assets/img/safe-natural.webp",
+      "status": "IDENTICAL",
+      "localBytes": 14024,
+      "remoteBytes": 14024,
+      "localSha": "4f0e3ec480c07aa8ffbf923d677201c04e02095f20edf5e552bbeac04d261ad7",
+      "remoteSha": "4f0e3ec480c07aa8ffbf923d677201c04e02095f20edf5e552bbeac04d261ad7",
+      "lastModified": "Wed, 21 Jan 2026 11:27:34 GMT"
+    },
+    {
+      "path": "hair-dandruff/assets/img/whatsapp.webp",
+      "status": "IDENTICAL",
+      "localBytes": 80040,
+      "remoteBytes": 80040,
+      "localSha": "0ef6e14eddbeabb706205f2c80a028d57ee52f6f12d6dddaad322521790960bd",
+      "remoteSha": "0ef6e14eddbeabb706205f2c80a028d57ee52f6f12d6dddaad322521790960bd",
+      "lastModified": "Wed, 21 Jan 2026 11:27:35 GMT"
+    },
+    {
+      "path": "hair-dandruff/assets/js/aos.js",
+      "status": "IDENTICAL",
+      "localBytes": 14243,
+      "remoteBytes": 14243,
+      "localSha": "4460f1596174d06cca957fdaca2c71e1a377cf1d6f07ee4c75ffb3bf3fc97a03",
+      "remoteSha": "4460f1596174d06cca957fdaca2c71e1a377cf1d6f07ee4c75ffb3bf3fc97a03",
+      "lastModified": "Wed, 21 Jan 2026 11:27:35 GMT"
+    },
+    {
+      "path": "hair-dandruff/assets/js/bootstrap.bundle.min.js",
+      "status": "IDENTICAL",
+      "localBytes": 80371,
+      "remoteBytes": 80371,
+      "localSha": "0d739c3c2b3e17d073a65f1381e8467fd731b6375a3e9e7bc494846df5fb3262",
+      "remoteSha": "0d739c3c2b3e17d073a65f1381e8467fd731b6375a3e9e7bc494846df5fb3262",
+      "lastModified": "Wed, 21 Jan 2026 11:27:35 GMT"
+    },
+    {
+      "path": "hair-dandruff/assets/js/contact-form-script.js",
+      "status": "IDENTICAL",
+      "localBytes": 895,
+      "remoteBytes": 895,
+      "localSha": "01f88dcee3ea695865770808ba43f18d9b0a0db51696c39d69ea2a607c108e78",
+      "remoteSha": "01f88dcee3ea695865770808ba43f18d9b0a0db51696c39d69ea2a607c108e78",
+      "lastModified": "Wed, 21 Jan 2026 11:27:35 GMT"
+    },
+    {
+      "path": "hair-dandruff/assets/js/fancybox.js",
+      "status": "IDENTICAL",
+      "localBytes": 68446,
+      "remoteBytes": 68446,
+      "localSha": "c563abe9b3e16a2461415597e352e306678e093e2078d6f3b9618d902b1ad2c7",
+      "remoteSha": "c563abe9b3e16a2461415597e352e306678e093e2078d6f3b9618d902b1ad2c7",
+      "lastModified": "Wed, 21 Jan 2026 11:27:35 GMT"
+    },
+    {
+      "path": "hair-dandruff/assets/js/form-validator.min.js",
+      "status": "IDENTICAL",
+      "localBytes": 6055,
+      "remoteBytes": 6055,
+      "localSha": "385e6c0ef7bf029072b35df53935b15f41b8f290be76e2e92f9bbaceeb0275ce",
+      "remoteSha": "385e6c0ef7bf029072b35df53935b15f41b8f290be76e2e92f9bbaceeb0275ce",
+      "lastModified": "Wed, 21 Jan 2026 11:27:35 GMT"
+    },
+    {
+      "path": "hair-dandruff/assets/js/jquery.appear.js",
+      "status": "IDENTICAL",
+      "localBytes": 1198,
+      "remoteBytes": 1198,
+      "localSha": "b57506318dccce1f06d2545f2db1bead5d46acb07df071aee7651d2c3013105d",
+      "remoteSha": "b57506318dccce1f06d2545f2db1bead5d46acb07df071aee7651d2c3013105d",
+      "lastModified": "Wed, 21 Jan 2026 11:27:35 GMT"
+    },
+    {
+      "path": "hair-dandruff/assets/js/jquery.min.js",
+      "status": "IDENTICAL",
+      "localBytes": 89663,
+      "remoteBytes": 89663,
+      "localSha": "131c0d82967fed05e1920e519e0ea6ec91ab97b7c40480f72f8af8680bba1f0a",
+      "remoteSha": "131c0d82967fed05e1920e519e0ea6ec91ab97b7c40480f72f8af8680bba1f0a",
+      "lastModified": "Wed, 21 Jan 2026 11:27:35 GMT"
+    },
+    {
+      "path": "hair-dandruff/assets/js/main.js",
+      "status": "IDENTICAL",
+      "localBytes": 13087,
+      "remoteBytes": 13087,
+      "localSha": "bf8e2821b068be6b896c923f4d5acb2e6a698a8bd6f820bce165505446a84095",
+      "remoteSha": "bf8e2821b068be6b896c923f4d5acb2e6a698a8bd6f820bce165505446a84095",
+      "lastModified": "Wed, 21 Jan 2026 11:27:35 GMT"
+    },
+    {
+      "path": "hair-dandruff/assets/js/odometer.min.js",
+      "status": "IDENTICAL",
+      "localBytes": 10263,
+      "remoteBytes": 10263,
+      "localSha": "981edc2c368c79ffac0376dd41ff6bef2b6c0abe2918b91ec16f49efc8ff1396",
+      "remoteSha": "981edc2c368c79ffac0376dd41ff6bef2b6c0abe2918b91ec16f49efc8ff1396",
+      "lastModified": "Wed, 21 Jan 2026 11:27:35 GMT"
+    },
+    {
+      "path": "hair-dandruff/assets/js/owl.carousel.min.js",
+      "status": "IDENTICAL",
+      "localBytes": 44342,
+      "remoteBytes": 44342,
+      "localSha": "a53c43f834b32309b084ea9314df8307e9c78cee2202c6e07f216ae4ae5b704d",
+      "remoteSha": "a53c43f834b32309b084ea9314df8307e9c78cee2202c6e07f216ae4ae5b704d",
+      "lastModified": "Wed, 21 Jan 2026 11:27:35 GMT"
+    },
+    {
+      "path": "hair-dandruff/assets/js/tweenmax.min.js",
+      "status": "IDENTICAL",
+      "localBytes": 144222,
+      "remoteBytes": 144222,
+      "localSha": "473ec6af8aa2f17eab77cf31bc4e007a9f48ba0195549ea62265232fb4bf8d63",
+      "remoteSha": "473ec6af8aa2f17eab77cf31bc4e007a9f48ba0195549ea62265232fb4bf8d63",
+      "lastModified": "Wed, 21 Jan 2026 11:27:35 GMT"
+    },
+    {
+      "path": "Mother-Tincture-Price-list.pdf",
+      "status": "IDENTICAL",
+      "localBytes": 8528032,
+      "remoteBytes": 8528032,
+      "localSha": "1926fcb79f8769888dc1fa546007cd2bbed838341dfa745e4ab100ed4b521111",
+      "remoteSha": "1926fcb79f8769888dc1fa546007cd2bbed838341dfa745e4ab100ed4b521111",
+      "lastModified": "Wed, 07 Jan 2026 05:47:00 GMT"
+    },
+    {
+      "path": "Potencies-rate-list.pdf",
+      "status": "IDENTICAL",
+      "localBytes": 5440612,
+      "remoteBytes": 5440612,
+      "localSha": "cfa75b16d7dba3cb9858704ab41d917bbb5ab9fa8d8c0c1bc03ed455f42cb0ed",
+      "remoteSha": "cfa75b16d7dba3cb9858704ab41d917bbb5ab9fa8d8c0c1bc03ed455f42cb0ed",
+      "lastModified": "Wed, 07 Jan 2026 05:46:59 GMT"
+    },
+    {
+      "path": "record/img/logo.png",
+      "status": "IDENTICAL",
+      "localBytes": 52649,
+      "remoteBytes": 52649,
+      "localSha": "8147bf405343306f3299cfe7741663ae470af819f394852a08c17a1d8b48c100",
+      "remoteSha": "8147bf405343306f3299cfe7741663ae470af819f394852a08c17a1d8b48c100",
+      "lastModified": "Wed, 07 Jan 2026 05:48:46 GMT"
+    },
+    {
+      "path": "record/img/register1.jpg",
+      "status": "IDENTICAL",
+      "localBytes": 164554,
+      "remoteBytes": 164554,
+      "localSha": "c2112e2bb36688029cc5b50f9385f655b3dc41b14ae934d3bcd78e396b1b4bd4",
+      "remoteSha": "c2112e2bb36688029cc5b50f9385f655b3dc41b14ae934d3bcd78e396b1b4bd4",
+      "lastModified": "Wed, 07 Jan 2026 05:48:46 GMT"
+    },
+    {
+      "path": "record/img/text.png",
+      "status": "IDENTICAL",
+      "localBytes": 3569,
+      "remoteBytes": 3569,
+      "localSha": "8fb922ac91a79d17efcf3efdd472afc1a01b07f2142e697815bbcd5db1e8e5d6",
+      "remoteSha": "8fb922ac91a79d17efcf3efdd472afc1a01b07f2142e697815bbcd5db1e8e5d6",
+      "lastModified": "Wed, 07 Jan 2026 05:48:46 GMT"
+    },
+    {
+      "path": "record/js/bootstrap.bundle.min.js",
+      "status": "IDENTICAL",
+      "localBytes": 78743,
+      "remoteBytes": 78743,
+      "localSha": "7e1f1503df765cca5e099891b94e318a2ef95081ba2af1eb6d417cc884bfdbfe",
+      "remoteSha": "7e1f1503df765cca5e099891b94e318a2ef95081ba2af1eb6d417cc884bfdbfe",
+      "lastModified": "Wed, 07 Jan 2026 05:48:46 GMT"
+    },
+    {
+      "path": "record/style/bootstrap.css",
+      "status": "IDENTICAL",
+      "localBytes": 195703,
+      "remoteBytes": 195703,
+      "localSha": "27e8552f5ef74d82e3c766b4d2826e70507972c2ec4413f0af0c9893e64779e8",
+      "remoteSha": "27e8552f5ef74d82e3c766b4d2826e70507972c2ec4413f0af0c9893e64779e8",
+      "lastModified": "Wed, 07 Jan 2026 05:48:46 GMT"
+    },
+    {
+      "path": "record/style/responsive.css",
+      "status": "IDENTICAL",
+      "localBytes": 816,
+      "remoteBytes": 816,
+      "localSha": "218b3d055d3d1184016618a7403a09c38f13093a74f09499b3c773c9bb22fa02",
+      "remoteSha": "218b3d055d3d1184016618a7403a09c38f13093a74f09499b3c773c9bb22fa02",
+      "lastModified": "Wed, 07 Jan 2026 05:48:46 GMT"
+    },
+    {
+      "path": "record/style/style.css",
+      "status": "IDENTICAL",
+      "localBytes": 8021,
+      "remoteBytes": 8021,
+      "localSha": "8f7b87c736da9f38f6190e335608a1212da0780814174897bc55e51afeff72b2",
+      "remoteSha": "8f7b87c736da9f38f6190e335608a1212da0780814174897bc55e51afeff72b2",
+      "lastModified": "Wed, 07 Jan 2026 05:48:46 GMT"
+    },
+    {
+      "path": "uploaded_files/categories/08b48-Female.jpg",
+      "status": "IDENTICAL",
+      "localBytes": 17470,
+      "remoteBytes": 17470,
+      "localSha": "c752270f61213153f9fe89baa215508782a32f7164c7e5ac7d8596c7032d32ed",
+      "remoteSha": "c752270f61213153f9fe89baa215508782a32f7164c7e5ac7d8596c7032d32ed",
+      "lastModified": "Wed, 07 Jan 2026 05:48:46 GMT"
+    },
+    {
+      "path": "uploaded_files/categories/08b5a-throat.jpg",
+      "status": "IDENTICAL",
+      "localBytes": 16405,
+      "remoteBytes": 16405,
+      "localSha": "d58a3c53e817e5598ad39e5194d0e24794957c0d640a93284354f8353b803535",
+      "remoteSha": "d58a3c53e817e5598ad39e5194d0e24794957c0d640a93284354f8353b803535",
+      "lastModified": "Wed, 07 Jan 2026 05:48:46 GMT"
+    },
+    {
+      "path": "uploaded_files/categories/0b495-Respiratory.jpg",
+      "status": "IDENTICAL",
+      "localBytes": 24886,
+      "remoteBytes": 24886,
+      "localSha": "475eccf6cd24601e351a3ab4e6bd61077e3ddd34abc287bd8ed77a0969c523ef",
+      "remoteSha": "475eccf6cd24601e351a3ab4e6bd61077e3ddd34abc287bd8ed77a0969c523ef",
+      "lastModified": "Wed, 07 Jan 2026 05:48:46 GMT"
+    },
+    {
+      "path": "uploaded_files/categories/1673093507gUrinary.jpg",
+      "status": "IDENTICAL",
+      "localBytes": 8116,
+      "remoteBytes": 8116,
+      "localSha": "676e6cc3545b2694f084ad9bb014a2a039f129315175ac4fa167f001dcd3322a",
+      "remoteSha": "676e6cc3545b2694f084ad9bb014a2a039f129315175ac4fa167f001dcd3322a",
+      "lastModified": "Wed, 07 Jan 2026 05:48:47 GMT"
+    },
+    {
+      "path": "uploaded_files/categories/17ae2-Mouth-and-tongue.jpg",
+      "status": "IDENTICAL",
+      "localBytes": 25738,
+      "remoteBytes": 25738,
+      "localSha": "40155c11bfb31f651bb21e45c08a1176c1ce1724ee5d05be9d1eede888dfe83c",
+      "remoteSha": "40155c11bfb31f651bb21e45c08a1176c1ce1724ee5d05be9d1eede888dfe83c",
+      "lastModified": "Wed, 07 Jan 2026 05:48:47 GMT"
+    },
+    {
+      "path": "uploaded_files/categories/30720-heart.jpg",
+      "status": "IDENTICAL",
+      "localBytes": 35540,
+      "remoteBytes": 35540,
+      "localSha": "1c87b61678ffe0325c26992e601dac8d5ec9bd78658ca24651793a9d319c1622",
+      "remoteSha": "1c87b61678ffe0325c26992e601dac8d5ec9bd78658ca24651793a9d319c1622",
+      "lastModified": "Wed, 07 Jan 2026 05:48:47 GMT"
+    },
+    {
+      "path": "uploaded_files/categories/3194b-gall-bladder.jpg",
+      "status": "IDENTICAL",
+      "localBytes": 33923,
+      "remoteBytes": 33923,
+      "localSha": "04f115f0848cbdcdf3923d5c8fe4c9171c3ce91f6765a0e73afc0de979ef6f1d",
+      "remoteSha": "04f115f0848cbdcdf3923d5c8fe4c9171c3ce91f6765a0e73afc0de979ef6f1d",
+      "lastModified": "Wed, 07 Jan 2026 05:48:47 GMT"
+    },
+    {
+      "path": "uploaded_files/categories/34a6c-Lifestyle.jpg",
+      "status": "IDENTICAL",
+      "localBytes": 20509,
+      "remoteBytes": 20509,
+      "localSha": "4afd8be957719ff66aacbb4dda7289d1238fd01531042d763744a9b22e0f89cb",
+      "remoteSha": "4afd8be957719ff66aacbb4dda7289d1238fd01531042d763744a9b22e0f89cb",
+      "lastModified": "Wed, 07 Jan 2026 05:48:48 GMT"
+    },
+    {
+      "path": "uploaded_files/categories/3802b-Children-Disease.jpg",
+      "status": "IDENTICAL",
+      "localBytes": 20699,
+      "remoteBytes": 20699,
+      "localSha": "4dc4480cb88eb29847089a31b5c9f62fd3cdcea660b70567c2fd1d93c06b1ab3",
+      "remoteSha": "4dc4480cb88eb29847089a31b5c9f62fd3cdcea660b70567c2fd1d93c06b1ab3",
+      "lastModified": "Wed, 07 Jan 2026 05:48:48 GMT"
+    },
+    {
+      "path": "uploaded_files/categories/3c97d-Bones.jpg",
+      "status": "IDENTICAL",
+      "localBytes": 30701,
+      "remoteBytes": 30701,
+      "localSha": "82761986fdc9e33286f842c40f1ff52a515ec1ab34a90d454154c57285e65f3e",
+      "remoteSha": "82761986fdc9e33286f842c40f1ff52a515ec1ab34a90d454154c57285e65f3e",
+      "lastModified": "Wed, 07 Jan 2026 05:48:48 GMT"
+    },
+    {
+      "path": "uploaded_files/categories/5224f-Eye.jpg",
+      "status": "IDENTICAL",
+      "localBytes": 18450,
+      "remoteBytes": 18450,
+      "localSha": "d916af9b1945ab3193c3f60c4a7af14ed77f18a0cec52c08116af80c0b2fcfe9",
+      "remoteSha": "d916af9b1945ab3193c3f60c4a7af14ed77f18a0cec52c08116af80c0b2fcfe9",
+      "lastModified": "Wed, 07 Jan 2026 05:48:48 GMT"
+    },
+    {
+      "path": "uploaded_files/categories/6598e-Ear.jpg",
+      "status": "IDENTICAL",
+      "localBytes": 33460,
+      "remoteBytes": 33460,
+      "localSha": "05b60a7d7356af5d685e02613621be5de8df4bbc5215cec5797cd1af68828a4b",
+      "remoteSha": "05b60a7d7356af5d685e02613621be5de8df4bbc5215cec5797cd1af68828a4b",
+      "lastModified": "Wed, 07 Jan 2026 05:48:48 GMT"
+    },
+    {
+      "path": "uploaded_files/categories/783e0-skin.jpg",
+      "status": "IDENTICAL",
+      "localBytes": 20934,
+      "remoteBytes": 20934,
+      "localSha": "285777119bd7e7a41ed7d68d5fbd192aca21a1997002ad40b1b35676aa34e0e3",
+      "remoteSha": "285777119bd7e7a41ed7d68d5fbd192aca21a1997002ad40b1b35676aa34e0e3",
+      "lastModified": "Wed, 07 Jan 2026 05:48:48 GMT"
+    },
+    {
+      "path": "uploaded_files/categories/8f0cf-Liver.jpg",
+      "status": "IDENTICAL",
+      "localBytes": 31049,
+      "remoteBytes": 31049,
+      "localSha": "342658eaa4f8d48d49c2f21b8f82dfa32caa2d59277d8e76fa39023b66f95be0",
+      "remoteSha": "342658eaa4f8d48d49c2f21b8f82dfa32caa2d59277d8e76fa39023b66f95be0",
+      "lastModified": "Wed, 07 Jan 2026 05:48:48 GMT"
+    },
+    {
+      "path": "uploaded_files/categories/9f29b-Cancer.jpg",
+      "status": "IDENTICAL",
+      "localBytes": 28666,
+      "remoteBytes": 28666,
+      "localSha": "a1ed0dc5b85e26e220f19fa73ea2ac4a069e93451c901e3ea9c00c179a4965a6",
+      "remoteSha": "a1ed0dc5b85e26e220f19fa73ea2ac4a069e93451c901e3ea9c00c179a4965a6",
+      "lastModified": "Wed, 07 Jan 2026 05:48:48 GMT"
+    },
+    {
+      "path": "uploaded_files/categories/a548b-Nose.jpg",
+      "status": "IDENTICAL",
+      "localBytes": 17828,
+      "remoteBytes": 17828,
+      "localSha": "f4ddf4a1bb9adcc1449564670e1ddeca62cb9ee629cdabb906394245bf814316",
+      "remoteSha": "f4ddf4a1bb9adcc1449564670e1ddeca62cb9ee629cdabb906394245bf814316",
+      "lastModified": "Wed, 07 Jan 2026 05:48:48 GMT"
+    },
+    {
+      "path": "uploaded_files/categories/aa85f-male.jpg",
+      "status": "IDENTICAL",
+      "localBytes": 24888,
+      "remoteBytes": 24888,
+      "localSha": "d39822dbf4019e07090af7c39ef62a351b20b61fe989d326b951e7cdc2e7bd3a",
+      "remoteSha": "d39822dbf4019e07090af7c39ef62a351b20b61fe989d326b951e7cdc2e7bd3a",
+      "lastModified": "Wed, 07 Jan 2026 05:48:48 GMT"
+    },
+    {
+      "path": "uploaded_files/categories/c4852-Infectious.jpg",
+      "status": "IDENTICAL",
+      "localBytes": 16216,
+      "remoteBytes": 16216,
+      "localSha": "4654850053ba8c6cac36cc4426642a4b056b7018fad33f7619df2f9bcacc8933",
+      "remoteSha": "4654850053ba8c6cac36cc4426642a4b056b7018fad33f7619df2f9bcacc8933",
+      "lastModified": "Wed, 07 Jan 2026 05:48:48 GMT"
+    },
+    {
+      "path": "uploaded_files/categories/d9531-Digestion.jpg",
+      "status": "IDENTICAL",
+      "localBytes": 30892,
+      "remoteBytes": 30892,
+      "localSha": "30f01a5841d49c00b2158f68ad7ad118a9154b3ec719be50a03781077b7a7dc3",
+      "remoteSha": "30f01a5841d49c00b2158f68ad7ad118a9154b3ec719be50a03781077b7a7dc3",
+      "lastModified": "Wed, 07 Jan 2026 05:48:48 GMT"
+    },
+    {
+      "path": "uploaded_files/categories/dcb59-teeth-disease.jpg",
+      "status": "IDENTICAL",
+      "localBytes": 14449,
+      "remoteBytes": 14449,
+      "localSha": "f59f301ffd79c70726df5df673ca19716c12b8337afbc816fe824b47fabb051e",
+      "remoteSha": "f59f301ffd79c70726df5df673ca19716c12b8337afbc816fe824b47fabb051e",
+      "lastModified": "Wed, 07 Jan 2026 05:48:48 GMT"
+    },
+    {
+      "path": "uploaded_files/categories/ddb94-Brain.jpg",
+      "status": "IDENTICAL",
+      "localBytes": 31811,
+      "remoteBytes": 31811,
+      "localSha": "ec5216531a25b9c0582629e0d8b54f704c1165d0ddf3153afc06c30caf361b78",
+      "remoteSha": "ec5216531a25b9c0582629e0d8b54f704c1165d0ddf3153afc06c30caf361b78",
+      "lastModified": "Wed, 07 Jan 2026 05:48:48 GMT"
+    },
+    {
+      "path": "uploaded_files/categories/f83af-Hair-disease.jpg",
+      "status": "IDENTICAL",
+      "localBytes": 21154,
+      "remoteBytes": 21154,
+      "localSha": "59fbef77f8609761d3a1af9c2c2dda0d2f37b5f45798a2da2fdbcc9db0db35b7",
+      "remoteSha": "59fbef77f8609761d3a1af9c2c2dda0d2f37b5f45798a2da2fdbcc9db0db35b7",
+      "lastModified": "Wed, 07 Jan 2026 05:48:48 GMT"
+    },
+    {
+      "path": "uploaded_files/post/1632112650gth (1).jpg",
+      "status": "IDENTICAL",
+      "localBytes": 9312,
+      "remoteBytes": 9312,
+      "localSha": "a27f5b5b2abc5ccba2c9e64975c8f63f31783437e375f14869ab61005882a126",
+      "remoteSha": "a27f5b5b2abc5ccba2c9e64975c8f63f31783437e375f14869ab61005882a126",
+      "lastModified": "Wed, 07 Jan 2026 05:48:50 GMT"
+    },
+    {
+      "path": "uploaded_files/post/1672918972g036fc-Ankylosing.png",
+      "status": "IDENTICAL",
+      "localBytes": 169126,
+      "remoteBytes": 169126,
+      "localSha": "919d5f65346b46a6a2f1442dad32ee738669fc81bd2d013fc49441a3ed37405b",
+      "remoteSha": "919d5f65346b46a6a2f1442dad32ee738669fc81bd2d013fc49441a3ed37405b",
+      "lastModified": "Wed, 07 Jan 2026 05:48:53 GMT"
+    },
+    {
+      "path": "uploaded_files/post/1673424383ga.jpg",
+      "status": "IDENTICAL",
+      "localBytes": 31058,
+      "remoteBytes": 31058,
+      "localSha": "4e8a06ba3e739000ae16f3d04bebaced85743a201612c32aaa5e464b5f29b6be",
+      "remoteSha": "4e8a06ba3e739000ae16f3d04bebaced85743a201612c32aaa5e464b5f29b6be",
+      "lastModified": "Wed, 07 Jan 2026 05:48:53 GMT"
+    },
+    {
+      "path": "uploaded_files/post/223c8-Chest pain.jpg",
+      "status": "IDENTICAL",
+      "localBytes": 206018,
+      "remoteBytes": 206018,
+      "localSha": "f9ff9adeef0e09cf1c0565e4540262f7ecab1e3832644ecb94c9c3c837f6aeb6",
+      "remoteSha": "f9ff9adeef0e09cf1c0565e4540262f7ecab1e3832644ecb94c9c3c837f6aeb6",
+      "lastModified": "Wed, 07 Jan 2026 05:49:43 GMT"
+    },
+    {
+      "path": "uploaded_files/post/22928-Amnesia.jpg",
+      "status": "IDENTICAL",
+      "localBytes": 17395,
+      "remoteBytes": 17395,
+      "localSha": "978033cd964b26ef0c7331eb5ef4a8ab616aea6ca160073b18db05a46d58aa92",
+      "remoteSha": "978033cd964b26ef0c7331eb5ef4a8ab616aea6ca160073b18db05a46d58aa92",
+      "lastModified": "Wed, 07 Jan 2026 05:49:43 GMT"
+    },
+    {
+      "path": "uploaded_files/post/24654-childhood-cancer.gif",
+      "status": "IDENTICAL",
+      "localBytes": 73545,
+      "remoteBytes": 73545,
+      "localSha": "a99fcf7439153450a00c8eaacb4075e971da1a8c3be6171f33ee69a624a074c8",
+      "remoteSha": "a99fcf7439153450a00c8eaacb4075e971da1a8c3be6171f33ee69a624a074c8",
+      "lastModified": "Wed, 07 Jan 2026 05:49:43 GMT"
+    },
+    {
+      "path": "uploaded_files/post/30c7c-Backpain.jpg",
+      "status": "IDENTICAL",
+      "localBytes": 22680,
+      "remoteBytes": 22680,
+      "localSha": "066babb6db2d35b3fe2a6af657af80837bb3347acbe04b2bff0a1d4c93d26965",
+      "remoteSha": "066babb6db2d35b3fe2a6af657af80837bb3347acbe04b2bff0a1d4c93d26965",
+      "lastModified": "Wed, 07 Jan 2026 05:49:44 GMT"
+    },
+    {
+      "path": "uploaded_files/post/34451-Filariasis.jpg",
+      "status": "IDENTICAL",
+      "localBytes": 38091,
+      "remoteBytes": 38091,
+      "localSha": "7748646e6c058663bc81fc2b28f09f134be08aca8ba029b067512e3e5cd5bfbb",
+      "remoteSha": "7748646e6c058663bc81fc2b28f09f134be08aca8ba029b067512e3e5cd5bfbb",
+      "lastModified": "Wed, 07 Jan 2026 05:49:44 GMT"
+    },
+    {
+      "path": "uploaded_files/post/432bf-bone and health.jpg",
+      "status": "IDENTICAL",
+      "localBytes": 95228,
+      "remoteBytes": 95228,
+      "localSha": "8ae0bc1747985e975ec27811468e7130d2ee00309b55a47bc28166a28d97eb8c",
+      "remoteSha": "8ae0bc1747985e975ec27811468e7130d2ee00309b55a47bc28166a28d97eb8c",
+      "lastModified": "Wed, 07 Jan 2026 05:49:46 GMT"
+    },
+    {
+      "path": "uploaded_files/post/52db6-Cerebral-palsy.jpg",
+      "status": "IDENTICAL",
+      "localBytes": 34655,
+      "remoteBytes": 34655,
+      "localSha": "5c3af15319d59364b3c6e22a2d9166952e9c4429eee502926b84da6118726754",
+      "remoteSha": "5c3af15319d59364b3c6e22a2d9166952e9c4429eee502926b84da6118726754",
+      "lastModified": "Wed, 07 Jan 2026 05:49:48 GMT"
+    },
+    {
+      "path": "uploaded_files/post/744ed-Diffuse-Idiopathic-Skeletal.jpg",
+      "status": "IDENTICAL",
+      "localBytes": 61542,
+      "remoteBytes": 61542,
+      "localSha": "796bbff75e9378bf735e06cbcb6cbce2edc2f324751469873ee81b1163a997a6",
+      "remoteSha": "796bbff75e9378bf735e06cbcb6cbce2edc2f324751469873ee81b1163a997a6",
+      "lastModified": "Wed, 07 Jan 2026 05:49:51 GMT"
+    },
+    {
+      "path": "uploaded_files/post/847f0-Brain-tumor.gif",
+      "status": "IDENTICAL",
+      "localBytes": 47435,
+      "remoteBytes": 47435,
+      "localSha": "875a54e8497a4111531051fdb2f6c4017b596bb8680dfc4bda04209522e36929",
+      "remoteSha": "875a54e8497a4111531051fdb2f6c4017b596bb8680dfc4bda04209522e36929",
+      "lastModified": "Wed, 07 Jan 2026 05:49:52 GMT"
+    },
+    {
+      "path": "uploaded_files/post/88753-Cervical-cancer-i.gif",
+      "status": "IDENTICAL",
+      "localBytes": 44283,
+      "remoteBytes": 44283,
+      "localSha": "2c20f66c7f42caae595818c5eb8e911969fbb16422fdd3e7c019037e2f35f1b3",
+      "remoteSha": "2c20f66c7f42caae595818c5eb8e911969fbb16422fdd3e7c019037e2f35f1b3",
+      "lastModified": "Wed, 07 Jan 2026 05:49:53 GMT"
+    },
+    {
+      "path": "uploaded_files/post/9e989-Anorexia.jpg",
+      "status": "IDENTICAL",
+      "localBytes": 16734,
+      "remoteBytes": 16734,
+      "localSha": "467b475f6c6daf32a4b9ebe6d1949518243a904188bbda04588783d647a798e9",
+      "remoteSha": "467b475f6c6daf32a4b9ebe6d1949518243a904188bbda04588783d647a798e9",
+      "lastModified": "Wed, 07 Jan 2026 05:49:56 GMT"
+    },
+    {
+      "path": "uploaded_files/post/a85c5-Arthritis.jpg",
+      "status": "IDENTICAL",
+      "localBytes": 47478,
+      "remoteBytes": 47478,
+      "localSha": "e0058f670d6655a330060d81df7f15338eb58c2eae9d816d9f248dca85f01bbf",
+      "remoteSha": "e0058f670d6655a330060d81df7f15338eb58c2eae9d816d9f248dca85f01bbf",
+      "lastModified": "Wed, 07 Jan 2026 05:49:57 GMT"
+    },
+    {
+      "path": "uploaded_files/post/ad94d-Acromegaly.jpg",
+      "status": "IDENTICAL",
+      "localBytes": 17129,
+      "remoteBytes": 17129,
+      "localSha": "880669d8d947100dab29f0525ca482ae94a27db8997be52c32badb5e1b249d6f",
+      "remoteSha": "880669d8d947100dab29f0525ca482ae94a27db8997be52c32badb5e1b249d6f",
+      "lastModified": "Wed, 07 Jan 2026 05:49:58 GMT"
+    },
+    {
+      "path": "uploaded_files/post/aeed8-Colon-cancer.gif",
+      "status": "IDENTICAL",
+      "localBytes": 47618,
+      "remoteBytes": 47618,
+      "localSha": "6a2d67cf360d05dcce07f4865f6c3022018c56a459a8be0ca96ffbf0dc1efccf",
+      "remoteSha": "6a2d67cf360d05dcce07f4865f6c3022018c56a459a8be0ca96ffbf0dc1efccf",
+      "lastModified": "Wed, 07 Jan 2026 05:49:58 GMT"
+    },
+    {
+      "path": "uploaded_files/post/b8dca-Breast-cancer.gif",
+      "status": "IDENTICAL",
+      "localBytes": 64686,
+      "remoteBytes": 64686,
+      "localSha": "bf24f23294a654a529f1eb7d3b0658aadc54e25a1e9a381a164a37f5cc6e0e7a",
+      "remoteSha": "bf24f23294a654a529f1eb7d3b0658aadc54e25a1e9a381a164a37f5cc6e0e7a",
+      "lastModified": "Wed, 07 Jan 2026 05:49:59 GMT"
+    },
+    {
+      "path": "uploaded_files/post/be95d-Blood-cancer.gif",
+      "status": "IDENTICAL",
+      "localBytes": 94556,
+      "remoteBytes": 94556,
+      "localSha": "1f2d6dc4197de62ca6cfc6c6aa5da3eeef38eae34a017fff1394b2be7db20fb1",
+      "remoteSha": "1f2d6dc4197de62ca6cfc6c6aa5da3eeef38eae34a017fff1394b2be7db20fb1",
+      "lastModified": "Wed, 07 Jan 2026 05:50:00 GMT"
+    },
+    {
+      "path": "uploaded_files/post/cf6ff-kidney-cancer.gif",
+      "status": "IDENTICAL",
+      "localBytes": 84354,
+      "remoteBytes": 84354,
+      "localSha": "38ea8da71a952245f9496143aec84dc3242687200ab54f2514452b0ad4fbc670",
+      "remoteSha": "38ea8da71a952245f9496143aec84dc3242687200ab54f2514452b0ad4fbc670",
+      "lastModified": "Wed, 07 Jan 2026 05:50:02 GMT"
+    },
+    {
+      "path": "uploaded_files/post/df74f-Brain-Hemorrhage.jpg",
+      "status": "IDENTICAL",
+      "localBytes": 23247,
+      "remoteBytes": 23247,
+      "localSha": "b1035b81dc3ce12cca7ba358d63fc41116c5d921fa2c96aa7b1d37bf3383d161",
+      "remoteSha": "b1035b81dc3ce12cca7ba358d63fc41116c5d921fa2c96aa7b1d37bf3383d161",
+      "lastModified": "Wed, 07 Jan 2026 05:50:05 GMT"
+    },
+    {
+      "path": "uploaded_files/post/e2c8d-Bipolar-disorder.jpg",
+      "status": "IDENTICAL",
+      "localBytes": 22917,
+      "remoteBytes": 22917,
+      "localSha": "dc47cfebd7470a02f9da56d40da478a36de0f85e073262cec2c95114501701a9",
+      "remoteSha": "dc47cfebd7470a02f9da56d40da478a36de0f85e073262cec2c95114501701a9",
+      "lastModified": "Wed, 07 Jan 2026 05:50:06 GMT"
+    },
+    {
+      "path": "uploaded_files/post/f9134-Adjustment-Disorder.jpg",
+      "status": "IDENTICAL",
+      "localBytes": 18429,
+      "remoteBytes": 18429,
+      "localSha": "57513bc04bcc9475cf182f134c5336f79e5004c7a7e10e9e25573fa199fbde0b",
+      "remoteSha": "57513bc04bcc9475cf182f134c5336f79e5004c7a7e10e9e25573fa199fbde0b",
+      "lastModified": "Wed, 07 Jan 2026 05:50:13 GMT"
+    },
+    {
+      "path": "uploaded_files/post/fd69f-Fibromyalgia.jpg",
+      "status": "IDENTICAL",
+      "localBytes": 64623,
+      "remoteBytes": 64623,
+      "localSha": "a242fb6adeba9b6cf989dc135b6cabbcf02bc8cc34b5104c6ee6f2bc877cdc4c",
+      "remoteSha": "a242fb6adeba9b6cf989dc135b6cabbcf02bc8cc34b5104c6ee6f2bc877cdc4c",
+      "lastModified": "Wed, 07 Jan 2026 05:50:13 GMT"
+    },
+    {
+      "path": "uploaded_files/products/1673001566g2.png",
+      "status": "IDENTICAL",
+      "localBytes": 426879,
+      "remoteBytes": 426879,
+      "localSha": "41a95735e2bf953ba1c6b2afe3203dad5283872657ae587331fb0b6bd4a60758",
+      "remoteSha": "41a95735e2bf953ba1c6b2afe3203dad5283872657ae587331fb0b6bd4a60758",
+      "lastModified": "Wed, 07 Jan 2026 05:48:57 GMT"
+    },
+    {
+      "path": "uploaded_files/products/1673001566gbone2.jpg",
+      "status": "IDENTICAL",
+      "localBytes": 156283,
+      "remoteBytes": 156283,
+      "localSha": "ece4edb6ff5856c3f41e006ecccefd9970544666add16db121d1a43bec61b8fe",
+      "remoteSha": "ece4edb6ff5856c3f41e006ecccefd9970544666add16db121d1a43bec61b8fe",
+      "lastModified": "Wed, 07 Jan 2026 05:48:57 GMT"
+    },
+    {
+      "path": "uploaded_files/products/1673001566gRhus-tox.png",
+      "status": "IDENTICAL",
+      "localBytes": 282814,
+      "remoteBytes": 282814,
+      "localSha": "43285044822832c42347bb2f2bc43c82beae2f3ed4f2cfb2c0ec05aa441b37b3",
+      "remoteSha": "43285044822832c42347bb2f2bc43c82beae2f3ed4f2cfb2c0ec05aa441b37b3",
+      "lastModified": "Wed, 07 Jan 2026 05:48:58 GMT"
+    },
+    {
+      "path": "uploaded_files/products/1673005250g3.png",
+      "status": "IDENTICAL",
+      "localBytes": 420859,
+      "remoteBytes": 420859,
+      "localSha": "b31ae2c5b3a29c521aff6c2621e1c630944aa01e58a20857f7289f9a3e8e7cf8",
+      "remoteSha": "b31ae2c5b3a29c521aff6c2621e1c630944aa01e58a20857f7289f9a3e8e7cf8",
+      "lastModified": "Wed, 07 Jan 2026 05:48:58 GMT"
+    },
+    {
+      "path": "uploaded_files/products/1673005250gbone3.jpg",
+      "status": "IDENTICAL",
+      "localBytes": 154790,
+      "remoteBytes": 154790,
+      "localSha": "c3ab157a0c830a98c29ce74732da6af332eaf0a7721c6e3458ef4273c02fdbdd",
+      "remoteSha": "c3ab157a0c830a98c29ce74732da6af332eaf0a7721c6e3458ef4273c02fdbdd",
+      "lastModified": "Wed, 07 Jan 2026 05:48:58 GMT"
+    },
+    {
+      "path": "uploaded_files/products/1673005250gRhus-tox.png",
+      "status": "IDENTICAL",
+      "localBytes": 282814,
+      "remoteBytes": 282814,
+      "localSha": "43285044822832c42347bb2f2bc43c82beae2f3ed4f2cfb2c0ec05aa441b37b3",
+      "remoteSha": "43285044822832c42347bb2f2bc43c82beae2f3ed4f2cfb2c0ec05aa441b37b3",
+      "lastModified": "Wed, 07 Jan 2026 05:48:58 GMT"
+    },
+    {
+      "path": "uploaded_files/products/1673007350g3.png",
+      "status": "IDENTICAL",
+      "localBytes": 260840,
+      "remoteBytes": 260840,
+      "localSha": "315ddd83587b1fcf04ab50a093bd4ab4465ff11ae3054f34d55a07a776a0fb46",
+      "remoteSha": "315ddd83587b1fcf04ab50a093bd4ab4465ff11ae3054f34d55a07a776a0fb46",
+      "lastModified": "Wed, 07 Jan 2026 05:48:58 GMT"
+    },
+    {
+      "path": "uploaded_files/products/1673075820g5.png",
+      "status": "IDENTICAL",
+      "localBytes": 429025,
+      "remoteBytes": 429025,
+      "localSha": "07164af573427d25148aa685fc43a5d22073b587d2dfb1fa360d6829bfb7693e",
+      "remoteSha": "07164af573427d25148aa685fc43a5d22073b587d2dfb1fa360d6829bfb7693e",
+      "lastModified": "Wed, 07 Jan 2026 05:48:58 GMT"
+    },
+    {
+      "path": "uploaded_files/products/1673075820gbone5.jpg",
+      "status": "IDENTICAL",
+      "localBytes": 27575,
+      "remoteBytes": 27575,
+      "localSha": "666115b700ba194c3ab7e279c6e03c56a5074c30afcb448d7386b433b969d706",
+      "remoteSha": "666115b700ba194c3ab7e279c6e03c56a5074c30afcb448d7386b433b969d706",
+      "lastModified": "Wed, 07 Jan 2026 05:48:58 GMT"
+    },
+    {
+      "path": "uploaded_files/products/1673075820gRhus-tox.png",
+      "status": "IDENTICAL",
+      "localBytes": 282814,
+      "remoteBytes": 282814,
+      "localSha": "43285044822832c42347bb2f2bc43c82beae2f3ed4f2cfb2c0ec05aa441b37b3",
+      "remoteSha": "43285044822832c42347bb2f2bc43c82beae2f3ed4f2cfb2c0ec05aa441b37b3",
+      "lastModified": "Wed, 07 Jan 2026 05:48:58 GMT"
+    },
+    {
+      "path": "uploaded_files/products/1673082751g5.png",
+      "status": "IDENTICAL",
+      "localBytes": 261818,
+      "remoteBytes": 261818,
+      "localSha": "41f2e0c807eeb591f1489dfafe822e11c84a95730bbe474764a9847f1aba8ba0",
+      "remoteSha": "41f2e0c807eeb591f1489dfafe822e11c84a95730bbe474764a9847f1aba8ba0",
+      "lastModified": "Wed, 07 Jan 2026 05:48:59 GMT"
+    },
+    {
+      "path": "uploaded_files/products/1676292635g_22.png",
+      "status": "IDENTICAL",
+      "localBytes": 265162,
+      "remoteBytes": 265162,
+      "localSha": "a9ab0e7c7f76525835d3cb6a5a4dd53b8a7ef9f4ddf9cd6b74516dbf2f9b74f3",
+      "remoteSha": "a9ab0e7c7f76525835d3cb6a5a4dd53b8a7ef9f4ddf9cd6b74516dbf2f9b74f3",
+      "lastModified": "Wed, 07 Jan 2026 05:51:33 GMT"
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+# src/actions — Next.js Server Actions
+#
+# EMPTY IN MILESTONE 0 BY DESIGN.
+#
+# Replaces Laravel controller methods that handle POST form submissions.
+# See blueprint.md §18.1 for the Laravel-to-Next.js concept mapping and
+# §8 for the inventory of all 36 forms.
+#
+# CONTRACT IR-5: validation must be copied EXACTLY, including the ABSENCE
+# of validation (e.g. the appointment form validates nothing).
