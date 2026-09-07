@@ -73,4 +73,24 @@ describe('getMongoClient production guard', () => {
     await getMongoClient();
     expect(connectMock).toHaveBeenCalledTimes(1);
   });
+
+  it('does NOT cache a client whose connect() rejected — a later call retries instead of reusing the dead client (regression, found+disclosed in GATE-REPORT-M5-CART.md §6, fixed pre-M6)', async () => {
+    process.env.MONGODB_URI = 'mongodb://localhost:27017';
+    process.env.MONGODB_DB_NAME = 'spaks_dev';
+    process.env.MONGODB_ENV = 'development';
+
+    connectMock.mockRejectedValueOnce(new Error('simulated transient connection failure'));
+
+    const { getMongoClient } = await import('@/lib/mongodb/client');
+
+    await expect(getMongoClient()).rejects.toThrow('simulated transient connection failure');
+
+    // If the failed client had been cached (the original bug), this second
+    // call would short-circuit on `if (client) return client;` and connect()
+    // would NOT be called again. The fix means it retries with a fresh
+    // client instead.
+    connectMock.mockResolvedValueOnce(undefined);
+    await getMongoClient();
+    expect(connectMock).toHaveBeenCalledTimes(2);
+  });
 });

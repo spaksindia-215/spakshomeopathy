@@ -1,7 +1,10 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { AdminStylesheets } from '@/components/admin/AdminStylesheets';
-import { getAdminPinCodeByLegacyId } from '@/lib/demo/admin';
+import { getDb } from '@/lib/mongodb/client';
+import { PinCodeRepository } from '@/lib/mongodb/repositories/pinCodeRepository';
+import { generateCsrfToken } from '@/lib/auth/csrf';
+import { readAndClearFlash } from '@/lib/auth/flash';
 
 /**
  * `/admin/edit-pincode/[id]` — ported from `admin/edit-pincode.blade.php`
@@ -10,13 +13,20 @@ import { getAdminPinCodeByLegacyId } from '@/lib/demo/admin';
  *
  * DELIBERATE CONTRAST WITH `add-pin-code`: this page's equivalent Status
  * `<select>` is well-formed — `name="pin_status"` (source line 109, no
- * stray quote) — confirmed directly this session. Do NOT "fix" Add to
- * match Edit, or "break" Edit to match Add; both are reproduced exactly
- * as they independently exist in source.
+ * stray quote) — confirmed directly this session. This was ALREADY
+ * correct before M5-E's Fix Register FIX-002 corrected Add's corrupted
+ * attribute to match — Edit itself required no change here, both forms
+ * simply converge on the same correct attribute name now, for two
+ * different reasons (Edit: never broken; Add: explicitly fixed).
  *
- * Same B-09 field-name caveat as `pin-code-list` applies to what this
- * form pre-fills from (`pincode`/`location`/`status`, the real column
- * names) — see that page's header for the full context.
+ * M5-E: switched from `@/lib/demo/admin`'s static fixture to a live
+ * `spaks_dev` read (`PinCodeRepository.findByLegacyId`), CSRF-token-wired
+ * (source has `{{csrf_field()}}` on this form), and the
+ * `session()->has('message')` success flash is now rendered (was
+ * previously unwired). Same B-09/DR-03 field-name mapping as
+ * `pin-code-list` (real columns `pincode`/`location`/`status` — see that
+ * page's header for the full context; DR-03 itself is RESOLVED per
+ * `pinCodeRepository.ts`'s header).
  */
 export const metadata: Metadata = {
   title: 'Admin Panel | Edit Pin Code',
@@ -29,11 +39,17 @@ export default async function AdminEditPinCodePage({
 }) {
   const { id } = await params;
   const legacyId = Number(id);
-  const pincode = Number.isFinite(legacyId) ? getAdminPinCodeByLegacyId(legacyId) : undefined;
+
+  const db = await getDb();
+  const repo = new PinCodeRepository(db);
+  const pincode = Number.isFinite(legacyId) ? await repo.findByLegacyId(legacyId) : null;
 
   if (!pincode) {
     notFound();
   }
+
+  const csrfToken = generateCsrfToken();
+  const message = await readAndClearFlash('message');
 
   return (
     <>
@@ -57,7 +73,9 @@ export default async function AdminEditPinCodePage({
 
       <section className="content">
         <div className="row">
+          {message !== null && <div className="alert alert-success">{message}</div>}
           <form method="post" action="/admin/update-pincode">
+            <input type="hidden" name="_token" value={csrfToken} />
             <input type="hidden" name="pin_id" value={pincode.legacyId} />
 
             <div className="col-md-6">

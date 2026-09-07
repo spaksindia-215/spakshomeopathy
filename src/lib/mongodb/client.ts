@@ -81,8 +81,20 @@ export async function getMongoClient(): Promise<MongoClient> {
     throw new ProductionConnectionBlockedError();
   }
 
-  client = new MongoClient(config.uri);
-  await client.connect();
+  // Held in a local until `.connect()` succeeds, and only THEN assigned to
+  // the module-level `client`. Assigning before `.connect()` resolves (the
+  // original bug here, found during M5-Cart, 2026-08-31, and left
+  // unfixed at the time as infrastructure-only / out of that slice's
+  // scope — see docs/GATE-REPORT-M5-CART.md §6) meant a failed connection
+  // attempt still got cached: `if (client) return client;` above would
+  // then short-circuit every later call in the same process onto a
+  // client that never actually connected, surfacing as
+  // MongoTopologyClosedError on every subsequent call until the process
+  // restarted. This mirrors the pattern `src/lib/herbs/db/client.ts` and
+  // `src/lib/motherTincture/db/client.ts` already use correctly.
+  const candidate = new MongoClient(config.uri);
+  await candidate.connect();
+  client = candidate;
   return client;
 }
 

@@ -1,13 +1,20 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { AdminStylesheets } from '@/components/admin/AdminStylesheets';
-import { getAllBlogCategories } from '@/lib/demo';
+import { getDb } from '@/lib/mongodb/client';
+import { BlogCategoryRepository } from '@/lib/mongodb/repositories/blogCategoryRepository';
+import { readAndClearFlash } from '@/lib/auth/flash';
 
 /**
  * `/admin/blog-category-list` — ported from `admin/blog-category-list.blade.php`
  * (152 lines), `AdminController@BlogCategoryList`. Also absent from the
  * sidebar nav (same as the rest of the Blog module) — not reproduced
  * with an added nav link.
+ *
+ * M5-E: switched from `@/lib/demo`'s static fixture to a live `spaks_dev`
+ * read (`BlogCategoryRepository.findAllDescending`), now that the write
+ * path is real — avoids the half-migrated trap, same discipline as
+ * pincode/slider. Success flash now rendered too.
  *
  * PRESERVED DEFECTS:
  *   - Image fallback to `assets/img/no-image.png`, gated by a real
@@ -36,8 +43,11 @@ function formatCreatedAt(date: Date | null): string {
   return `${day}, ${month} ${year}`;
 }
 
-export default function AdminBlogCategoryListPage() {
-  const categories = getAllBlogCategories();
+export default async function AdminBlogCategoryListPage() {
+  const db = await getDb();
+  const repo = new BlogCategoryRepository(db);
+  const categories = await repo.findAllDescending();
+  const message = await readAndClearFlash('message');
 
   return (
     <>
@@ -61,6 +71,7 @@ export default function AdminBlogCategoryListPage() {
 
       <section className="content">
         <div className="row">
+          {message !== null && <div className="alert alert-success">{message}</div>}
           <div className="col-xs-12">
             <div className="box">
               <div className="box-body">

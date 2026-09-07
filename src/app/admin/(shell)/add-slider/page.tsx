@@ -1,10 +1,18 @@
 import type { Metadata } from 'next';
 import { AdminStylesheets } from '@/components/admin/AdminStylesheets';
+import { generateCsrfToken } from '@/lib/auth/csrf';
+import { readAndClearFlash } from '@/lib/auth/flash';
 
 /**
  * `/admin/add-slider` — ported from `admin/add-slider.blade.php` (165
  * lines), `AdminController@AddSlider` (GET) / `SaveSlider` (POST, to
  * `admin/save-slider`).
+ *
+ * M5-E: form now POSTs for real (`src/app/admin/save-slider/route.ts`),
+ * CSRF-token-wired (source has `{{csrf_field()}}`), success flash
+ * rendered. D-04 RESOLVED this slice (Fix Register FIX-003) — uploads are
+ * now extension-whitelisted and filename-sanitized; see
+ * `src/lib/uploads/adminUpload.ts`'s header for the full reasoning.
  *
  * PRESERVED DEFECT: Bootstrap CSS loaded twice, same as every other
  * Add/Edit page in this migration.
@@ -13,7 +21,10 @@ export const metadata: Metadata = {
   title: 'Admin Panel | Add Slider',
 };
 
-export default function AdminAddSliderPage() {
+export default async function AdminAddSliderPage() {
+  const csrfToken = generateCsrfToken();
+  const message = await readAndClearFlash('message');
+
   return (
     <>
       <AdminStylesheets />
@@ -36,7 +47,9 @@ export default function AdminAddSliderPage() {
 
       <section className="content">
         <div className="row">
+          {message !== null && <div className="alert alert-success">{message}</div>}
           <form method="post" action="/admin/save-slider" encType="multipart/form-data">
+            <input type="hidden" name="_token" value={csrfToken} />
             <div className="col-md-6">
               <div className="box box-success">
                 <div className="box-header with-border">

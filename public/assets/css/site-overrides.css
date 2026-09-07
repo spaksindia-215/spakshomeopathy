@@ -1,0 +1,29 @@
+/**
+ * Site-specific overrides layered on top of the vendored theme CSS
+ * (`style.css` / `responsive.css`). Kept separate from those files so the
+ * vendored theme assets stay byte-identical to the source they were ported
+ * from (see PublicHeader.tsx's contract F-30 note: assets ship unchanged).
+ *
+ * Header logo/nav overlap fix (2026-09-03)
+ * -----------------------------------------
+ * `.header-navigation .container .logo-box` is `position:absolute` and
+ * `.header-navigation .main-navigation` is `float:right` with no left
+ * offset. Nothing in the theme CSS reserves horizontal space for the logo
+ * at desktop widths (>=1200px) — the only logo-width reservation
+ * (`padding-right` on `.logo-box`) exists solely inside the <=1199px
+ * mobile media query, where the nav collapses into a full-width dropdown
+ * and doesn't need it.
+ *
+ * At desktop widths the floated nav's left edge is purely a function of
+ * how much content it holds (it hugs the container's right edge and grows
+ * leftward), so it can land underneath the absolutely-positioned logo.
+ * With this site's logo (`logo.png`, 226x74) and 8 menu items, the first
+ * item ("Home") renders directly under the logo image instead of after
+ * it. Reserving left space explicitly on `.main-navigation` fixes this
+ * regardless of exact logo width or how many menu items are present.
+ */
+@media (min-width: 1200px) {
+  .header-navigation .main-navigation {
+    padding-left: 226px;
+  }
+}

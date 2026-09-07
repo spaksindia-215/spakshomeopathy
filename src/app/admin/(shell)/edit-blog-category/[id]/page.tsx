@@ -1,7 +1,10 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { AdminStylesheets } from '@/components/admin/AdminStylesheets';
-import { getBlogCategoryByLegacyId } from '@/lib/demo';
+import { getDb } from '@/lib/mongodb/client';
+import { BlogCategoryRepository } from '@/lib/mongodb/repositories/blogCategoryRepository';
+import { generateCsrfToken } from '@/lib/auth/csrf';
+import { readAndClearFlash } from '@/lib/auth/flash';
 
 /**
  * `/admin/edit-blog-category/[id]` — ported from
@@ -24,6 +27,13 @@ import { getBlogCategoryByLegacyId } from '@/lib/demo';
  * — approximated here (no server filesystem to check) by gating on
  * `bcatImage` truthiness alone, same divergence noted on
  * `blog-category-list`.
+ *
+ * M5-E: switched from `@/lib/demo`'s static fixture to a live `spaks_dev`
+ * read (`BlogCategoryRepository.findByLegacyId`), CSRF-token-wired,
+ * success flash rendered. See `src/app/admin/update-blog-category/route.ts`'s
+ * header for a genuinely new finding this slice surfaced (Update never
+ * deletes the old image file on real Laravel either — preserved, not
+ * fixed).
  */
 export const metadata: Metadata = {
   // PRESERVED MISLABEL — see file header. Not "Edit Blog Category".
@@ -37,11 +47,17 @@ export default async function AdminEditBlogCategoryPage({
 }) {
   const { id } = await params;
   const legacyId = Number(id);
-  const category = Number.isFinite(legacyId) ? getBlogCategoryByLegacyId(legacyId) : undefined;
+
+  const db = await getDb();
+  const repo = new BlogCategoryRepository(db);
+  const category = Number.isFinite(legacyId) ? await repo.findByLegacyId(legacyId) : null;
 
   if (!category) {
     notFound();
   }
+
+  const csrfToken = generateCsrfToken();
+  const message = await readAndClearFlash('message');
 
   return (
     <>
@@ -66,7 +82,9 @@ export default async function AdminEditBlogCategoryPage({
 
       <section className="content">
         <div className="row">
+          {message !== null && <div className="alert alert-success">{message}</div>}
           <form method="post" action="/admin/update-blog-category" encType="multipart/form-data">
+            <input type="hidden" name="_token" value={csrfToken} />
             <div className="col-md-6">
               <div className="box box-success">
                 <div className="box-header with-border">

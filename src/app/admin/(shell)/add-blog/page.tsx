@@ -1,12 +1,23 @@
 import type { Metadata } from 'next';
 import { AdminStylesheets } from '@/components/admin/AdminStylesheets';
 import { CKEditorPlaceholder } from '@/components/admin/CKEditorPlaceholder';
-import { getAllBlogCategories } from '@/lib/demo';
+import { getDb } from '@/lib/mongodb/client';
+import { BlogCategoryRepository } from '@/lib/mongodb/repositories/blogCategoryRepository';
+import { generateCsrfToken } from '@/lib/auth/csrf';
+import { readAndClearFlash } from '@/lib/auth/flash';
 
 /**
  * `/admin/add-blog` — ported from `admin/add-blog.blade.php` (182
  * lines), `AdminController@AddBlog` (GET) / `SaveBlog` (POST, to
  * `admin/save-blog`).
+ *
+ * M5-E: form now POSTs for real (`src/app/admin/save-blog/route.ts`),
+ * CSRF-token-wired, success flash rendered. Category dropdown now reads
+ * live `spaks_dev` blog categories (reuses `BlogCategoryRepository`,
+ * built in the blog-categories sub-slice) instead of the demo fixture —
+ * matches source's own `AddBlog()`, which queries `blog_category` live.
+ * Uploads validated per D-04/FIX-003 (reused). Slug via `convertToSlug`
+ * (P-07's `convert_to_slug` algorithm, same as blog categories).
  *
  * PRESERVED DEFECTS: Bootstrap CSS loaded twice (same pattern as every
  * other Add/Edit page in this migration).
@@ -15,8 +26,12 @@ export const metadata: Metadata = {
   title: 'Admin Panel | Add Blog',
 };
 
-export default function AdminAddBlogPage() {
-  const categories = getAllBlogCategories();
+export default async function AdminAddBlogPage() {
+  const db = await getDb();
+  const categoryRepo = new BlogCategoryRepository(db);
+  const categories = await categoryRepo.findAllDescending();
+  const csrfToken = generateCsrfToken();
+  const message = await readAndClearFlash('message');
 
   return (
     <>
@@ -40,7 +55,9 @@ export default function AdminAddBlogPage() {
 
       <section className="content">
         <div className="row">
+          {message !== null && <div className="alert alert-success">{message}</div>}
           <form method="post" action="/admin/save-blog" encType="multipart/form-data">
+            <input type="hidden" name="_token" value={csrfToken} />
             <div className="col-md-6">
               <div className="box box-success">
                 <div className="box-header with-border">

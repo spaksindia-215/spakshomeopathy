@@ -2,7 +2,12 @@ import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { AdminStylesheets } from '@/components/admin/AdminStylesheets';
 import { CKEditorPlaceholder } from '@/components/admin/CKEditorPlaceholder';
-import { getAllCategories, getAllProducts, getPostByLegacyId } from '@/lib/demo';
+import { getAllProducts } from '@/lib/demo';
+import { getDb } from '@/lib/mongodb/client';
+import { PostRepository } from '@/lib/mongodb/repositories/postRepository';
+import { CategoryRepository } from '@/lib/mongodb/repositories/categoryRepository';
+import { generateCsrfToken } from '@/lib/auth/csrf';
+import { readAndClearFlash } from '@/lib/auth/flash';
 
 /**
  * `/admin/edit-post/[post_id]` — ported from `admin/edit-post.blade.php`
@@ -19,6 +24,14 @@ import { getAllCategories, getAllProducts, getPostByLegacyId } from '@/lib/demo'
  * (source line 273, `selected` compared against `$getPost->p_id`, which
  * source's own `postSchema.pId` doc note flags as a varchar field, not a
  * numeric id) — same as `add-post`, no asymmetry here.
+ *
+ * M5-E: switched from `@/lib/demo` to live `spaks_dev` reads
+ * (`PostRepository.findByLegacyId`,
+ * `CategoryRepository.findAllByNameAscending` for the dropdown —
+ * matching source's `EditPost()`, which queries `categories` live), CSRF
+ * -token-wired, success flash rendered. Product dropdown remains
+ * demo-fixture-backed, same disclosed asymmetry as `add-post` (products'
+ * own CRUD/read infrastructure is out of this sub-slice's scope).
  *
  * PRESERVED DEFECTS:
  *   - Image field name is `post_image` here — DIFFERS from Add's
@@ -41,14 +54,20 @@ export default async function AdminEditPostPage({
 }) {
   const { post_id } = await params;
   const legacyId = Number(post_id);
-  const post = Number.isFinite(legacyId) ? getPostByLegacyId(legacyId) : undefined;
+
+  const db = await getDb();
+  const postRepo = new PostRepository(db);
+  const post = Number.isFinite(legacyId) ? await postRepo.findByLegacyId(legacyId) : null;
 
   if (!post) {
     notFound();
   }
 
-  const categories = getAllCategories();
+  const categoryRepo = new CategoryRepository(db);
+  const categories = await categoryRepo.findAllByNameAscending();
   const products = getAllProducts();
+  const csrfToken = generateCsrfToken();
+  const message = await readAndClearFlash('message');
 
   return (
     <>
@@ -72,7 +91,9 @@ export default async function AdminEditPostPage({
 
       <section className="content">
         <div className="row">
+          {message !== null && <div className="alert alert-success">{message}</div>}
           <form method="post" action="/admin/update-post" encType="multipart/form-data">
+            <input type="hidden" name="_token" value={csrfToken} />
             <div className="col-md-6">
               <div className="box box-success">
                 <div className="box-header with-border">

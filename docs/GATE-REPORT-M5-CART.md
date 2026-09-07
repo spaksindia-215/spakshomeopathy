@@ -290,3 +290,68 @@ addenda:** re-run the live end-to-end HTTP flow from an environment with
 confirmed MongoDB Atlas connectivity, and decide whether to fix
 `client.ts`'s failed-connection-caching bug (a Change-Request-eligible
 infrastructure fix, not itself a Laravel-behavior deviation).
+
+---
+
+## ADDENDUM (2026-09-07) — `getMongoClient()` failed-connection-caching bug FIXED, pre-M6
+
+**Append-only. Nothing above this line is altered, deleted, or superseded.**
+
+Per owner instruction, immediately before M6 (Checkout & orders) begins —
+the milestone this bug was flagged as most likely to visibly break, since
+order creation is exactly the kind of sequential multi-collection-write
+flow a poisoned connection would silently corrupt — the bug disclosed in
+§6/§10 above was fixed:
+
+`src/lib/mongodb/client.ts`'s `getMongoClient()` previously assigned the
+result of `new MongoClient(config.uri)` to the module-level `client`
+variable BEFORE `await client.connect()` resolved. If `.connect()`
+threw, the failed instance was still cached, so `if (client) return
+client;` on every later call in the same process would short-circuit
+onto a client that never actually connected, surfacing as
+`MongoTopologyClosedError` on every subsequent call until the process
+restarted.
+
+**Fix:** the new client is now held in a local (`candidate`) and only
+assigned to `client` after `.connect()` succeeds — the same pattern
+`src/lib/herbs/db/client.ts` and `src/lib/motherTincture/db/client.ts`
+(both built later, 2026-08-31 and 2026-09-07 respectively) already used
+correctly, confirmed by direct comparison before this fix was written.
+
+**This is infrastructure-only** — it changes no Laravel-parity behavior,
+no observable output, no database write path, no route, and no dimension
+in contract §7.1. It affects only what happens after a *failed* connection
+attempt, a scenario with no Laravel equivalent to preserve (Laravel's own
+MySQL connection handling is a separate mechanism entirely, out of scope
+for D1–D7 comparison). Per `GATE-REPORT-M5-CART.md`'s own §6 characterization
+("a Change-Request-eligible infrastructure fix, not itself a Laravel-behavior
+deviation"), no Change Request was required.
+
+**Verification:**
+
+```
+npm run typecheck   ✅ 0 errors
+npm run lint         ✅ 0 errors (same 4 pre-existing, unrelated warnings)
+npm run test         ✅ 512/512 passed, 55 test files, 0 regressions
+                         (511 pre-existing + 1 new regression test)
+```
+
+New regression test added: `tests/mongodb/production-guard.test.ts` — "does
+NOT cache a client whose connect() rejected" — mocks a `.connect()`
+rejection on the first call, then asserts a second `getMongoClient()`
+call retries (calls `connect()` again) rather than short-circuiting on the
+cached failed client. This test would have failed against the pre-fix code.
+
+**No M5 gate is reopened by this addendum.** This fix touches only
+`src/lib/mongodb/client.ts` and its own test file — no file any M5-A/B/C/E-\*
+gate report claims, and no file `docs/CR-005-HOMEPAGE-REDESIGN-AND-NEW-SECTIONS.md`
+or `docs/CR-003-HERBAL-ECOMMERCE-SECTION.md` governs. Real Atlas
+verification of this fix specifically was not attempted, for the same
+disclosed environment-TLS reason every other M5 report has documented; the
+fix is verified at the unit/regression-test level, consistent with this
+project's established evidentiary standard for infrastructure-only changes.
+
+**Status:** M5-Cart's one remaining disclosed infrastructure gap is now
+closed. The live-Atlas verification gap remains open, unchanged, and
+non-blocking per the owner's standing instruction (`GATE-REPORT-M5-A.md`
+addendum).

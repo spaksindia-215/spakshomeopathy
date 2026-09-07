@@ -12,6 +12,10 @@
  * AFTER all 10 ported items — not interleaved among them, so the ported
  * source order above is unchanged and unambiguous. This is the only
  * addition to this file for the Herbs Store feature.
+ *
+ * ADDED (Mother Tincture admin-add feature): a second new top-level item,
+ * "Mother Tincture", appended AFTER "Herbs Store" — same append-only
+ * posture, same reasoning: keeps every prior addition's order unchanged.
  */
 export function AdminSidebar() {
   return (
@@ -189,6 +193,24 @@ export function AdminSidebar() {
               <li>
                 <a href="/admin/herbs-list">
                   <i className="fa fa-circle-o"></i> Herbs List
+                </a>
+              </li>
+            </ul>
+          </li>
+
+          {/* Mother Tincture admin-add feature addition — see file header. */}
+          <li className="treeview">
+            <a href="#">
+              <i className="fa fa-tint"></i>
+              <span>Mother Tincture</span>
+              <span className="pull-right-container">
+                <i className="fa fa-angle-left pull-right"></i>
+              </span>
+            </a>
+            <ul className="treeview-menu">
+              <li>
+                <a href="/admin/add-mother-tincture">
+                  <i className="fa fa-circle-o"></i> Add Mother Tincture
                 </a>
               </li>
             </ul>

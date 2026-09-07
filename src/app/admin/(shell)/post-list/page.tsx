@@ -1,11 +1,31 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { AdminStylesheets } from '@/components/admin/AdminStylesheets';
-import { getAllPosts } from '@/lib/demo';
+import { getDb } from '@/lib/mongodb/client';
+import { PostRepository } from '@/lib/mongodb/repositories/postRepository';
+import { readAndClearFlash } from '@/lib/auth/flash';
 
 /**
  * `/admin/post-list` — ported from `admin/post-list.blade.php` (143
  * lines), `AdminController@PostList`.
+ *
+ * M5-E: switched from `@/lib/demo` to live `spaks_dev` read
+ * (`PostRepository.findAllByTitleAscending`, mirroring source's
+ * `orderBy('post_title','ASC')` — NOT `id DESC` like every other list
+ * this project has built), now that the write path is real. Success
+ * flash now rendered (source's `session()->has('message')` block,
+ * `post-list.blade.php:56`, was previously unwired). Destroy link now
+ * routes to the real `admin/destroy-post/[post_id]/route.ts` — the
+ * previous demo-only confirm()/alert() click-intercept script is
+ * REMOVED, since the link now performs a genuine action, matching every
+ * other now-real destroy link in this project.
+ *
+ * PAGINATION NOT IMPLEMENTED — DISCLOSED GAP, same class as `categories`:
+ * source uses `paginate(20)` (`AdminController.php:770`) against ~414
+ * real rows (per `docs/M5-PREFLIGHT-AUDIT.md`) — production pagination
+ * boundaries are crossed many times over. This page renders the FULL
+ * unpaginated list. Flagged explicitly in
+ * `docs/GATE-REPORT-M5-E-POSTS.md`.
  *
  * PRESERVED DEFECTS, verified directly this session:
  *   - Status column: dead `href="#"` badges (Active/"Deativate", typo
@@ -22,8 +42,11 @@ export const metadata: Metadata = {
   title: 'Admin Panel | Post List',
 };
 
-export default function AdminPostListPage() {
-  const posts = getAllPosts();
+export default async function AdminPostListPage() {
+  const db = await getDb();
+  const repo = new PostRepository(db);
+  const posts = await repo.findAllByTitleAscending();
+  const message = await readAndClearFlash('message');
 
   return (
     <>
@@ -47,6 +70,7 @@ export default function AdminPostListPage() {
 
       <section className="content">
         <div className="row">
+          {message !== null && <div className="alert alert-success">{message}</div>}
           <div className="col-xs-12">
             <div className="box">
               <div className="box-body">
@@ -89,10 +113,7 @@ export default function AdminPostListPage() {
                             <i className="fa fa-pencil btn btn-info btn-sm"></i>
                           </Link>
                           &nbsp;&nbsp;&nbsp;&nbsp;
-                          <a
-                            href={`/admin/destroy-post/${post.legacyId}`}
-                            className="demo-destroy-link"
-                          >
+                          <a href={`/admin/destroy-post/${post.legacyId}`}>
                             <i className="fa fa-trash btn btn-danger btn-sm"></i>
                           </a>
                         </td>
@@ -108,22 +129,6 @@ export default function AdminPostListPage() {
           </div>
         </div>
       </section>
-
-      {/* DEMO ONLY — see product-list's identical note. */}
-      <script
-        dangerouslySetInnerHTML={{
-          __html: `
-document.querySelectorAll('.demo-destroy-link').forEach(function (el) {
-  el.addEventListener('click', function (e) {
-    e.preventDefault();
-    if (window.confirm('Are you sure you want to delete?')) {
-      window.alert('Demo only — no real data was deleted.');
-    }
-  });
-});
-`,
-        }}
-      />
     </>
   );
 }

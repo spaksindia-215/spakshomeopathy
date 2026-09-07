@@ -1,7 +1,10 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { AdminStylesheets } from '@/components/admin/AdminStylesheets';
-import { getCategoryByLegacyId } from '@/lib/demo';
+import { getDb } from '@/lib/mongodb/client';
+import { CategoryRepository } from '@/lib/mongodb/repositories/categoryRepository';
+import { generateCsrfToken } from '@/lib/auth/csrf';
+import { readAndClearFlash } from '@/lib/auth/flash';
 
 /**
  * `/admin/edit-category/[id]` — ported from `admin/edit-category.blade.php`
@@ -11,6 +14,10 @@ import { getCategoryByLegacyId } from '@/lib/demo';
  * Unlike `add-hurbcat`, THIS page's title/heading/button text are all
  * correctly labeled "Edit Category" — the mislabeling is specific to the
  * Add form, not a module-wide pattern. Confirmed directly this session.
+ *
+ * M5-E: switched from `@/lib/demo` to live `spaks_dev` read
+ * (`CategoryRepository.findByLegacyId`), CSRF-token-wired, success flash
+ * rendered.
  *
  * PRESERVED DEFECTS:
  *   - Image field name is `image` here — DIFFERS from Add's `c_image`
@@ -33,11 +40,17 @@ export default async function AdminEditCategoryPage({
 }) {
   const { id } = await params;
   const legacyId = Number(id);
-  const category = Number.isFinite(legacyId) ? getCategoryByLegacyId(legacyId) : undefined;
+
+  const db = await getDb();
+  const repo = new CategoryRepository(db);
+  const category = Number.isFinite(legacyId) ? await repo.findByLegacyId(legacyId) : null;
 
   if (!category) {
     notFound();
   }
+
+  const csrfToken = generateCsrfToken();
+  const message = await readAndClearFlash('message');
 
   return (
     <>
@@ -61,7 +74,9 @@ export default async function AdminEditCategoryPage({
 
       <section className="content">
         <div className="row">
+          {message !== null && <div className="alert alert-success">{message}</div>}
           <form method="post" action="/admin/update-category" encType="multipart/form-data">
+            <input type="hidden" name="_token" value={csrfToken} />
             <div className="col-md-6">
               <div className="box box-success">
                 <div className="box-header with-border">

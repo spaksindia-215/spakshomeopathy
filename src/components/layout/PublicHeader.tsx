@@ -122,34 +122,40 @@ async function StickyNavBody() {
             <li className="current">
               <Link href="/">Home</Link>
             </li>{' '}
-            <li>
-              <a href="/about">About Us</a>
-            </li>{' '}
-            {/* <li><a href="{{url('diseases-list')}}">Diseases</a></li> */}
-            <li>
-              <Link href="/productsbydisease/24">Herbs</Link>
-            </li>{' '}
-            <li>
-              <a href="http://www.spakshomeopathy.com/public/catalogue-list.pdf">
-                Diseases Catalogue
-              </a>
-            </li>{' '}
-            {/* <li><a href="{{url('products')}}"> Herbs and Supplements</a></li> */}
-            {/* <li><a href="https://herbandsupplements.com/" target="_blank"> Herbs and Supplements</a></li> */}
-            {/* <li><a href="#">Video</a></li> */}
-            {/* <li><a href="{{url('videos')}}">Video</a></li> */}
-            <li>
-              <a href="/video">Video</a>
-            </li>{' '}
             {/*
-                  <li>
-                   <a href="">&#9662;	Catalogue <button class="sub-nav-toggler"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button></a>
-                                          <ul class="submenu">
-                                             <li><a href="http://www.spakshomeopathy.com/public/Mother-Tincture-Price-list.pdf">Mother Tincture Price List</a></li>
-                                              <li><a href="http://www.spakshomeopathy.com/public/Potencies-rate-list.pdf">Potencies Rate List </a></li>
-                                                  </ul>
-                                              </li>
-                  */}
+              Consolidated per owner request (2026-09-07): About Us, Herbs,
+              Diseases Catalogue, Video, and Herbs Store no longer sit as
+              separate top-level items — they're grouped under one "Menu"
+              dropdown placed immediately before Mother Tincture. Reuses the
+              theme's existing `.submenu` hover-dropdown CSS (see
+              public/assets/css/style.css `ul.navigation-box > li > .submenu`,
+              previously only exercised by the commented-out Myaccount/
+              Catalogue submenus above) — no new styles added.
+            */}
+            <li>
+              <a href="#">
+                Menu <button className="sub-nav-toggler"> <span className="sr-only">Toggle navigation</span> <span className="icon-bar"></span> <span className="icon-bar"></span> <span className="icon-bar"></span> </button>
+              </a>
+              <ul className="submenu">
+                <li>
+                  <a href="/about">About Us</a>
+                </li>
+                <li>
+                  <Link href="/productsbydisease/24">Herbs</Link>
+                </li>
+                <li>
+                  <a href="http://www.spakshomeopathy.com/public/catalogue-list.pdf">
+                    Diseases Catalogue
+                  </a>
+                </li>
+                <li>
+                  <a href="/video">Video</a>
+                </li>
+                <li>
+                  <Link href="/herbs">Herbs Store</Link>
+                </li>
+              </ul>
+            </li>{' '}
             <li>
               <a href="http://www.spakshomeopathy.com/public/Mother-Tincture-Price-list.pdf">
                 Mother Tincture
@@ -160,18 +166,14 @@ async function StickyNavBody() {
             </li>{' '}
             <li>
               <a href="/contact">Contact Us</a>
-            </li>{' '}
+            </li>
             {/*
               CR-003 (docs/CR-003-HERBAL-ECOMMERCE-SECTION.md §10, owner
-              amendment 2026-08-30) — ONE new item, appended at the end of
-              the list rather than interleaved among the ported items, so
-              none of the OI-13 whitespace-parity spacing above is
-              disturbed. This is the only change in this file for the
-              Herbs Store: no existing <li>, href, or spacing was touched.
+              amendment 2026-08-30) originally appended Herbs Store here as
+              its own top-level item. 2026-09-07 consolidation folded it
+              into the new "Menu" dropdown above instead (see that comment)
+              — kept out of the top-level list so it isn't duplicated.
             */}
-            <li>
-              <Link href="/herbs">Herbs Store</Link>
-            </li>
           </ul>
         </div>
         {/* /.navbar-collapse */}

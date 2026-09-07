@@ -88,4 +88,55 @@ export class ValidatedRepository<T extends Document> {
   async count(filter: Filter<T> = {}): Promise<number> {
     return this.collection.countDocuments(filter);
   }
+
+  /**
+   * Added M5-E (admin CRUD write paths, first sub-slice: pin codes).
+   * Generic partial-field update by filter — mirrors
+   * `DB::table(...)->where(...)->update([...])`'s shape (a targeted
+   * column-set update, not a full-document replace). Does NOT re-validate
+   * the merged result against the full schema (a partial `$set` payload
+   * would fail `schema.parse()` if fields are omitted) — callers that need
+   * a schema-validated read-back should `findOne()` again after updating,
+   * the same pattern `pinCodeRepository.ts` uses.
+   */
+  async updateOne(filter: Filter<T>, update: Partial<T>): Promise<void> {
+    await this.collection.updateOne(filter, { $set: update });
+  }
+
+  /**
+   * Added M5-E. Mirrors `DB::table(...)->where(...)->delete()` — Laravel's
+   * delete methods in this app (e.g. `AdminController::DestroyPinCode`)
+   * take no action on a zero-match delete (no error, no distinguishable
+   * response), so this does not throw or report whether a document
+   * actually existed; same "quiet either way" behavior.
+   */
+  async deleteOne(filter: Filter<T>): Promise<void> {
+    await this.collection.deleteOne(filter);
+  }
+
+  /**
+   * Added M5-E. Generic `MAX(legacyId) + 1` new-document id strategy —
+   * the same strategy already independently implemented per-repository in
+   * `userRepository.ts`/`enquiryRepository.ts`/`appointmentRepository.ts`
+   * (each predates this generic version and is left unchanged, per this
+   * project's established append-don't-replace convention — not
+   * consolidated here, since touching those files is out of this slice's
+   * scope). Named `nextLegacyIdGeneric` rather than `nextLegacyId`
+   * specifically to avoid colliding with those existing per-repository
+   * methods of the same short name (TypeScript's `noImplicitOverride`
+   * would otherwise force every one of them to add an `override` keyword
+   * merely because this slice introduced a same-named base method — a
+   * ripple effect into unrelated files this slice does not touch). New
+   * repositories built from M5-E onward should prefer this one over
+   * adding another per-repository copy.
+   */
+  async nextLegacyIdGeneric(): Promise<number> {
+    const highest = await this.collection
+      .find({} as Filter<T>)
+      .sort({ legacyId: -1 })
+      .limit(1)
+      .toArray();
+    const currentMax = (highest[0] as { legacyId?: number } | undefined)?.legacyId ?? 0;
+    return currentMax + 1;
+  }
 }

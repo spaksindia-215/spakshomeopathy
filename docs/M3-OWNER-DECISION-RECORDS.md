@@ -217,6 +217,12 @@ these tables today.
 
 ## DR-03 — `pin_codes` BROKEN-Behavior Reproduction (B-09)
 
+**STATUS: RESOLVED (2026-09-04, M5-E) — Option 2 selected.** See ADDENDUM 3
+at the end of this document for the owner's decision, Fix Register entries
+FIX-001/FIX-002, and implementation record. The analysis below is preserved
+as originally written (append-only convention) and remains the correct
+description of both options considered.
+
 **What is being decided:** how (or whether) to reproduce the pincode admin CRUD's
 existing SQL-column-mismatch failure (B-09) in a schemaless MongoDB target, where the
 specific failure mode (writing to non-existent SQL columns) has no direct equivalent.
@@ -535,7 +541,7 @@ this specific item.
 | **DR-01** (orders shape) | All order/checkout/payment implementation | **Highest** — the single largest piece of blocked work |
 | **DR-05** (session store) | All authenticated flows, cart persistence | High — needed early regardless of DR-01's outcome |
 | **DR-04** (email unique index) | Registration/login | High — needed early; also requires a pre-migration duplicate-email check regardless of which option is chosen |
-| **DR-03** (`pin_codes` B-09) | Only pincode admin CRUD | Medium — small, isolated surface |
+| **DR-03** (`pin_codes` B-09) | Only pincode admin CRUD | **RESOLVED** 2026-09-04, ADDENDUM 3 — Option 2, Fix Register FIX-001/FIX-002 |
 | **DR-06** (charset conversion) | Migration-script correctness for 6 tables | Medium — a due-diligence item, not a fidelity trade-off |
 | **DR-02** (vestigial placement) | Only final collection naming, no functional code | Low |
 | **DR-07** (enquiries spam) | Only the migration script for one table | Low |
@@ -714,3 +720,56 @@ any future re-run of index creation is idempotent against the live name
 rather than silently drifting further. This is a documentation/source-label
 correction only — the index's key spec (`{ email: 1 }`) and `unique: true`
 constraint are unchanged, and no database operation was performed.
+
+---
+
+## ADDENDUM 3 (2026-09-04, M5-E) — DR-03 RESOLVED: pincode admin CRUD is now an Approved Fix (Option 2)
+
+`docs/M5-PREFLIGHT-AUDIT.md` §10 proposed M5-E (admin CRUD write paths) as
+the first sub-slice to build after M5-A/B/C, and specifically named pin
+codes as the smallest, most isolated candidate — but DR-03 (this
+document's own §"DR-03 — pin_codes BROKEN-Behavior Reproduction (B-09)")
+remained unresolved, so the pincode write path could not be built without
+a decision.
+
+**That gap is now closed.** Presented with DR-03's own two options
+(reproduce B-09's SQL failure artificially, vs. treat as an Approved Fix
+Register candidate per contract §9.3), the owner selected Option 2:
+
+> **Owner:** homeopathy38@gmail.com
+> **Decision:** APPROVED
+> **Scope:** DR-03 — pincode admin CRUD (add/edit/delete) is a formally
+> Approved Fix. New saves write to the `pin_codes` collection's REAL
+> column shape (`pincode`/`location`/`country`/`uid`/`status`) and
+> succeed, rather than artificially reproducing B-09's SQL-column-mismatch
+> failure. Recorded in `MIGRATION-CONTRACT.md` §9.3 as Fix Register entry
+> **FIX-001**.
+> **Date:** 2026-09-04
+
+A second, narrower question surfaced only once Option 2 made it concrete:
+the Add Pin Code form's Status `<select>` carries a separate, independently
+real defect — a corrupted `name="'pin_status"` attribute (a literal stray
+leading single-quote, `add-pin-code.blade.php:108`), previously
+undocumented outside this project's own "flagship preserve-real-defects
+example" framing in `add-pin-code/page.tsx`'s header comment. Under Option
+1 this never mattered (the SQL error fired first, before the corrupted
+field name could matter); under Option 2 it would mean the Status field
+silently never saves on Add even though Pin Code/Address now do. The owner
+was asked whether to preserve this too or correct it as part of making the
+form work end-to-end, and selected:
+
+> **Owner:** homeopathy38@gmail.com
+> **Decision:** APPROVED
+> **Scope:** The Add Pin Code form's corrupted `name="'pin_status"`
+> attribute is corrected to `name="pin_status"`, so the Status field saves
+> correctly alongside Pin Code/Address. Recorded in `MIGRATION-CONTRACT.md`
+> §9.3 as Fix Register entry **FIX-002** — a distinct entry from FIX-001,
+> since this defect was never part of B-09/DR-03's own scope (B-09 is a
+> database-column mismatch; this is an HTML attribute-name corruption).
+> **Date:** 2026-09-04
+
+**What this does NOT do:** it does not reopen or reinterpret any other
+DR-02/DR-06/DR-07 decision, and it does not authorize any other M5-E
+sub-slice (categories/blogs/posts/sliders/products) — each remains its own
+future review, per this project's established milestone discipline. Full
+implementation record: `docs/GATE-REPORT-M5-E-PINCODE.md`.

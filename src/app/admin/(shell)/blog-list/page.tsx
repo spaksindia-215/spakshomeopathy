@@ -1,7 +1,9 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { AdminStylesheets } from '@/components/admin/AdminStylesheets';
-import { getAllBlogs } from '@/lib/demo';
+import { getDb } from '@/lib/mongodb/client';
+import { BlogRepository } from '@/lib/mongodb/repositories/blogRepository';
+import { readAndClearFlash } from '@/lib/auth/flash';
 
 /**
  * `/admin/blog-list` — ported from `admin/blog-list.blade.php` (146
@@ -9,6 +11,15 @@ import { getAllBlogs } from '@/lib/demo';
  * from the sidebar nav (confirmed, `AdminSidebar.tsx` has no Blog entry)
  * — a real live-but-orphaned module, not reproduced with an added nav
  * link.
+ *
+ * M5-E: switched from `@/lib/demo` to live `spaks_dev` read
+ * (`BlogRepository.findAllDescending`), now that the write path is real —
+ * avoids the half-migrated trap. Success flash now rendered (source has
+ * a `session()->has('message')` block, `blog-list.blade.php:56`,
+ * previously unwired). No pagination in source for this list
+ * (`AdminController::BlogList` uses plain `orderBy('id','desc')->get()`,
+ * no `paginate()` — confirmed directly this slice, unlike `CategorytList`'s
+ * `paginate(20)`), so there is no pagination gap to disclose here.
  *
  * PRESERVED DEFECTS, verified directly this session:
  *   - Status column prints raw PHP-ternary strings, NOT badges: lowercase
@@ -32,8 +43,11 @@ export const metadata: Metadata = {
   title: 'Admin Panel | Blog List',
 };
 
-export default function AdminBlogListPage() {
-  const blogs = getAllBlogs();
+export default async function AdminBlogListPage() {
+  const db = await getDb();
+  const repo = new BlogRepository(db);
+  const blogs = await repo.findAllDescending();
+  const message = await readAndClearFlash('message');
 
   return (
     <>
@@ -57,6 +71,7 @@ export default function AdminBlogListPage() {
 
       <section className="content">
         <div className="row">
+          {message !== null && <div className="alert alert-success">{message}</div>}
           <div className="col-xs-12">
             <div className="box">
               <div className="box-body">

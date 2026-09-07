@@ -150,6 +150,116 @@ describe('route protection wiring (STRUCTURAL — source inspection)', () => {
     expect(route).not.toMatch(GUARD_IMPORT);
   });
 
+  it('search-products route.ts (M5-C) has no guard import — Laravel source has no auth check on this route either', () => {
+    const route = read('search-products/route.ts');
+    expect(route).not.toMatch(GUARD_IMPORT);
+  });
+
+  it('search-results and diseases-list pages (M5-C) have no guard import — public catalog pages', () => {
+    expect(read('search-results/page.tsx')).not.toMatch(GUARD_IMPORT);
+    expect(read('diseases-list/page.tsx')).not.toMatch(GUARD_IMPORT);
+  });
+
+  it("pincode write routes (M5-E) import and call requireAdminSession independently — all 6 pincode routes sit inside admin.php's userAuth group", () => {
+    for (const routePath of [
+      'admin/save-pincode/route.ts',
+      'admin/update-pincode/route.ts',
+      'admin/destroy-pincode/[id]/route.ts',
+    ]) {
+      const route = read(routePath);
+      expect(route).toMatch(
+        /import\s*{\s*requireAdminSession\s*}\s*from\s*['"]@\/lib\/auth\/guard['"]/
+      );
+      expect(route).toMatch(/await\s+requireAdminSession\(\)/);
+    }
+  });
+
+  it("slider write routes (M5-E) import and call requireAdminSession independently — all 6 slider routes sit inside admin.php's userAuth group", () => {
+    for (const routePath of [
+      'admin/save-slider/route.ts',
+      'admin/update-slider/route.ts',
+      'admin/destroy-slider/[id]/route.ts',
+    ]) {
+      const route = read(routePath);
+      expect(route).toMatch(
+        /import\s*{\s*requireAdminSession\s*}\s*from\s*['"]@\/lib\/auth\/guard['"]/
+      );
+      expect(route).toMatch(/await\s+requireAdminSession\(\)/);
+    }
+  });
+
+  it("blog-category write routes (M5-E) import and call requireAdminSession independently — all 6 blog-category routes sit inside admin.php's userAuth group", () => {
+    for (const routePath of [
+      'admin/save-blog-category/route.ts',
+      'admin/update-blog-category/route.ts',
+      'admin/destroy-blog-category/[id]/route.ts',
+    ]) {
+      const route = read(routePath);
+      expect(route).toMatch(
+        /import\s*{\s*requireAdminSession\s*}\s*from\s*['"]@\/lib\/auth\/guard['"]/
+      );
+      expect(route).toMatch(/await\s+requireAdminSession\(\)/);
+    }
+  });
+
+  it("category (disease/herb tree) write routes (M5-E) import and call requireAdminSession independently — all 4 sit inside admin.php's userAuth group (no destroy route exists for this table — see categoryRepository.ts's own note)", () => {
+    for (const routePath of [
+      'admin/save-cat/route.ts',
+      'admin/update-category/route.ts',
+      'admin/update-category-status-active/[id]/route.ts',
+      'admin/update-category-status-inactive/[id]/route.ts',
+    ]) {
+      const route = read(routePath);
+      expect(route).toMatch(
+        /import\s*{\s*requireAdminSession\s*}\s*from\s*['"]@\/lib\/auth\/guard['"]/
+      );
+      expect(route).toMatch(/await\s+requireAdminSession\(\)/);
+    }
+  });
+
+  it("blog write routes (M5-E) import and call requireAdminSession independently — all 3 sit inside admin.php's userAuth group", () => {
+    for (const routePath of [
+      'admin/save-blog/route.ts',
+      'admin/update-blog/route.ts',
+      'admin/destroy-blog/[id]/route.ts',
+    ]) {
+      const route = read(routePath);
+      expect(route).toMatch(
+        /import\s*{\s*requireAdminSession\s*}\s*from\s*['"]@\/lib\/auth\/guard['"]/
+      );
+      expect(route).toMatch(/await\s+requireAdminSession\(\)/);
+    }
+  });
+
+  it("post write routes (M5-E) import and call requireAdminSession independently — all 3 sit inside admin.php's userAuth group", () => {
+    for (const routePath of [
+      'admin/save-post/route.ts',
+      'admin/update-post/route.ts',
+      'admin/destroy-post/[post_id]/route.ts',
+    ]) {
+      const route = read(routePath);
+      expect(route).toMatch(
+        /import\s*{\s*requireAdminSession\s*}\s*from\s*['"]@\/lib\/auth\/guard['"]/
+      );
+      expect(route).toMatch(/await\s+requireAdminSession\(\)/);
+    }
+  });
+
+  it("product_category write routes (M5-E, all 3 levels) import and call requireAdminSession independently — all 4 sit inside admin.php's userAuth group", () => {
+    for (const routePath of [
+      'admin/save-product-category/route.ts',
+      'admin/save-product-subcat/route.ts',
+      'admin/save-other-category/route.ts',
+      'admin/destroy-product-category/[id]/route.ts',
+    ]) {
+      const route = read(routePath);
+      expect(route).toMatch(
+        /import\s*{\s*requireAdminSession\s*}\s*from\s*['"]@\/lib\/auth\/guard['"]/
+      );
+      expect(route).toMatch(/await\s+requireAdminSession\(\)/);
+    }
+  });
+
   it('every page under admin/(shell)/ is a descendant of the guarded layout (no sibling escape route)', () => {
     // Structural sanity check: Next.js applies a layout.tsx to every
     // page.tsx nested under it, with no per-page opt-out mechanism, so
@@ -192,6 +302,51 @@ describe('CSRF-equivalent protection wiring (STRUCTURAL — source inspection)',
     'save-appointment/route.ts',
     'admin/user-login/route.ts',
     'update-profile/route.ts',
+    // M5-C: search-products has no live UI entry point (the only Laravel
+    // form that posts here is HTML-commented-out, §BCN resolution), but
+    // the route itself is real, POST, and Laravel's VerifyCsrfToken has
+    // zero route exclusions — so CSRF is applied here too, for the same
+    // reason it would apply if the header form were ever un-commented.
+    'search-products/route.ts',
+    // M5-E: both add-pin-code.blade.php and edit-pincode.blade.php have
+    // {{csrf_field()}} on their forms (verified directly this slice) —
+    // destroy-pincode is the GET-based delete and is correctly NOT in this
+    // list (see EXEMPT_GET_ROUTES below).
+    'admin/save-pincode/route.ts',
+    'admin/update-pincode/route.ts',
+    // M5-E: both add-slider.blade.php and edit-slider.blade.php have
+    // {{csrf_field()}} on their forms — destroy-slider is the GET-based
+    // delete and is correctly NOT in this list.
+    'admin/save-slider/route.ts',
+    'admin/update-slider/route.ts',
+    // M5-E: both add-blog-category.blade.php and edit-blog-category.blade.php
+    // have {{csrf_field()}} on their forms — destroy-blog-category is the
+    // GET-based delete and is correctly NOT in this list.
+    'admin/save-blog-category/route.ts',
+    'admin/update-blog-category/route.ts',
+    // M5-E: both add-category.blade.php and edit-category.blade.php have
+    // @csrf on their forms — the two status-toggle routes are GET and
+    // correctly NOT in this list (see EXEMPT_GET_ROUTES below); no
+    // destroy route exists for this table at all.
+    'admin/save-cat/route.ts',
+    'admin/update-category/route.ts',
+    // M5-E: both add-blog.blade.php and edit-blog.blade.php have
+    // {{csrf_field()}} on their forms — destroy-blog is the GET-based
+    // delete and is correctly NOT in this list.
+    'admin/save-blog/route.ts',
+    'admin/update-blog/route.ts',
+    // M5-E: both add-post.blade.php and edit-post.blade.php have
+    // {{csrf_field()}} on their forms — destroy-post is the GET-based
+    // delete and is correctly NOT in this list.
+    'admin/save-post/route.ts',
+    'admin/update-post/route.ts',
+    // M5-E: add-product-category.blade.php, add-product-subcategory.blade.php,
+    // and add-other-category.blade.php all have {{csrf_field()}} on their
+    // forms — destroy-product-category is the GET-based shared delete
+    // and is correctly NOT in this list.
+    'admin/save-product-category/route.ts',
+    'admin/save-product-subcat/route.ts',
+    'admin/save-other-category/route.ts',
   ];
 
   it.each(PROTECTED_ROUTES)('%s imports and calls verifyCsrfToken', (routePath) => {
@@ -204,6 +359,29 @@ describe('CSRF-equivalent protection wiring (STRUCTURAL — source inspection)',
     'logout/route.ts',
     'admin/user-logout/route.ts',
     'cancel-order/route.ts',
+    // M5-E: DestroyPinCode is GET in source (AdminController.php:1136),
+    // IR-3 preserves that verb — GET destructive operations stay GET.
+    'admin/destroy-pincode/[id]/route.ts',
+    // M5-E: DestroySlider is GET in source (AdminController.php:1207),
+    // same IR-3 reasoning.
+    'admin/destroy-slider/[id]/route.ts',
+    // M5-E: DestroyBlogCategory is GET in source (AdminController.php:910),
+    // same IR-3 reasoning.
+    'admin/destroy-blog-category/[id]/route.ts',
+    // M5-E: UpdateCategoryStausActive/Inactive are GET in source
+    // (AdminController.php:418, 427) — status-toggle links, not forms;
+    // Laravel's VerifyCsrfToken only checks non-GET requests either way.
+    'admin/update-category-status-active/[id]/route.ts',
+    'admin/update-category-status-inactive/[id]/route.ts',
+    // M5-E: DestroyBlog is GET in source (AdminController.php:1072), same
+    // IR-3 reasoning.
+    'admin/destroy-blog/[id]/route.ts',
+    // M5-E: DestroyPost is GET in source (AdminController.php:827), same
+    // IR-3 reasoning.
+    'admin/destroy-post/[post_id]/route.ts',
+    // M5-E: DestroyCategory (the shared product_category delete handler)
+    // is GET in source (AdminController.php:188), same IR-3 reasoning.
+    'admin/destroy-product-category/[id]/route.ts',
   ];
 
   it.each(EXEMPT_GET_ROUTES)(
@@ -222,6 +400,23 @@ describe('CSRF-equivalent protection wiring (STRUCTURAL — source inspection)',
     'profile/page.tsx',
     'contact/page.tsx',
     'consultancy/page.tsx',
+    // M5-E
+    'admin/(shell)/add-pin-code/page.tsx',
+    'admin/(shell)/edit-pincode/[id]/page.tsx',
+    'admin/(shell)/add-slider/page.tsx',
+    'admin/(shell)/edit-slider/[id]/page.tsx',
+    'admin/(shell)/add-blog-category/page.tsx',
+    'admin/(shell)/edit-blog-category/[id]/page.tsx',
+    'admin/(shell)/add-hurbcat/page.tsx',
+    'admin/(shell)/edit-category/[id]/page.tsx',
+    'admin/(shell)/add-blog/page.tsx',
+    'admin/(shell)/edit-blog/[id]/page.tsx',
+    'admin/(shell)/add-post/page.tsx',
+    'admin/(shell)/edit-post/[post_id]/page.tsx',
+    'admin/(shell)/add-product-category/page.tsx',
+    'admin/(shell)/edit-product-category/[id]/page.tsx',
+    'admin/(shell)/add-product-subcategory/page.tsx',
+    'admin/(shell)/add-other-category/page.tsx',
   ];
 
   it.each(FORMS_WITH_REAL_TOKEN)(

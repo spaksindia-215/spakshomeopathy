@@ -1,7 +1,9 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { AdminStylesheets } from '@/components/admin/AdminStylesheets';
-import { getAllCategories } from '@/lib/demo';
+import { getDb } from '@/lib/mongodb/client';
+import { CategoryRepository } from '@/lib/mongodb/repositories/categoryRepository';
+import { readAndClearFlash } from '@/lib/auth/flash';
 
 /**
  * `/admin/cat-list` — ported from `admin/category-list.blade.php` (301
@@ -10,6 +12,24 @@ import { getAllCategories } from '@/lib/demo';
  * confirmed via `AdminController@CategorytList`, which renders
  * `view('admin.category-list', ...)`), `AdminController@CategorytList`
  * (route `cat-list`).
+ *
+ * M5-E: switched from `@/lib/demo` to live `spaks_dev` read
+ * (`CategoryRepository.findAllDescending`), now that the write path is
+ * real — avoids the half-migrated trap. Success flash now rendered too
+ * (source has a `session()->has('message')` block, `category-list.blade.php:111`,
+ * previously unwired — same gap already closed for pincode/slider/
+ * blog-category).
+ *
+ * PAGINATION NOT IMPLEMENTED — DISCLOSED GAP, DIFFERENT FROM PRIOR
+ * SUB-SLICES: source uses `paginate(20)` (`AdminController.php:645`).
+ * Unlike pincode/slider/blog-category (all far below 20 real rows),
+ * `categories` has ~23 real rows per `docs/M5-PREFLIGHT-AUDIT.md`'s own
+ * count — meaning production pagination boundaries WOULD actually be
+ * crossed (page 1 of 20, page 2 with the remaining ~3). This page
+ * currently renders the FULL unpaginated list. Flagged explicitly in
+ * `docs/GATE-REPORT-M5-E-CATEGORIES.md` as a genuine, currently-
+ * unreproduced D5 (data-read/pagination) gap — not silently assumed
+ * irrelevant the way it correctly was for the smaller-count entities.
  *
  * PRESERVED DEFECTS, verified directly this session:
  *   - Status IS a live toggle here (unlike `product-list`'s dead `href="#"`
@@ -32,8 +52,11 @@ export const metadata: Metadata = {
   title: 'Admin Panel | Category List',
 };
 
-export default function AdminCatListPage() {
-  const categories = getAllCategories();
+export default async function AdminCatListPage() {
+  const db = await getDb();
+  const repo = new CategoryRepository(db);
+  const categories = await repo.findAllDescending();
+  const message = await readAndClearFlash('message');
 
   return (
     <>
@@ -57,6 +80,7 @@ export default function AdminCatListPage() {
 
       <section className="content">
         <div className="row">
+          {message !== null && <div className="alert alert-success">{message}</div>}
           <div className="col-xs-12">
             <div className="box">
               <div className="box-body">

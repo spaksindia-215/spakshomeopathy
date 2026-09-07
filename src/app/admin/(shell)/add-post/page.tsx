@@ -1,7 +1,11 @@
 import type { Metadata } from 'next';
 import { AdminStylesheets } from '@/components/admin/AdminStylesheets';
 import { CKEditorPlaceholder } from '@/components/admin/CKEditorPlaceholder';
-import { getAllCategories, getAllProducts } from '@/lib/demo';
+import { getAllProducts } from '@/lib/demo';
+import { getDb } from '@/lib/mongodb/client';
+import { CategoryRepository } from '@/lib/mongodb/repositories/categoryRepository';
+import { generateCsrfToken } from '@/lib/auth/csrf';
+import { readAndClearFlash } from '@/lib/auth/flash';
 
 /**
  * `/admin/add-post` — ported from `admin/add-post.blade.php` (393 lines),
@@ -12,11 +16,12 @@ import { getAllCategories, getAllProducts } from '@/lib/demo';
  * from the `categories` table (`$getHomo`, a misleading variable name —
  * the REAL `tbl_homeopathy` query is commented out in source, line 843)
  * and its option VALUE is each category's `slug`, not its id — because
- * `SavePost` looks the category back up by `slug`. Uses
- * `getAllCategories()` from `@/lib/demo`, with `option value={c.slug}`.
- * Contrast with `edit-post`, whose equivalent select uses `id` as the
- * value (that page looks the category up by id instead) — a genuine,
- * confirmed asymmetry, not normalized here.
+ * `SavePost` looks the category back up by `slug`. Category dropdown now
+ * reads live `spaks_dev` (`CategoryRepository`, reused from the
+ * categories sub-slice), matching source's own live query. Contrast with
+ * `edit-post`, whose equivalent select uses `id` as the value (that page
+ * looks the category up by id instead) — a genuine, confirmed asymmetry,
+ * not normalized here.
  *
  * A SECOND, dead Category `<select>` exists earlier in source
  * (HTML-commented out, left column, using `$row->id` as its value) —
@@ -24,7 +29,14 @@ import { getAllCategories, getAllProducts } from '@/lib/demo';
  *
  * Product `<select>` uses each product's `p_slug` as its option value
  * (`getAllProducts()`, `option value={p.pSlug}`) — confirmed directly,
- * not the product's numeric id.
+ * not the product's numeric id. DELIBERATELY STILL DEMO-FIXTURE-BACKED
+ * THIS SLICE, disclosed asymmetry: source's `AddPost` also queries
+ * `products` live, but products' own admin CRUD/read infrastructure is a
+ * SEPARATE, not-yet-built M5-E entity — building a full live product
+ * listing here would be scope creep into that entity, not a mechanical
+ * extension of THIS slice. Flagged in
+ * `docs/GATE-REPORT-M5-E-POSTS.md` rather than silently left
+ * inconsistent with the category dropdown's own live-data switch.
  *
  * PRESERVED DEFECTS:
  *   - Bootstrap CSS loaded twice (same pattern as every Product/Category
@@ -37,9 +49,13 @@ export const metadata: Metadata = {
   title: 'Admin Panel | Add Post',
 };
 
-export default function AdminAddPostPage() {
-  const categories = getAllCategories();
+export default async function AdminAddPostPage() {
+  const db = await getDb();
+  const categoryRepo = new CategoryRepository(db);
+  const categories = await categoryRepo.findAllByNameAscending();
   const products = getAllProducts();
+  const csrfToken = generateCsrfToken();
+  const message = await readAndClearFlash('message');
 
   return (
     <>
@@ -64,7 +80,9 @@ export default function AdminAddPostPage() {
 
       <section className="content">
         <div className="row">
+          {message !== null && <div className="alert alert-success">{message}</div>}
           <form method="post" action="/admin/save-post" encType="multipart/form-data">
+            <input type="hidden" name="_token" value={csrfToken} />
             <div className="col-md-6">
               <div className="box box-success">
                 <div className="box-header with-border">

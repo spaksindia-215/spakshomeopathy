@@ -2,12 +2,21 @@ import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { AdminStylesheets } from '@/components/admin/AdminStylesheets';
 import { CKEditorPlaceholder } from '@/components/admin/CKEditorPlaceholder';
-import { getAllBlogCategories, getBlogByLegacyId } from '@/lib/demo';
+import { getDb } from '@/lib/mongodb/client';
+import { BlogRepository } from '@/lib/mongodb/repositories/blogRepository';
+import { BlogCategoryRepository } from '@/lib/mongodb/repositories/blogCategoryRepository';
+import { generateCsrfToken } from '@/lib/auth/csrf';
+import { readAndClearFlash } from '@/lib/auth/flash';
 
 /**
  * `/admin/edit-blog/[id]` — ported from `admin/edit-blog.blade.php` (188
  * lines), `AdminController@EditBlog` (GET) / `UpdateBlog` (POST, to
  * `admin/update-blog`).
+ *
+ * M5-E: switched from `@/lib/demo` to live `spaks_dev` reads
+ * (`BlogRepository.findByLegacyId`, `BlogCategoryRepository.findAllDescending`
+ * for the dropdown — matching source's `EditBlog()`, which queries both
+ * live), CSRF-token-wired, success flash rendered.
  *
  * NOTE: source sets a `value="{{$getBlog->blog_image}}"` attribute on
  * the file `<input>` (line 129) — browsers silently ignore any `value`
@@ -24,13 +33,19 @@ export const metadata: Metadata = {
 export default async function AdminEditBlogPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
   const legacyId = Number(id);
-  const blog = Number.isFinite(legacyId) ? getBlogByLegacyId(legacyId) : undefined;
+
+  const db = await getDb();
+  const blogRepo = new BlogRepository(db);
+  const blog = Number.isFinite(legacyId) ? await blogRepo.findByLegacyId(legacyId) : null;
 
   if (!blog) {
     notFound();
   }
 
-  const categories = getAllBlogCategories();
+  const categoryRepo = new BlogCategoryRepository(db);
+  const categories = await categoryRepo.findAllDescending();
+  const csrfToken = generateCsrfToken();
+  const message = await readAndClearFlash('message');
 
   return (
     <>
@@ -54,7 +69,9 @@ export default async function AdminEditBlogPage({ params }: { params: Promise<{ 
 
       <section className="content">
         <div className="row">
+          {message !== null && <div className="alert alert-success">{message}</div>}
           <form method="post" action="/admin/update-blog" encType="multipart/form-data">
+            <input type="hidden" name="_token" value={csrfToken} />
             <div className="col-md-6">
               <div className="box box-success">
                 <div className="box-header with-border">

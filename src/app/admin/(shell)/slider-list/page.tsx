@@ -1,18 +1,31 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { AdminStylesheets } from '@/components/admin/AdminStylesheets';
-import { getAllAdminSliders } from '@/lib/demo/admin';
+import { getDb } from '@/lib/mongodb/client';
+import { SliderRepository } from '@/lib/mongodb/repositories/sliderRepository';
+import { readAndClearFlash } from '@/lib/auth/flash';
 
 /**
  * `/admin/slider-list` — ported from `admin/slider-list.blade.php` (142
  * lines), `AdminController@SliderList`.
  *
- * Sliders table is confirmed ZERO REAL PRODUCTION ROWS (P-18,
- * `schemas/slider.ts`'s own header: "maintained by admin but unused by
- * the homepage... zero rows in production today"). This list renders
- * honestly empty here, matching that real state — not padded with
- * invented rows. No sidebar nav entry exists for this module either
- * (same P-18 disconnect), not reproduced with an added link.
+ * M5-E: switched from `@/lib/demo/admin`'s static fixture to a live
+ * `spaks_dev` read (`SliderRepository.findAllDescending`), now that the
+ * write path (add/edit/delete) is real — avoids the "half-migrated:
+ * writes succeed but the list view doesn't show them" trap
+ * `docs/M5-PREFLIGHT-AUDIT.md` §5/§10 warned M5-E about, same reasoning
+ * already applied to `pin-code-list` in the prior sub-slice. Success
+ * flash now rendered too.
+ *
+ * P-18 (Preserved Defect, unaffected by this slice): sliders are
+ * maintained by admin but never rendered on the homepage — this remains
+ * true; nothing in this slice wires `sliders` into any public-facing
+ * page. Production had ZERO rows as of this project's earlier analysis
+ * (`schemas/slider.ts`'s header) — this list now renders whatever is
+ * actually in `spaks_dev` (honestly, including zero, if that's still the
+ * real count), rather than a frozen point-in-time fixture. No sidebar nav
+ * entry exists for this module either (same P-18 disconnect), not
+ * reproduced with an added link.
  *
  * PRESERVED DEFECTS (same pattern as `blog-list`):
  *   - Status prints raw lowercase `"active"` / capitalized `"Inactive"`
@@ -25,8 +38,11 @@ export const metadata: Metadata = {
   title: 'Admin Panel | Slider List',
 };
 
-export default function AdminSliderListPage() {
-  const sliders = getAllAdminSliders();
+export default async function AdminSliderListPage() {
+  const db = await getDb();
+  const repo = new SliderRepository(db);
+  const sliders = await repo.findAllDescending();
+  const message = await readAndClearFlash('message');
 
   return (
     <>
@@ -50,6 +66,7 @@ export default function AdminSliderListPage() {
 
       <section className="content">
         <div className="row">
+          {message !== null && <div className="alert alert-success">{message}</div>}
           <div className="col-xs-12">
             <div className="box">
               <div className="box-body">

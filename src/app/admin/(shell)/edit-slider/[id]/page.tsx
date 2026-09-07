@@ -1,18 +1,25 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { AdminStylesheets } from '@/components/admin/AdminStylesheets';
-import { getAdminSliderByLegacyId } from '@/lib/demo/admin';
+import { getDb } from '@/lib/mongodb/client';
+import { SliderRepository } from '@/lib/mongodb/repositories/sliderRepository';
+import { generateCsrfToken } from '@/lib/auth/csrf';
+import { readAndClearFlash } from '@/lib/auth/flash';
 
 /**
  * `/admin/edit-slider/[id]` — ported from `admin/edit-slider.blade.php`
  * (175 lines), `AdminController@EditSlider` (GET) / `UpdateSlider`
  * (POST, to `admin/update-slider`).
  *
+ * M5-E: switched from `@/lib/demo/admin`'s static fixture to a live
+ * `spaks_dev` read (`SliderRepository.findByLegacyId`), CSRF-token-wired,
+ * success flash rendered. D-04 RESOLVED this slice (Fix Register
+ * FIX-003) — see `src/lib/uploads/adminUpload.ts`'s header.
+ *
  * Reachable only by directly visiting a URL with an id, since
- * `slider-list` has zero real rows to link an edit action from (see
- * that page's header) — kept buildable/demoable on its own for
- * completeness, per the milestone's List+Create+Edit+View requirement
- * for every named module.
+ * `slider-list` typically has zero/few real rows to link an edit action
+ * from — kept buildable/demoable on its own for completeness, per the
+ * milestone's List+Create+Edit+View requirement for every named module.
  *
  * FLAGSHIP PRESERVED STRUCTURAL DEFECT, confirmed directly this session:
  * the right column has TWO adjacent `.box-body` divs (source lines 109
@@ -29,11 +36,17 @@ export const metadata: Metadata = {
 export default async function AdminEditSliderPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
   const legacyId = Number(id);
-  const slider = Number.isFinite(legacyId) ? getAdminSliderByLegacyId(legacyId) : undefined;
+
+  const db = await getDb();
+  const repo = new SliderRepository(db);
+  const slider = Number.isFinite(legacyId) ? await repo.findByLegacyId(legacyId) : null;
 
   if (!slider) {
     notFound();
   }
+
+  const csrfToken = generateCsrfToken();
+  const message = await readAndClearFlash('message');
 
   return (
     <>
@@ -57,7 +70,9 @@ export default async function AdminEditSliderPage({ params }: { params: Promise<
 
       <section className="content">
         <div className="row">
+          {message !== null && <div className="alert alert-success">{message}</div>}
           <form method="post" action="/admin/update-slider" encType="multipart/form-data">
+            <input type="hidden" name="_token" value={csrfToken} />
             <input type="hidden" name="slider_id" value={slider.legacyId} />
             <input type="hidden" name="old_image" value={slider.sliderImage} />
 

@@ -1,5 +1,7 @@
 import type { Metadata } from 'next';
 import { AdminStylesheets } from '@/components/admin/AdminStylesheets';
+import { generateCsrfToken } from '@/lib/auth/csrf';
+import { readAndClearFlash } from '@/lib/auth/flash';
 
 /**
  * `/admin/add-hurbcat` — ported from `admin/add-category.blade.php` (330
@@ -7,6 +9,12 @@ import { AdminStylesheets } from '@/components/admin/AdminStylesheets';
  * "hurbcat"/"HurbCat" — a genuine source typo for "herb category",
  * preserved in the route path itself, not just a view artifact) /
  * `Savecategory` (POST, to `admin/save-cat`).
+ *
+ * M5-E: form now POSTs for real (`src/app/admin/save-cat/route.ts`),
+ * CSRF-token-wired, success flash rendered. Uploads validated per D-04/
+ * FIX-003 (reused). Slug generated via source's FIRST algorithm
+ * (`name-rand()`, NOT `convertToSlug`) — see `save-cat/route.ts`'s
+ * header.
  *
  * FLAGSHIP PRESERVED MISLABELS, verified directly this session — this
  * page is visually "Add Category" but reads like a leftover copy of the
@@ -33,7 +41,10 @@ export const metadata: Metadata = {
   title: 'Admin Panel | Add Product',
 };
 
-export default function AdminAddHurbCatPage() {
+export default async function AdminAddHurbCatPage() {
+  const csrfToken = generateCsrfToken();
+  const message = await readAndClearFlash('message');
+
   return (
     <>
       <AdminStylesheets />
@@ -57,7 +68,9 @@ export default function AdminAddHurbCatPage() {
 
       <section className="content">
         <div className="row">
+          {message !== null && <div className="alert alert-success">{message}</div>}
           <form method="post" action="/admin/save-cat" encType="multipart/form-data">
+            <input type="hidden" name="_token" value={csrfToken} />
             <div className="col-md-6">
               <div className="box box-success">
                 <div className="box-header with-border">

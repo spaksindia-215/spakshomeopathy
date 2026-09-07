@@ -1,16 +1,31 @@
 import type { Metadata } from 'next';
-import { PublicHeader } from '@/components/layout/PublicHeader';
-import { PublicFooter } from '@/components/layout/PublicFooter';
-import { PublicScripts } from '@/components/layout/PublicScripts';
-import { PublicStylesheets } from '@/components/layout/PublicStylesheets';
-import { HomePageContent } from '../HomePageContent';
+import { Lato, Source_Sans_3 } from 'next/font/google';
+import { RedesignedHome } from '../redesign/RedesignedHome';
 
 /**
- * `/home` — ported from `index.blade.php` (`HomeController@home`).
- * Renders the SAME content as `/` (`src/app/page.tsx`) — see that file's
- * and `HomePageContent.tsx`'s doc comments for the full explanation of
- * why (source renders the identical `index` view at both routes).
+ * `/home` — renders the SAME content as `/` (`src/app/page.tsx`), exactly
+ * as it did before the 2026-09-07 swap (source's own duplicate `index`/
+ * `home` routes both rendered the same view — see `page.tsx`'s doc
+ * comment for the full swap history). Only the CONTENT changed (legacy
+ * `HomePageContent` → `RedesignedHome`, now living at `/redesign`
+ * instead) — the "both routes render the same thing" relationship is
+ * unchanged.
  */
+const lato = Lato({
+  subsets: ['latin'],
+  weight: ['400', '700', '900'],
+  style: ['normal', 'italic'],
+  variable: '--font-lato',
+  display: 'swap',
+});
+
+const sourceSansPro = Source_Sans_3({
+  subsets: ['latin'],
+  weight: ['400', '600', '700', '900'],
+  variable: '--font-source-sans-pro',
+  display: 'swap',
+});
+
 export const metadata: Metadata = {
   title: 'Homeopathy Clinic in Delhi | Dr. S.K. Meena | Spaks Homeopathy',
   description:
@@ -26,23 +41,8 @@ export const metadata: Metadata = {
 
 export default function HomeAliasPage() {
   return (
-    <>
-      <PublicStylesheets />
-      <link
-        rel="stylesheet"
-        type="text/css"
-        href="https://cdnjs.cloudflare.com/ajax/libs/bxslider/4.2.5/jquery.bxslider.css"
-      />
-      <PublicHeader />
-      <HomePageContent />
-      <PublicFooter />
-      <PublicScripts />
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/bxslider/4.2.5/jquery.bxslider.min.js"></script>
-      <script
-        dangerouslySetInnerHTML={{
-          __html: `(function(){function init(){if(window.jQuery&&window.jQuery.fn.bxSlider){window.jQuery('.bxslider').bxSlider({auto:true,autoControls:true,stopAutoOnClick:false,pager:true});}else{setTimeout(init,50);}}init();})();`,
-        }}
-      />
-    </>
+    <div className={`${lato.variable} ${sourceSansPro.variable}`}>
+      <RedesignedHome />
+    </div>
   );
 }

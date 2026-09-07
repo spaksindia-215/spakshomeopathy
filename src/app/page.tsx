@@ -1,24 +1,41 @@
 import type { Metadata } from 'next';
-import { PublicHeader } from '@/components/layout/PublicHeader';
-import { PublicFooter } from '@/components/layout/PublicFooter';
-import { PublicScripts } from '@/components/layout/PublicScripts';
-import { PublicStylesheets } from '@/components/layout/PublicStylesheets';
-import { HomePageContent } from './HomePageContent';
+import { Lato, Source_Sans_3 } from 'next/font/google';
+import { RedesignedHome } from './redesign/RedesignedHome';
 
 /**
- * `/` — ported from `index.blade.php` (`HomeController@index`). See
- * `HomePageContent.tsx` for the full body content and its dead-code /
- * live-duplicate-section documentation. This file and `home/page.tsx`
- * both render the same `HomePageContent`, matching source's own duplicate
- * `index`/`home` routes (docs/M3-APPLICATION-MAPPING.md rows #1/#2).
+ * `/` — the site's real homepage.
  *
- * GTM (Google Tag Manager, GTM-M7TG8NJ7) and the MedicalOrganization/
- * WebSite JSON-LD block are NOT ported this phase — both are genuinely
- * live in source, but wiring a real GTM container / structured-data
- * script is analytics/SEO infrastructure, not visual UI; deferred
- * consistently with this milestone's "no new features/infrastructure"
- * boundary. Flagged here rather than silently dropped.
+ * SWAPPED (owner request, 2026-09-07): this route used to render the
+ * legacy `index.blade.php`-ported `HomePageContent` (MIGRATION-CONTRACT.md
+ * IR-1 governed it). That content has NOT been deleted — it now lives at
+ * `/redesign` (see that route's page.tsx for the full rationale). This
+ * route and `/home` (`src/app/home/page.tsx`) now both render
+ * `RedesignedHome`, the from-scratch homepage design that was previously
+ * only previewed at `/redesign` — see `RedesignedHome.tsx`'s own doc
+ * comment for the swap's full history.
+ *
+ * Metadata below is the SAME real, production-verified SEO copy the
+ * legacy `/` route used (title/description/keywords/OG/Twitter) — carried
+ * over rather than reinvented, since this is still the same business's
+ * real homepage, just a new visual design. `robots`/`noindex` is
+ * deliberately NOT set here (unlike `/redesign`'s preview-era metadata):
+ * this is now the canonical, indexable homepage.
  */
+const lato = Lato({
+  subsets: ['latin'],
+  weight: ['400', '700', '900'],
+  style: ['normal', 'italic'],
+  variable: '--font-lato',
+  display: 'swap',
+});
+
+const sourceSansPro = Source_Sans_3({
+  subsets: ['latin'],
+  weight: ['400', '600', '700', '900'],
+  variable: '--font-source-sans-pro',
+  display: 'swap',
+});
+
 export const metadata: Metadata = {
   title: 'Homeopathy Clinic in Delhi | Dr. S.K. Meena | Spaks Homeopathy',
   description:
@@ -61,36 +78,8 @@ export const metadata: Metadata = {
 
 export default function HomePage() {
   return (
-    <>
-      <PublicStylesheets />
-      {/* Page-specific extra stylesheet: bxSlider CSS (CDN, matching
-          index.blade.php:19's exact cdnjs URL — not bundled locally in
-          source either). Positioned same as PublicStylesheets' own scope
-          note: "uncommon" extras are each page's own responsibility. */}
-      <link
-        rel="stylesheet"
-        type="text/css"
-        href="https://cdnjs.cloudflare.com/ajax/libs/bxslider/4.2.5/jquery.bxslider.css"
-      />
-      <PublicHeader />
-      <HomePageContent />
-      <PublicFooter />
-      <PublicScripts />
-      {/* bxSlider JS (CDN) + its init script — page-specific, not in
-          LegacyScriptRunner's fixed list, added after the shared scripts
-          exactly as source appends its own extra <script> tags after the
-          same shared block (index.blade.php:833-842). Init options copied
-          verbatim from source: auto/autoControls/stopAutoOnClick/pager,
-          nothing added or removed. Relies on the same hydration-delay
-          mechanism LegacyScriptRunner already establishes for jQuery's
-          availability — see that file for why scripts execute after
-          React hydration, not before. */}
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/bxslider/4.2.5/jquery.bxslider.min.js"></script>
-      <script
-        dangerouslySetInnerHTML={{
-          __html: `(function(){function init(){if(window.jQuery&&window.jQuery.fn.bxSlider){window.jQuery('.bxslider').bxSlider({auto:true,autoControls:true,stopAutoOnClick:false,pager:true});}else{setTimeout(init,50);}}init();})();`,
-        }}
-      />
-    </>
+    <div className={`${lato.variable} ${sourceSansPro.variable}`}>
+      <RedesignedHome />
+    </div>
   );
 }

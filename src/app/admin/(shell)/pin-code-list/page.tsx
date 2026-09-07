@@ -1,28 +1,35 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { AdminStylesheets } from '@/components/admin/AdminStylesheets';
-import { getAllAdminPinCodes } from '@/lib/demo/admin';
+import { getDb } from '@/lib/mongodb/client';
+import { PinCodeRepository } from '@/lib/mongodb/repositories/pinCodeRepository';
+import { readAndClearFlash } from '@/lib/auth/flash';
 
 /**
  * `/admin/pin-code-list` — ported from `admin/pin-code-list.blade.php`
  * (142 lines), `AdminController@PinCodeList`.
  *
- * B-09 / DR-03 (confirmed directly this session via `schemas/pinCode.ts`'s
- * own header, NOT a new finding): the real `pin_codes` table's columns
+ * M5-E: switched from `@/lib/demo/admin`'s static fixture to a live
+ * `spaks_dev` read (`PinCodeRepository.findAllDescending()`, mirroring
+ * `orderBy('id','desc')` — verified directly against
+ * `AdminController.php:1102-1105` this slice), now that the write path
+ * (add/edit/delete) is real — avoids the "half-migrated: writes succeed
+ * but the list view doesn't show them" trap `docs/M5-PREFLIGHT-AUDIT.md`
+ * §10 explicitly warned M5-E about. Also now renders the
+ * `session()->has('message')` success flash (was previously unwired).
+ *
+ * B-09 / DR-03 (RESOLVED, Fix Register FIX-001 — see
+ * `pinCodeRepository.ts`'s header): the real `pin_codes` table's columns
  * are `pincode`/`location`/`country`/`uid`/`status` (status is a
  * `varchar`, not numeric) — NOT `pin_code`/`pin_address`/`pin_status`
- * (int), which is what `PinCodeList`'s Blade view and every pincode
- * controller method actually reference. Reading the REAL table with the
- * BROKEN view's exact field names would produce blank/null cells for
- * every row in production. This page instead reads the schema's real
- * field names (`pincode`, `location`, `status`), which is the only way
- * to show the real 1 row's actual data — DR-03 remains unresolved
- * (whether new saves should be "fixed" or artificially reproduce the
- * SQL failure) and is NOT decided here; this is a read-only List view.
+ * (int), which is what `PinCodeList`'s Blade view and the (formerly
+ * broken, now fixed) write methods reference. This page reads the
+ * schema's real field names (`pincode`, `location`, `status`).
  *
- * FLAGSHIP PRESERVED MISLABEL (still applies regardless of the B-09
- * field-name substitution above): the header row says "Name" over what
- * is actually the pincode value — not the location/address. Preserved
+ * FLAGSHIP PRESERVED MISLABEL (still applies, DR-03's resolution does NOT
+ * touch this — it is a separate, cosmetic display defect, not part of
+ * B-09's write-path failure): the header row says "Name" over what is
+ * actually the pincode value — not the location/address. Preserved
  * verbatim; the column is NOT relabeled to "Pin Code" to match the data
  * it truly holds.
  *
@@ -34,8 +41,11 @@ export const metadata: Metadata = {
   title: 'Admin Panel | Pin Code List',
 };
 
-export default function AdminPinCodeListPage() {
-  const pincodes = getAllAdminPinCodes();
+export default async function AdminPinCodeListPage() {
+  const db = await getDb();
+  const repo = new PinCodeRepository(db);
+  const pincodes = await repo.findAllDescending();
+  const message = await readAndClearFlash('message');
 
   return (
     <>
@@ -59,6 +69,7 @@ export default function AdminPinCodeListPage() {
 
       <section className="content">
         <div className="row">
+          {message !== null && <div className="alert alert-success">{message}</div>}
           <div className="col-xs-12">
             <div className="box">
               <div className="box-body">

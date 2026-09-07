@@ -1,0 +1,23 @@
+/* Site-wide baseline reset.
+ * Bootstrap (loaded on the legacy public/homeopathy/herbs/admin sections)
+ * already zeroes `body` margin, but the redesign route has no such reset,
+ * so the browser's default ~8px body margin was pushing the navbar away
+ * from the top/left/right edges and the footer away from the
+ * bottom/left/right edges. Applied globally so every route — present and
+ * future — starts flush, per the site-wide "0 margin" requirement.
+ */
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+/* Belt-and-suspenders: whichever header/nav or footer element renders at
+ * the top/bottom of the page should never carry outer margin, regardless
+ * of which section's markup produced it. Layout spacing is expected to
+ * come from padding, not margin, on these elements. */
+header,
+nav,
+footer {
+  margin: 0;
+}
