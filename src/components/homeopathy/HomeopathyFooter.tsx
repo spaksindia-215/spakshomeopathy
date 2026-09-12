@@ -60,7 +60,7 @@ export function HomeopathyFooter() {
               <p className="hm-footer__heading">Support</p>
               <ul className="hm-footer__links">
                 <li>
-                  <a href="/cart-list">Your Cart</a>
+                  <Link href="/homeopathy/cart">Your Cart</Link>
                 </li>
                 <li>
                   <Link href="/contact">Contact Us</Link>

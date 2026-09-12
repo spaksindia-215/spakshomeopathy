@@ -132,6 +132,40 @@ export function EmptyState({
   );
 }
 
+/**
+ * "<Product> added to cart" confirmation toast — recreated from the
+ * Herbs Store's `HerbsUI.tsx#Toast` (defined there but never actually
+ * wired up to any add-to-cart action). Rendered once from
+ * `HomeopathyShell`, driven by `useHomeopathyStore().toastMessage`, so
+ * every add-to-cart entry point (product card, Quick View, PDP) shows
+ * the same confirmation.
+ */
+export function Toast({ message, onClose }: { message: string; onClose: () => void }) {
+  return (
+    <div className="hm-toast" role="status">
+      <span className="hm-toast__icon">
+        <HomeopathyIcon name="check" size={18} />
+      </span>
+      {message}
+      <button
+        type="button"
+        onClick={onClose}
+        aria-label="Dismiss"
+        style={{
+          background: 'none',
+          border: 'none',
+          color: '#fff',
+          cursor: 'pointer',
+          marginLeft: 6,
+          display: 'inline-flex',
+        }}
+      >
+        <HomeopathyIcon name="close" size={14} />
+      </button>
+    </div>
+  );
+}
+
 export function ProductGridSkeleton({ count = 8 }: { count?: number }) {
   return (
     <div className="hm-product-grid" aria-hidden="true" aria-busy="true">

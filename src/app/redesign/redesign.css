@@ -471,8 +471,22 @@
   min-height: 300px;
 }
 
+.sp-division-split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 28px;
+}
+.sp-division-card-split {
+  grid-template-columns: 1fr;
+  min-height: 300px;
+}
+
 .sp-division-card-dark {
   background: linear-gradient(120deg, #0f4469 0%, #123a56 55%, #0d2f45 100%);
+  color: var(--ivory);
+}
+.sp-division-card-forest {
+  background: linear-gradient(120deg, #12503c 0%, #0e3f2f 55%, #0a3327 100%);
   color: var(--ivory);
 }
 .sp-division-card-light {
@@ -551,6 +565,12 @@
 .sp-division-card-title-dark {
   color: var(--forest);
 }
+.sp-division-card-title-accent-blue {
+  color: #7db8e8;
+}
+.sp-division-card-title-accent-green {
+  color: #8fd6a8;
+}
 .sp-division-card-desc {
   font-size: 15.5px;
   line-height: 1.6;
@@ -593,6 +613,16 @@
   background: rgba(255, 107, 53, 0.08);
   border: 1px solid rgba(255, 107, 53, 0.18);
   color: #b5502a;
+}
+.sp-tag-link {
+  cursor: pointer;
+  transition: background 0.15s ease, border-color 0.15s ease, transform 0.15s ease;
+}
+.sp-tag-link:hover {
+  background: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.36);
+  color: var(--ivory);
+  transform: translateY(-1px);
 }
 
 .sp-division-cta {
@@ -1254,6 +1284,9 @@
   .sp-division-card,
   .sp-division-card-light,
   .sp-why-card {
+    grid-template-columns: 1fr;
+  }
+  .sp-division-split {
     grid-template-columns: 1fr;
   }
   .sp-division-card-media,

@@ -69,7 +69,7 @@ export default async function HomeopathyHomePage() {
                 <Link href="/homeopathy/products" className="hm-btn hm-btn--primary">
                   Shop Medicines
                 </Link>
-                <Link href="#categories" className="hm-btn hm-btn--outline">
+                <Link href="/homeopathy/patents" className="hm-btn hm-btn--outline">
                   Explore Categories
                 </Link>
               </div>
@@ -107,7 +107,7 @@ export default async function HomeopathyHomePage() {
               </div>
             </div>
             <div className="hm-division-grid">
-              <Link href="#categories" className="hm-division-card hm-division-card--patents">
+              <Link href="/homeopathy/patents" className="hm-division-card hm-division-card--patents">
                 <div className="hm-division-card__icon">
                   <HomeopathyIcon name="grid" size={22} />
                 </div>
@@ -162,8 +162,8 @@ export default async function HomeopathyHomePage() {
                   Find medicines for {categoryCount} everyday disease and wellness areas
                 </p>
               </div>
-              <Link href="/homeopathy/products" className="hm-section__link">
-                View all medicines{' '}
+              <Link href="/homeopathy/patents" className="hm-section__link">
+                View all categories{' '}
                 <HomeopathyIcon
                   name="chevron-down"
                   size={14}

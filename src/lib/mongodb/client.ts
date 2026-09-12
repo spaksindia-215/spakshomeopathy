@@ -66,6 +66,33 @@ export class ProductionConnectionBlockedError extends Error {
 }
 
 /**
+ * Number of extra attempts made when the *initial* `.connect()` fails with
+ * a transient network/TLS error, before giving up and letting the error
+ * propagate. Observed in dev (2026-09-12): intermittent
+ * `MongoServerSelectionError` / `SSL routines:ssl3_read_bytes:tlsv1 alert
+ * internal error` (TLS alert 80) against Atlas, which clears on the very
+ * next attempt. This is a known flaky interaction between newer Node/OpenSSL
+ * builds and Atlas's TLS termination, not an application bug — retrying the
+ * handshake is the correct mitigation rather than surfacing a 500 to the
+ * user for a connection that would have succeeded a moment later.
+ */
+const CONNECT_RETRY_ATTEMPTS = 2;
+const CONNECT_RETRY_DELAY_MS = 300;
+
+function isTransientConnectError(err: unknown): boolean {
+  const message = err instanceof Error ? err.message : String(err);
+  return (
+    /ssl|tls/i.test(message) ||
+    /ServerSelectionError/i.test(message) ||
+    /ECONNRESET|ETIMEDOUT|ENOTFOUND/i.test(message)
+  );
+}
+
+function sleep(ms: number): Promise<void> {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+/**
  * Returns the singleton MongoClient, connecting on first use.
  *
  * Lazy construction means importing any module that imports this one never
@@ -92,10 +119,53 @@ export async function getMongoClient(): Promise<MongoClient> {
   // MongoTopologyClosedError on every subsequent call until the process
   // restarted. This mirrors the pattern `src/lib/herbs/db/client.ts` and
   // `src/lib/motherTincture/db/client.ts` already use correctly.
-  const candidate = new MongoClient(config.uri);
-  await candidate.connect();
-  client = candidate;
-  return client;
+  //
+  // `minPoolSize: 0` / a modest `maxIdleTimeMS` keep the pool from holding
+  // idle sockets that Atlas may already be tearing down on its end (a
+  // common contributor to the TLS-alert-80 symptom above); the retry loop
+  // below covers the initial handshake, which is the case that otherwise
+  // becomes a request-facing 500 (see product-store-cart route, 2026-09-12).
+  //
+  // NOT a TLS-version fix here (deliberately) — diagnosed 2026-09-12 that
+  // the `SSL alert number 80` / `tlsv1 alert internal error` this cluster
+  // produces is NOT a TLS-1.2-vs-1.3 issue: forcing 1.2 via a raw
+  // `openssl s_client -tls1_2` against Node's actual linked libssl
+  // (`/usr/lib/x86_64-linux-gnu/libssl.so.3`, NOT the unrelated
+  // `~/anaconda3/bin/openssl` that first made 1.2 look like a fix) fails
+  // identically to the default, as does every other TLS version and both
+  // `curl` and Node's own `tls.connect`. Plain HTTPS to other hosts
+  // (google.com) succeeds from this same machine, so it isn't a
+  // system-wide TLS/network/proxy issue either — the handshake is being
+  // torn down by Atlas itself, most likely because this environment's
+  // current outbound IP is not in the Atlas project's Network Access
+  // (IP allowlist) entry for this cluster. That's an Atlas dashboard
+  // configuration fix, not something resolvable from this codebase — see
+  // the retry loop below for how the app degrades instead of never
+  // recovering.
+  let lastError: unknown;
+  for (let attempt = 0; attempt <= CONNECT_RETRY_ATTEMPTS; attempt++) {
+    const candidate = new MongoClient(config.uri, {
+      maxIdleTimeMS: 10_000,
+      minPoolSize: 0,
+      serverSelectionTimeoutMS: 10_000,
+    });
+    try {
+      await candidate.connect();
+      client = candidate;
+      return client;
+    } catch (err) {
+      lastError = err;
+      await candidate.close().catch(() => {});
+      const isLastAttempt = attempt === CONNECT_RETRY_ATTEMPTS;
+      if (isLastAttempt || !isTransientConnectError(err)) {
+        throw err;
+      }
+      await sleep(CONNECT_RETRY_DELAY_MS * (attempt + 1));
+    }
+  }
+  // Unreachable — the loop above always returns or throws — but keeps
+  // TypeScript satisfied that every path produces a result.
+  throw lastError;
 }
 
 /**

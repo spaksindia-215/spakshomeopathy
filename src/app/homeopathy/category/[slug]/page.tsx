@@ -2,7 +2,6 @@ import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { HomeopathyShell } from '@/components/homeopathy/HomeopathyShell';
 import { HomeopathyCatalog } from '@/components/homeopathy/HomeopathyCatalog';
-import { HomeopathyProductCard } from '@/components/homeopathy/HomeopathyProductCard';
 import { getCategoriesByType, getCategoryBySlug } from '@/lib/demo/categories';
 import { getProductsByCategory } from '@/lib/demo/products';
 
@@ -33,6 +32,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
  * row (`type: 'N'`), then its `legacyId` against `product.pCat` via the
  * real `getProductsByCategory()` accessor — recreating the Herbs Store's
  * `/herbs/category/[form]` page pattern.
+ *
+ * Uses the same `HomeopathyCatalog` filter+grid as `/homeopathy/products`
+ * (category locked via `lockedCategoryId`) so this page gets the same
+ * "Condition" filter group (`pHeading`, see `groupProductsByDisease`) that
+ * lets a shopper narrow straight to a disease within the category, in
+ * addition to price/rating/stock — not a separate tile-browsing page.
  */
 export default async function HomeopathyCategoryPage({ params }: Props) {
   const { slug } = await params;
@@ -40,8 +45,6 @@ export default async function HomeopathyCategoryPage({ params }: Props) {
   if (!category || category.type !== 'N' || category.status !== 1) notFound();
 
   const products = getProductsByCategory(category.legacyId, 1);
-  // Server-rendered here — see HomeopathyCatalog's `cardsById` doc comment.
-  const cardsById = new Map(products.map((p) => [p.legacyId, <HomeopathyProductCard key={p.legacyId} product={p} />]));
 
   return (
     <HomeopathyShell>
@@ -50,7 +53,6 @@ export default async function HomeopathyCategoryPage({ params }: Props) {
           title={`${category.name} Medicines`}
           subtitle={`Homeopathic remedies for ${category.name?.toLowerCase()}`}
           products={products}
-          cardsById={cardsById}
           lockedCategoryId={category.legacyId}
         />
       </main>

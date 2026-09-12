@@ -146,6 +146,54 @@ export function getRelatedHomeopathyProducts(product: Product, limit: number): P
     .slice(0, limit);
 }
 
+/** One disease "bucket" within a category — see `groupProductsByDisease`. */
+export interface DiseaseGroup {
+  /** Raw `pHeading` value shared by every product in this group (e.g.
+   * "Arthritis"), used as the display label. */
+  heading: string;
+  /** URL-safe form of `heading`, used as the route param in
+   * `/homeopathy/category/[slug]/[disease]` — lowercased/hyphenated, not a
+   * stored slug (no such field exists on `categories`/`products` for this
+   * disease grouping, it's derived purely for routing). */
+  key: string;
+  products: Product[];
+}
+
+/** Turns `key` (from a `/homeopathy/category/[slug]/[disease]` route param)
+ * back into a comparable form — mirrors the encoding in
+ * `groupProductsByDisease` so a group can be found by its route param. */
+export function diseaseKeyFromHeading(heading: string): string {
+  return heading
+    .trim()
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '');
+}
+
+/**
+ * Groups a category's products by `pHeading` — the disease/condition name
+ * shown as each product card's green label (e.g. "Arthritis", "Back
+ * pain"). `categories` (the `type: 'N'` disease tree) has no stored
+ * subcategory table of its own, so the disease grouping a shopper expects
+ * under a category (Bones -> Arthritis -> the Arthritis medicine) is
+ * derived here from the real, populated `pHeading` field rather than
+ * inventing a new taxonomy. In the current catalogue every disease within
+ * a category maps to exactly one product, but this groups correctly if a
+ * category ever carries more than one product per disease.
+ */
+export function groupProductsByDisease(products: Product[]): DiseaseGroup[] {
+  const groups = new Map<string, DiseaseGroup>();
+  for (const p of products) {
+    const heading = (p.pHeading || '').trim();
+    if (!heading) continue;
+    const key = diseaseKeyFromHeading(heading);
+    const existing = groups.get(key);
+    if (existing) existing.products.push(p);
+    else groups.set(key, { heading, key, products: [p] });
+  }
+  return [...groups.values()].sort((a, b) => a.heading.localeCompare(b.heading));
+}
+
 /** Plain-text excerpt from `pDesc`'s HTML for card/PDP short-description
  * slots — every real product's `pShortDesc` field is null in this
  * dataset, so the short description is derived from `pDesc` (stripped of

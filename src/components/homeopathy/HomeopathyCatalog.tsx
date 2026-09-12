@@ -1,9 +1,16 @@
 'use client';
 
-import { Fragment, useMemo, useState, type ReactNode } from 'react';
+import { useMemo, useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { HomeopathyIcon } from './HomeopathyIcon';
+import { HomeopathyProductCard } from './HomeopathyProductCard';
 import { EmptyState, ProductGridSkeleton } from './HomeopathyUI';
-import { SORT_LABELS, getHomeopathyPriceRange, type SortOption } from '@/lib/homeopathy/queries';
+import {
+  SORT_LABELS,
+  getHomeopathyPriceRange,
+  groupProductsByDisease,
+  type SortOption,
+} from '@/lib/homeopathy/queries';
 import type { Category, Product } from '@/lib/mongodb/schemas';
 
 const PAGE_SIZE = 12;
@@ -12,22 +19,13 @@ export interface HomeopathyCatalogProps {
   /** The real product pool this catalog page shows — already resolved
    * server-side (`getActiveProducts()`, or `getProductsByCategory()` for
    * a category-scoped page) and passed down, so this client component
-   * only filters/sorts/paginates in memory, it never re-fetches. */
+   * only filters/sorts/paginates in memory, it never re-fetches. Cards
+   * are built directly from this list with `<HomeopathyProductCard>` —
+   * no server-prebuilt `cardsById` map is needed any more now that Add to
+   * Cart is the client-side `useHomeopathyStore()` interaction (matching
+   * the Herbs Store's `HerbCatalog`) rather than the old `AddToCartForm`,
+   * which needed a server render for its CSRF token. */
   products: Product[];
-  /** One pre-rendered `<HomeopathyProductCard>` per product, keyed by
-   * `Product.legacyId`, built by the calling SERVER component. Required
-   * because `HomeopathyProductCard` renders `AddToCartForm`, which calls
-   * server-only `generateCsrfToken()` (reads `process.env` via
-   * `getCryptoConfig()`) during render — that must run on the server.
-   * This catalog is `'use client'` (filter/sort/pagination state), so it
-   * cannot import or invoke that render itself: doing so bundles the
-   * server-only code into the client bundle, where a later filter/sort/
-   * page interaction re-renders it in the browser with no `process.env`,
-   * throwing "Missing required environment variable: APP_KEY" — exactly
-   * the failure this prop shape avoids. This component only *selects*
-   * pre-built nodes out of the map after filtering/sorting/paginating
-   * the data; it never constructs a card itself. */
-  cardsById: Map<number, ReactNode>;
   /** Real category rows, for the category filter group. Omit (or pass an
    * empty array) on a page whose category is already fixed. */
   categories?: Category[];
@@ -37,6 +35,16 @@ export interface HomeopathyCatalogProps {
    * (`Category.legacyId`) — used by `/homeopathy/category/[slug]`. */
   lockedCategoryId?: number;
   initialQuery?: string;
+  /** When true, show an empty grid with a "choose a filter" prompt instead
+   * of the full `products` pool until the shopper applies at least one
+   * filter (category/condition/price/rating/in-stock) or a search query.
+   * Used by `/homeopathy/products` ("Shop All Medicines") only — per the
+   * owner's request that that page not dump the entire catalogue on
+   * first load. Other pages using this catalog (`/mother-tincture`,
+   * `/nutrition`, `/homeopathy/category/[slug]`) are themselves already a
+   * pre-applied filter/scope, so they keep showing their pool immediately
+   * (default `false`, unchanged behavior). */
+  emptyUntilFiltered?: boolean;
 }
 
 /**
@@ -48,15 +56,17 @@ export interface HomeopathyCatalogProps {
  */
 export function HomeopathyCatalog({
   products,
-  cardsById,
   categories = [],
   title,
   subtitle,
   lockedCategoryId,
   initialQuery,
+  emptyUntilFiltered = false,
 }: HomeopathyCatalogProps) {
+  const router = useRouter();
   const priceRange = useMemo(() => getHomeopathyPriceRange(products), [products]);
   const [categoryId, setCategoryId] = useState<number | undefined>(lockedCategoryId);
+  const [diseaseKey, setDiseaseKey] = useState<string | undefined>(undefined);
   const [minPrice, setMinPrice] = useState<number | undefined>(undefined);
   const [maxPrice, setMaxPrice] = useState<number | undefined>(undefined);
   const [minRating, setMinRating] = useState<number | undefined>(undefined);
@@ -65,10 +75,37 @@ export function HomeopathyCatalog({
   const [page, setPage] = useState(1);
   const [drawerOpen, setDrawerOpen] = useState(false);
 
+  // "Condition" filter options — one per distinct `pHeading` (disease/
+  // subcategory, see `groupProductsByDisease`'s header) within whatever
+  // the category filter has already narrowed to, so this list is scoped
+  // to the selected category on a locked category page, or spans the
+  // whole catalogue on the unlocked Shop All page.
+  const conditionPool = useMemo(
+    () => (categoryId !== undefined ? products.filter((p) => p.pCat === categoryId) : products),
+    [products, categoryId]
+  );
+  const diseaseGroups = useMemo(() => groupProductsByDisease(conditionPool), [conditionPool]);
+
+  const hasActiveFilter =
+    categoryId !== undefined ||
+    diseaseKey !== undefined ||
+    Boolean(initialQuery?.trim()) ||
+    minPrice !== undefined ||
+    maxPrice !== undefined ||
+    minRating !== undefined ||
+    inStockOnly;
+
   const results = useMemo(() => {
+    if (emptyUntilFiltered && !hasActiveFilter) return [];
+
     let list = products;
 
     if (categoryId !== undefined) list = list.filter((p) => p.pCat === categoryId);
+    if (diseaseKey !== undefined) {
+      const group = diseaseGroups.find((g) => g.key === diseaseKey);
+      const ids = new Set(group?.products.map((p) => p.legacyId) ?? []);
+      list = list.filter((p) => ids.has(p.legacyId));
+    }
 
     if (initialQuery) {
       const q = initialQuery.trim().toLowerCase();
@@ -108,13 +145,27 @@ export function HomeopathyCatalog({
         break;
     }
     return sorted;
-  }, [products, categoryId, initialQuery, minPrice, maxPrice, minRating, inStockOnly, sort]);
+  }, [
+    products,
+    categoryId,
+    diseaseKey,
+    diseaseGroups,
+    initialQuery,
+    minPrice,
+    maxPrice,
+    minRating,
+    inStockOnly,
+    sort,
+    emptyUntilFiltered,
+    hasActiveFilter,
+  ]);
 
   const totalPages = Math.max(1, Math.ceil(results.length / PAGE_SIZE));
   const paged = results.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE);
 
   function resetFilters() {
     if (lockedCategoryId === undefined) setCategoryId(undefined);
+    setDiseaseKey(undefined);
     setMinPrice(undefined);
     setMaxPrice(undefined);
     setMinRating(undefined);
@@ -141,13 +192,40 @@ export function HomeopathyCatalog({
                 name="category"
                 checked={categoryId === c.legacyId}
                 onChange={() => {
-                  setCategoryId(c.legacyId);
-                  setPage(1);
+                  // Navigate to the category's disease/subcategory picker
+                  // (`/homeopathy/category/[slug]`) instead of filtering
+                  // this page's grid in place — category selection now
+                  // drills down (category -> disease -> medicine)
+                  // everywhere, not just on pages reached via the
+                  // homepage's "Shop by Category" grid.
+                  if (c.slug) router.push(`/homeopathy/category/${c.slug}`);
                 }}
               />
               {c.name}
             </label>
           ))}
+        </div>
+      )}
+
+      {diseaseGroups.length > 0 && (
+        <div className="hm-filters__group">
+          <p className="hm-filters__title">Condition</p>
+          <div className="hm-filters__scroll">
+            {diseaseGroups.map((g) => (
+              <label key={g.key} className="hm-filters__option" data-active={diseaseKey === g.key}>
+                <input
+                  type="radio"
+                  name="condition"
+                  checked={diseaseKey === g.key}
+                  onChange={() => {
+                    setDiseaseKey(g.key);
+                    setPage(1);
+                  }}
+                />
+                {g.heading}
+              </label>
+            ))}
+          </div>
         </div>
       )}
 
@@ -232,7 +310,9 @@ export function HomeopathyCatalog({
           <div>
             <div className="hm-toolbar">
               <span className="hm-toolbar__count">
-                {results.length} {results.length === 1 ? 'medicine' : 'medicines'} found
+                {emptyUntilFiltered && !hasActiveFilter
+                  ? `${products.length} medicines available`
+                  : `${results.length} ${results.length === 1 ? 'medicine' : 'medicines'} found`}
               </span>
               <div className="hm-toolbar__right">
                 <button
@@ -257,7 +337,13 @@ export function HomeopathyCatalog({
               </div>
             </div>
 
-            {results.length === 0 ? (
+            {results.length === 0 && emptyUntilFiltered && !hasActiveFilter ? (
+              <EmptyState
+                icon="filter"
+                title="Choose a category or search to see medicines."
+                text="Pick a category, condition, price, or rating filter on the left, or search above, to browse our medicines."
+              />
+            ) : results.length === 0 ? (
               <EmptyState
                 icon="bottle"
                 title="No medicines found."
@@ -276,7 +362,7 @@ export function HomeopathyCatalog({
               <>
                 <div className="hm-product-grid">
                   {paged.map((p) => (
-                    <Fragment key={p.legacyId}>{cardsById.get(p.legacyId)}</Fragment>
+                    <HomeopathyProductCard key={p.legacyId} product={p} />
                   ))}
                 </div>
 

@@ -1,7 +1,6 @@
 import type { Metadata } from 'next';
 import { HomeopathyShell } from '@/components/homeopathy/HomeopathyShell';
 import { HomeopathyCatalog } from '@/components/homeopathy/HomeopathyCatalog';
-import { HomeopathyProductCard } from '@/components/homeopathy/HomeopathyProductCard';
 import { getCategoriesByType } from '@/lib/demo/categories';
 import { getMergedMotherTinctureCatalog } from '@/lib/motherTincture/catalog';
 
@@ -37,10 +36,6 @@ export default async function HomeopathyProductsPage({ searchParams }: Props) {
   const { q } = await searchParams;
   const products = await getMergedMotherTinctureCatalog();
   const categories = getCategoriesByType('N', 1);
-  // Cards are built HERE, server-side — see HomeopathyCatalog's `cardsById`
-  // doc comment for why this can't happen inside the client catalog itself
-  // (AddToCartForm needs a real server render for its CSRF token).
-  const cardsById = new Map(products.map((p) => [p.legacyId, <HomeopathyProductCard key={p.legacyId} product={p} />]));
 
   return (
     <HomeopathyShell>
@@ -49,9 +44,9 @@ export default async function HomeopathyProductsPage({ searchParams }: Props) {
           title="Shop All Medicines"
           subtitle="Browse our full homeopathy catalogue"
           products={products}
-          cardsById={cardsById}
           categories={categories}
           initialQuery={q}
+          emptyUntilFiltered
         />
       </main>
     </HomeopathyShell>

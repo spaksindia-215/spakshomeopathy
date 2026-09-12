@@ -2,8 +2,6 @@ import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { HomeopathyShell } from '@/components/homeopathy/HomeopathyShell';
 import { HomeopathyProductDetail } from '@/components/homeopathy/HomeopathyProductDetail';
-import { HomeopathyProductCard } from '@/components/homeopathy/HomeopathyProductCard';
-import { AddToCartForm } from '@/components/interactive/AddToCartForm';
 import { getAllProducts, getProductBySlug } from '@/lib/demo/products';
 import { getRelatedHomeopathyProducts, getShortDescription } from '@/lib/homeopathy/queries';
 
@@ -49,13 +47,6 @@ export default async function HomeopathyProductPage({ params }: Props) {
 
   const related = getRelatedHomeopathyProducts(product, 4);
   const name = product.pName || product.pHeading;
-  // Built HERE, server-side — see HomeopathyProductDetail's `addToCartSlot`/
-  // `relatedCardsById` doc comments for why (AddToCartForm needs a real
-  // server render for its CSRF token; this page's body is 'use client').
-  const addToCartSlot = <AddToCartForm product={product} />;
-  const relatedCardsById = new Map(
-    related.map((p) => [p.legacyId, <HomeopathyProductCard key={p.legacyId} product={p} />])
-  );
 
   const productJsonLd = {
     '@context': 'https://schema.org',
@@ -93,12 +84,7 @@ export default async function HomeopathyProductPage({ params }: Props) {
   return (
     <HomeopathyShell>
       <main>
-        <HomeopathyProductDetail
-          product={product}
-          related={related}
-          addToCartSlot={addToCartSlot}
-          relatedCardsById={relatedCardsById}
-        />
+        <HomeopathyProductDetail product={product} related={related} />
       </main>
       <script
         type="application/ld+json"

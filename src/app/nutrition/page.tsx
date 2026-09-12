@@ -2,7 +2,6 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { HomeopathyShell } from '@/components/homeopathy/HomeopathyShell';
 import { HomeopathyCatalog } from '@/components/homeopathy/HomeopathyCatalog';
-import { HomeopathyProductCard } from '@/components/homeopathy/HomeopathyProductCard';
 import { getCategoriesByType } from '@/lib/demo/categories';
 import { getMergedMotherTinctureCatalog } from '@/lib/motherTincture/catalog';
 
@@ -40,8 +39,6 @@ export default async function NutritionPage({ searchParams }: Props) {
   const { q } = await searchParams;
   const products = await getMergedMotherTinctureCatalog();
   const categories = getCategoriesByType('N', 1);
-  // Server-rendered here — see HomeopathyCatalog's `cardsById` doc comment.
-  const cardsById = new Map(products.map((p) => [p.legacyId, <HomeopathyProductCard key={p.legacyId} product={p} />]));
 
   return (
     <HomeopathyShell>
@@ -73,7 +70,6 @@ export default async function NutritionPage({ searchParams }: Props) {
           title="Nutritional & Supplements"
           subtitle="Browse the full Spaks catalogue for everyday nutrition and wellness support"
           products={products}
-          cardsById={cardsById}
           categories={categories}
           initialQuery={q}
         />

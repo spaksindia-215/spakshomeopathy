@@ -1242,6 +1242,14 @@
   padding: 5px 0;
   cursor: pointer;
 }
+/* Scoped scroll area for long option lists (e.g. the "Condition" filter,
+   which can list 30+ diseases on a category page or 100+ on Shop All) so
+   they don't push the rest of the filter panel far down the sidebar. */
+.homeopathy-scope .hm-filters__scroll {
+  max-height: 220px;
+  overflow-y: auto;
+  padding-right: 4px;
+}
 .homeopathy-scope .hm-filters__option input {
   accent-color: var(--hm-green-600);
   width: 15px;

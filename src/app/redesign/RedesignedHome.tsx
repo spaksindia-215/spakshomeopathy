@@ -267,40 +267,61 @@ export function RedesignedHome() {
           </div>
 
           <div className="sp-divisions-stack">
-            {/* Division 01 — Homeopathy */}
-            <div className="sp-division-card sp-division-card-dark">
-              <LeafBranchDecor style={{ top: -18, left: -10, transform: 'scaleX(-1)' }} />
-              <LeafBranchDecor style={{ top: -18, right: -10 }} />
-              <div className="sp-division-card-copy">
-                <div className="sp-division-card-head">
-                  <span className="sp-division-badge sp-division-badge-dark">Division 01</span>
-                  <span className="sp-division-icon sp-division-icon-dark">
-                    <MortarIcon />
-                  </span>
+            {/* Division 01 — Homeopathy, split into Medicines / Cosmetics */}
+            <div className="sp-division-split">
+              <div className="sp-division-card sp-division-card-dark sp-division-card-split">
+                <LeafBranchDecor style={{ top: -18, left: -10, transform: 'scaleX(-1)' }} />
+                <LeafBranchDecor style={{ top: -18, right: -10 }} />
+                <div className="sp-division-card-copy">
+                  <div className="sp-division-card-head">
+                    <span className="sp-division-badge sp-division-badge-dark">Division 01</span>
+                    <span className="sp-division-icon sp-division-icon-dark">
+                      <MortarIcon />
+                    </span>
+                  </div>
+                  <h3 className="sp-division-card-title">
+                    Homeopathy
+                    <br />
+                    for <span className="sp-division-card-title-accent-blue">Medicines</span>
+                  </h3>
+                  <p className="sp-division-card-desc">
+                    Classical homeopathic medicines, prepared in the potencies our clinic
+                    prescribes.
+                  </p>
+                  <Link
+                    href="/homeopathy/products"
+                    className="sp-division-cta sp-division-cta-accent"
+                  >
+                    Explore Medicines →
+                  </Link>
                 </div>
-                <h3 className="sp-division-card-title">Homeopathy</h3>
-                <p className="sp-division-card-desc">
-                  Classical homeopathic medicines and cosmetics, prepared in the potencies our clinic
-                  prescribes.
-                </p>
-                <div className="sp-division-tags">
-                  <span className="sp-tag sp-tag-dark">
-                    <LeafIcon /> Medicine
-                  </span>
-                  <span className="sp-tag sp-tag-dark">
-                    <LeafIcon /> Cosmetics
-                  </span>
-                </div>
-                <Link href="/homeopathy" className="sp-division-cta sp-division-cta-accent">
-                  Browse division →
-                </Link>
               </div>
-              <div className="sp-division-card-media">
-                <img
-                  src="/assets/images/redesign/division-homeopathy.png"
-                  alt="Homeopathic dilution bottle and mortar with fresh daisies"
-                  className="sp-division-card-img"
-                />
+
+              <div className="sp-division-card sp-division-card-forest sp-division-card-split">
+                <LeafBranchDecor style={{ top: -18, left: -10, transform: 'scaleX(-1)' }} />
+                <LeafBranchDecor style={{ top: -18, right: -10 }} />
+                <div className="sp-division-card-copy">
+                  <div className="sp-division-card-head">
+                    <span className="sp-division-badge sp-division-badge-dark">Division 01</span>
+                    <span className="sp-division-icon sp-division-icon-dark">
+                      <MortarIcon />
+                    </span>
+                  </div>
+                  <h3 className="sp-division-card-title">
+                    Homeopathy
+                    <br />
+                    for <span className="sp-division-card-title-accent-green">Cosmetics</span>
+                  </h3>
+                  <p className="sp-division-card-desc">
+                    Natural homeopathic cosmetics, gentle care for healthy, radiant you.
+                  </p>
+                  <Link
+                    href="/homeopathy/category/skin-783e0"
+                    className="sp-division-cta sp-division-cta-accent"
+                  >
+                    Explore Cosmetics →
+                  </Link>
+                </div>
               </div>
             </div>
 

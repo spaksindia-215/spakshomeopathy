@@ -1,10 +1,12 @@
 'use client';
 
-import { Fragment, useState, type ReactNode } from 'react';
+import { useState } from 'react';
 import Link from 'next/link';
 import { ProductImage } from './HomeopathyMedia';
 import { HomeopathyIcon } from './HomeopathyIcon';
-import { RatingLine } from './HomeopathyUI';
+import { RatingLine, QuantitySelector } from './HomeopathyUI';
+import { HomeopathyProductCard } from './HomeopathyProductCard';
+import { useHomeopathyStore } from './HomeopathyStoreProvider';
 import type { Product } from '@/lib/mongodb/schemas';
 import { getShortDescription } from '@/lib/homeopathy/queries';
 
@@ -13,19 +15,6 @@ export interface HomeopathyProductDetailProps {
   /** Real related products (same `pCat`), resolved server-side via
    * `getRelatedHomeopathyProducts()`. */
   related: Product[];
-  /** Pre-rendered `<AddToCartForm product={product} />` (or the
-   * out-of-stock fallback), built by the calling SERVER component.
-   * `AddToCartForm` calls server-only `generateCsrfToken()` during
-   * render, and this component is `'use client'` (image gallery / tab
-   * state) — importing/rendering it here would bundle that server-only
-   * code into the client bundle, where a later tab/thumbnail click
-   * re-renders it in the browser with no `process.env`, throwing
-   * "Missing required environment variable: APP_KEY". See the identical
-   * note on `HomeopathyCatalog`'s `cardsById` prop. */
-  addToCartSlot: ReactNode;
-  /** One pre-rendered `<HomeopathyProductCard>` per `related` product,
-   * keyed by `Product.legacyId` — same reason as `addToCartSlot`. */
-  relatedCardsById: Map<number, ReactNode>;
 }
 
 /**
@@ -36,16 +25,14 @@ export interface HomeopathyProductDetailProps {
  * real `images[]` array on this dataset always has exactly one entry
  * (mirroring `pBestimg`), so the additional gallery thumbnails are drawn
  * from the variant slots' own image fields, which the schema comment
- * documents as real per-slot photography, not invented. The Add-to-Cart
- * action is the EXISTING `AddToCartForm` component used verbatim, passed
- * in pre-rendered via `addToCartSlot` (see its doc comment).
+ * documents as real per-slot photography, not invented.
+ *
+ * Add to Cart is the same client-side `useHomeopathyStore()` interaction
+ * as everywhere else in the Homeopathy Store (instant, no page reload),
+ * with a quantity selector — matching the Herbs Store's PDP — instead of
+ * the old server-rendered `AddToCartForm` (hardcoded quantity of 1).
  */
-export function HomeopathyProductDetail({
-  product,
-  related,
-  addToCartSlot,
-  relatedCardsById,
-}: HomeopathyProductDetailProps) {
+export function HomeopathyProductDetail({ product, related }: HomeopathyProductDetailProps) {
   const galleryImages = Array.from(
     new Set(
       [
@@ -60,6 +47,8 @@ export function HomeopathyProductDetail({
   const [activeImage, setActiveImage] = useState(galleryImages[0] ?? product.pBestimg ?? null);
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [tab, setTab] = useState<'description' | 'dosage' | 'specifications'>('description');
+  const [quantity, setQuantity] = useState(1);
+  const { addToCart } = useHomeopathyStore();
 
   const outOfStock = (product.pQuantity ?? 0) <= 0;
   const name = product.pName || product.pHeading;
@@ -141,17 +130,29 @@ export function HomeopathyProductDetail({
 
               <p className="hm-pdp__short">{shortDescription}</p>
 
+              {!outOfStock && (
+                <div className="hm-pdp__row">
+                  <QuantitySelector quantity={quantity} onChange={setQuantity} />
+                </div>
+              )}
+
               <div className="hm-pdp__actions">
                 {outOfStock ? (
                   <button type="button" className="hm-btn hm-btn--primary" disabled>
                     <HomeopathyIcon name="cart" size={16} /> Out of Stock
                   </button>
                 ) : (
-                  addToCartSlot
+                  <button
+                    type="button"
+                    className="hm-btn hm-btn--primary"
+                    onClick={() => addToCart(product, quantity)}
+                  >
+                    <HomeopathyIcon name="cart" size={16} /> Add To Cart
+                  </button>
                 )}
-                <a href="/cart-list" className="hm-btn hm-btn--outline">
+                <Link href="/homeopathy/cart" className="hm-btn hm-btn--outline">
                   View Cart
-                </a>
+                </Link>
               </div>
 
               <p className="hm-disclaimer">
@@ -227,7 +228,7 @@ export function HomeopathyProductDetail({
             </div>
             <div className="hm-product-grid">
               {related.map((p) => (
-                <Fragment key={p.legacyId}>{relatedCardsById.get(p.legacyId)}</Fragment>
+                <HomeopathyProductCard key={p.legacyId} product={p} />
               ))}
             </div>
           </div>
