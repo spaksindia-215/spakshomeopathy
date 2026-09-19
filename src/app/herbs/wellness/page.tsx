@@ -1,7 +1,9 @@
 import type { Metadata } from 'next';
 import { HerbsShell } from '@/components/herbs/HerbsShell';
 import { WellnessCategoryGrid } from '@/components/herbs/HerbCategoryGrid';
+import { WELLNESS_CATEGORIES } from '@/lib/herbs/data/taxonomy';
 import { getMergedHerbCatalog } from '@/lib/herbs/catalog';
+import { isHerbsDbConfigured, readWellnessCategoriesFromDb } from '@/lib/herbs/db';
 
 export const metadata: Metadata = {
   title: 'Shop by Wellness | Spaks Herbs',
@@ -17,6 +19,12 @@ export const revalidate = 60;
 /** `/herbs/wellness` — full wellness-category index (§9, §20). */
 export default async function HerbsWellnessIndexPage() {
   const catalog = await getMergedHerbCatalog();
+  const dbConfigured = isHerbsDbConfigured();
+  const dbWellness = dbConfigured ? await readWellnessCategoriesFromDb() : null;
+  const wellnessCategories =
+    dbWellness && dbWellness.length > 0
+      ? dbWellness.filter((c) => c.status === 'active').sort((a, b) => a.sortOrder - b.sortOrder)
+      : WELLNESS_CATEGORIES;
   return (
     <HerbsShell catalog={catalog}>
       <main>
@@ -30,7 +38,7 @@ export default async function HerbsWellnessIndexPage() {
                 </p>
               </div>
             </div>
-            <WellnessCategoryGrid />
+            <WellnessCategoryGrid categories={wellnessCategories} />
           </div>
         </section>
       </main>

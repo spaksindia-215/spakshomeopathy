@@ -71,8 +71,13 @@ export const ALLOWED_UPLOAD_EXTENSIONS = ['jpg', 'jpeg', 'png', 'gif', 'webp', '
  * `ADMIN_UPLOAD_ROOT` — it only exists so `tests/lib/adminUpload.test.ts`
  * can point writes at a temp directory instead of the real
  * `public/uploaded_files/`.
+ *
+ * EXPORTED as of CR-006 Phase 8 (`docs/CR-006-PHASE-8-PLAN.md` §2.1) so
+ * the new `/admin/media-library` screen resolves the exact same root
+ * `saveAdminUpload`/`deleteAdminUpload` already use, instead of a second,
+ * independently-computed path that could drift from this one.
  */
-function uploadedFilesRoot(): string {
+export function uploadedFilesRoot(): string {
   const override = process.env.ADMIN_UPLOAD_ROOT;
   return override ? resolve(override) : resolve(process.cwd(), 'public', 'uploaded_files');
 }

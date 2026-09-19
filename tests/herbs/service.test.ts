@@ -10,8 +10,16 @@
  */
 
 import { describe, it, expect, beforeEach, afterEach } from 'vitest';
-import { readHerbProductsFromDb, saveHerbProduct, deleteHerbProduct } from '@/lib/herbs/db/service';
+import {
+  readHerbProductsFromDb,
+  saveHerbProduct,
+  deleteHerbProduct,
+  readWellnessCategoriesFromDb,
+  saveWellnessCategory,
+  hideWellnessCategory,
+} from '@/lib/herbs/db/service';
 import type { HerbProductDoc } from '@/lib/herbs/db/schema';
+import type { WellnessCategoryDoc } from '@/lib/herbs/db/wellnessCategorySchema';
 
 const ENV_KEYS = [
   'MONGODB_URI',
@@ -64,6 +72,17 @@ const sampleHerb: HerbProductDoc = {
   updatedAt: '2026-08-30T00:00:00.000Z',
 };
 
+const sampleCategory: WellnessCategoryDoc = {
+  key: 'svc-test-category',
+  label: 'Service Test Category',
+  description: 'A wellness category for service-layer tests.',
+  icon: 'leaf',
+  sortOrder: 0,
+  status: 'active',
+  createdAt: '2026-09-15T00:00:00.000Z',
+  updatedAt: '2026-09-15T00:00:00.000Z',
+};
+
 describe('Herbs DB service — unconfigured environment (no MONGODB_* vars set)', () => {
   it('readHerbProductsFromDb returns null rather than throwing', async () => {
     await expect(readHerbProductsFromDb()).resolves.toBeNull();
@@ -77,6 +96,22 @@ describe('Herbs DB service — unconfigured environment (no MONGODB_* vars set)'
 
   it('deleteHerbProduct returns persisted:false with an explicit reason', async () => {
     const result = await deleteHerbProduct('hp-svc-1');
+    expect(result.persisted).toBe(false);
+    expect(result.reason).toMatch(/no database/i);
+  });
+
+  it('readWellnessCategoriesFromDb returns null rather than throwing', async () => {
+    await expect(readWellnessCategoriesFromDb()).resolves.toBeNull();
+  });
+
+  it('saveWellnessCategory returns persisted:false with an explicit reason', async () => {
+    const result = await saveWellnessCategory(sampleCategory);
+    expect(result.persisted).toBe(false);
+    expect(result.reason).toMatch(/no database/i);
+  });
+
+  it('hideWellnessCategory returns persisted:false with an explicit reason', async () => {
+    const result = await hideWellnessCategory('svc-test-category');
     expect(result.persisted).toBe(false);
     expect(result.reason).toMatch(/no database/i);
   });

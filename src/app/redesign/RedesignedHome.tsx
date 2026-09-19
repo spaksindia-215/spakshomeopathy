@@ -316,7 +316,7 @@ export function RedesignedHome() {
                     Natural homeopathic cosmetics, gentle care for healthy, radiant you.
                   </p>
                   <Link
-                    href="/homeopathy/category/skin-783e0"
+                    href="/homeopathy/cosmetics"
                     className="sp-division-cta sp-division-cta-accent"
                   >
                     Explore Cosmetics →

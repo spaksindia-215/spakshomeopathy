@@ -5,7 +5,8 @@ import { PublicScripts } from '@/components/layout/PublicScripts';
 import { PublicStylesheets } from '@/components/layout/PublicStylesheets';
 import { Breadcrumb } from '@/components/ui/Breadcrumb';
 import { ProductCard } from '@/components/cards/ProductCard';
-import { getProductsByCategory } from '@/lib/demo';
+import { getDb } from '@/lib/mongodb/client';
+import { ProductRepository } from '@/lib/mongodb/repositories/productRepository';
 
 /**
  * `/productsbydisease/{slug}` — ported from `products.blade.php` (96
@@ -25,14 +26,23 @@ import { getProductsByCategory } from '@/lib/demo';
  * `products.blade.php:49-67`, the same fragment `ProductCard`'s own file
  * header cites).
  *
- * A `productsbydisease-24` baseline screenshot exists, but VERIFIED this
- * session by extracting the real dump: pCat=24 has ZERO real products in
- * production — the baseline was very likely captured against a
- * genuinely-empty category page. Rather than fabricate products under
- * pCat=24, the curated demo data ensures pCat=1 (the best-represented
- * real category, 34 real products) is fully populated instead —
- * `/productsbydisease/1` shows real, non-empty content;
- * `/productsbydisease/24` correctly renders empty, matching real data.
+ * CR-006 Phase 5 (docs/CR-006-PHASE-5-PLAN.md §3/§4): live-wired from
+ * `@/lib/demo`'s `getProductsByCategory` to real MongoDB. This is the ONE
+ * catalog page this phase live-wires — deliberately not extended to
+ * `products`/`herbs`/other still-demo-backed pages, which is out of this
+ * phase's scope (see the plan's §4 "delivers now vs. defers" table).
+ *
+ * QUERY STRATEGY, DISCLOSED: tries the NEW `findByDiseaseCategoryIds`
+ * first (the multi-disease capability this phase adds), and FALLS BACK
+ * to the ORIGINAL `findByCategory` (single-`pCat` match) if that returns
+ * nothing — because the `diseaseCategoryIds` backfill script
+ * (`scripts/backfill-disease-category-ids.ts`) has been WRITTEN BUT NOT
+ * YET RUN (owner instruction, §7.3) as of this phase. Once the backfill
+ * runs for real, every product will have `diseaseCategoryIds` populated
+ * (seeded from its existing `pCat`), and this fallback becomes a no-op in
+ * practice — it is not removed preemptively, since removing it before the
+ * backfill runs would make this page regress to showing nothing for any
+ * product that hasn't been backfilled yet.
  */
 export function generateMetadata(): Metadata {
   return {
@@ -51,7 +61,17 @@ export default async function ProductsByDiseasePage({
 }) {
   const { slug } = await params;
   const pCat = Number.parseInt(slug, 10);
-  const products = Number.isFinite(pCat) ? getProductsByCategory(pCat, 1) : [];
+
+  let products: Awaited<ReturnType<ProductRepository['findByCategory']>> = [];
+  if (Number.isFinite(pCat)) {
+    const db = await getDb();
+    const repo = new ProductRepository(db);
+    products = await repo.findByDiseaseCategoryIds(pCat, 1);
+    if (products.length === 0) {
+      // Fallback for not-yet-backfilled products — see file header.
+      products = await repo.findByCategory(pCat, 1);
+    }
+  }
 
   return (
     <div className="page-wrapper">

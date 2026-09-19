@@ -16,6 +16,15 @@
  * ADDED (Mother Tincture admin-add feature): a second new top-level item,
  * "Mother Tincture", appended AFTER "Herbs Store" — same append-only
  * posture, same reasoning: keeps every prior addition's order unchanged.
+ *
+ * ADDED (CR-006 Phase 4, docs/CR-006-PHASE-4-PLAN.md §9, owner-confirmed
+ * 2026-09-12): a third new top-level item, "Homeopathy List", appended
+ * AFTER "Mother Tincture" — same append-only posture. Links the
+ * GENUINELY NEW `homeopathyMaster` (`tbl_homeopathy`) CRUD screens (no
+ * Laravel precedent to match either way — see
+ * `homeopathyMasterRepository.ts`'s header), not to be confused with the
+ * pre-existing "Category List" item above, which manages the SEPARATE
+ * `categories` collection.
  */
 export function AdminSidebar() {
   return (
@@ -76,6 +85,11 @@ export function AdminSidebar() {
               <li>
                 <a href="/admin/product-list">
                   <i className="fa fa-circle-o"></i> Product List
+                </a>
+              </li>
+              <li>
+                <a href="/admin/review-list">
+                  <i className="fa fa-circle-o"></i> Review List
                 </a>
               </li>
             </ul>
@@ -195,6 +209,11 @@ export function AdminSidebar() {
                   <i className="fa fa-circle-o"></i> Herbs List
                 </a>
               </li>
+              <li>
+                <a href="/admin/wellness-categories">
+                  <i className="fa fa-circle-o"></i> Wellness Categories
+                </a>
+              </li>
             </ul>
           </li>
 
@@ -211,6 +230,82 @@ export function AdminSidebar() {
               <li>
                 <a href="/admin/add-mother-tincture">
                   <i className="fa fa-circle-o"></i> Add Mother Tincture
+                </a>
+              </li>
+            </ul>
+          </li>
+
+          {/* CR-006 Phase 4 addition — see file header. */}
+          <li className="treeview">
+            <a href="#">
+              <i className="fa fa-heartbeat"></i>
+              <span>Homeopathy List</span>
+              <span className="pull-right-container">
+                <i className="fa fa-angle-left pull-right"></i>
+              </span>
+            </a>
+            <ul className="treeview-menu">
+              <li>
+                <a href="/admin/add-homeopathy">
+                  <i className="fa fa-circle-o"></i> Add Homeopathy Entry
+                </a>
+              </li>
+              <li>
+                <a href="/admin/homeopathy-list">
+                  <i className="fa fa-circle-o"></i> Homeopathy List
+                </a>
+              </li>
+            </ul>
+          </li>
+
+          {/* CR-006 Phase 7 addition — see docs/CR-006-PHASE-7-PLAN.md.
+              Media Library and Redirects added CR-006 Phase 8 — see
+              docs/CR-006-PHASE-8-PLAN.md. */}
+          <li className="treeview">
+            <a href="#">
+              <i className="fa fa-file-text-o"></i>
+              <span>Content</span>
+              <span className="pull-right-container">
+                <i className="fa fa-angle-left pull-right"></i>
+              </span>
+            </a>
+            <ul className="treeview-menu">
+              <li>
+                <a href="/admin/pages-list">
+                  <i className="fa fa-circle-o"></i> Pages
+                </a>
+              </li>
+              <li>
+                <a href="/admin/media-library">
+                  <i className="fa fa-circle-o"></i> Media Library
+                </a>
+              </li>
+              <li>
+                <a href="/admin/redirects-list">
+                  <i className="fa fa-circle-o"></i> Redirects
+                </a>
+              </li>
+            </ul>
+          </li>
+
+          {/* CR-006 Phase 9 addition — see docs/CR-006-PHASE-9-PLAN.md. */}
+          <li className="treeview">
+            <a href="#">
+              <i className="fa fa-shield"></i>
+              <span>System</span>
+              <span className="pull-right-container">
+                <i className="fa fa-angle-left pull-right"></i>
+              </span>
+            </a>
+            <ul className="treeview-menu">
+              <li>
+                <a href="/admin/audit-log">
+                  <i className="fa fa-circle-o"></i> Audit Log
+                </a>
+              </li>
+              <li>
+                <a href="/admin/admin-users-list">
+                  <i className="fa fa-circle-o"></i> Admin Users
                 </a>
               </li>
             </ul>

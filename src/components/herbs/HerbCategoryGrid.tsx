@@ -23,11 +23,28 @@ export function HerbCategoryGrid() {
   );
 }
 
-/** "Shop by Wellness" grid (§9 of the original brief). */
-export function WellnessCategoryGrid() {
+interface WellnessCategoryGridItem {
+  key: string;
+  label: string;
+  description: string;
+  icon: string;
+}
+
+/**
+ * "Shop by Wellness" grid (§9 of the original brief). `categories`
+ * defaults to the static `WELLNESS_CATEGORIES` constant but is normally
+ * passed by the page (DB-backed when configured — CR-006 Phase 6, see
+ * `/herbs/wellness/page.tsx`) so this component doesn't need to know
+ * which source it came from.
+ */
+export function WellnessCategoryGrid({
+  categories = WELLNESS_CATEGORIES,
+}: {
+  categories?: WellnessCategoryGridItem[];
+}) {
   return (
     <div className="hs-wellness-grid">
-      {WELLNESS_CATEGORIES.map((c) => (
+      {categories.map((c) => (
         <Link key={c.key} href={`/herbs/wellness/${c.key}`} className="hs-wellness-card">
           <div className="hs-wellness-card__icon">
             <HerbIcon name={c.icon as Parameters<typeof HerbIcon>[0]['name']} size={20} />

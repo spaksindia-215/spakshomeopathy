@@ -29,7 +29,9 @@ export class MotherTinctureProductRepository extends ValidatedRepository<MotherT
    * numbering scheme). Used by the admin add form: every submission mints
    * a new synthetic `legacyId`, so this is effectively insert-only today,
    * but upsert keeps the shape consistent with `HerbProductRepository`
-   * and leaves room for a future edit form. */
+   * and leaves room for a future edit form. Calls `this.logMutation()`
+   * directly (CR-006 Phase 9) since this bypasses the base class's own
+   * instrumented `updateOne`. */
   async upsert(doc: MotherTinctureProductDoc): Promise<MotherTinctureProductDoc> {
     const validated = this.validate(doc);
     // `this.collection` is `protected` on ValidatedRepository — directly
@@ -39,10 +41,14 @@ export class MotherTinctureProductRepository extends ValidatedRepository<MotherT
       { $set: validated },
       { upsert: true }
     );
+    await this.logMutation('update', validated.legacyId);
     return validated;
   }
 
+  /** Calls `this.logMutation()` directly (CR-006 Phase 9) since this
+   * bypasses the base class's own instrumented `deleteOne`. */
   async deleteByLegacyId(legacyId: number): Promise<void> {
     await this.collection.deleteOne({ legacyId });
+    await this.logMutation('delete', legacyId);
   }
 }

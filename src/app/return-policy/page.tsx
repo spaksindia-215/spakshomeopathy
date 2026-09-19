@@ -3,6 +3,8 @@ import { PublicHeader } from '@/components/layout/PublicHeader';
 import { PublicFooter } from '@/components/layout/PublicFooter';
 import { PublicScripts } from '@/components/layout/PublicScripts';
 import { PublicStylesheets } from '@/components/layout/PublicStylesheets';
+import { getDb } from '@/lib/mongodb/client';
+import { PageRepository } from '@/lib/pages/repository';
 
 /**
  * `/return-policy` — ported from `return-policy.blade.php`. Body verified
@@ -21,7 +23,21 @@ export const metadata: Metadata = {
   },
 };
 
-export default function ReturnPolicyPage() {
+/** CR-006 Phase 7 — see `src/app/terms/page.tsx`'s identical helper for
+ * the full rationale (degrade-gracefully DB read). */
+async function getPageOverride() {
+  try {
+    const db = await getDb();
+    const repo = new PageRepository(db);
+    return await repo.findBySlug('return-policy');
+  } catch {
+    return null;
+  }
+}
+
+export default async function ReturnPolicyPage() {
+  const override = await getPageOverride();
+
   return (
     <>
       <div className="page-wrapper">
@@ -63,6 +79,16 @@ export default function ReturnPolicyPage() {
         </section>
         {/* /.feature-two */}
 
+        {override ? (
+          <section className="cover-page feature-two homeabout">
+            <div className="container">
+              <div
+                className="row"
+                dangerouslySetInnerHTML={{ __html: override.bodyHtml }}
+              />
+            </div>
+          </section>
+        ) : (
         <section className="cover-page feature-two homeabout">
           <div className="container">
             <div className="row">
@@ -128,6 +154,7 @@ export default function ReturnPolicyPage() {
             {/* 18 */}
           </div>
         </section>
+        )}
         {/* /.about-two */}
         {/* /.fun-fact-one */}
         {/* /.testimonials-one */}

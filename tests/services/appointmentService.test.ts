@@ -21,11 +21,16 @@ import type { Db, Collection, Document, OptionalUnlessRequiredId } from 'mongodb
 
 function createFakeDb() {
   const store: Document[] = [];
+  // CR-006 Phase 9: `auditLog` writes (from `ValidatedRepository`'s new
+  // `logMutation()`) route to their own isolated bucket, not `store` —
+  // same fix as `tests/mongodb/fakeDb.ts`'s shared fixture, applied here
+  // since this file keeps its own local copy.
+  const auditLogStore: Document[] = [];
   const db = {
-    collection: () =>
+    collection: (name: string) =>
       ({
         insertOne: async (doc: OptionalUnlessRequiredId<Document>) => {
-          store.push(doc as unknown as Document);
+          (name === 'auditLog' ? auditLogStore : store).push(doc as unknown as Document);
           return { acknowledged: true, insertedId: null };
         },
       }) as unknown as Collection<Document>,

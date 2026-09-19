@@ -1,7 +1,7 @@
 'use client';
 
 import { useActionState } from 'react';
-import { HERB_FORM_CATEGORIES, WELLNESS_CATEGORIES } from '@/lib/herbs/data/taxonomy';
+import { HERB_FORM_CATEGORIES } from '@/lib/herbs/data/taxonomy';
 import { updateHerbProductAction, type HerbFormActionResult } from '@/lib/herbs/db/actions';
 import { isRealImagePath } from '@/components/herbs/HerbArt';
 import type { HerbProduct } from '@/lib/herbs/types';
@@ -9,7 +9,18 @@ import { getLeadVariant } from '@/lib/herbs/types';
 
 const initialState: HerbFormActionResult | null = null;
 
-export function EditHerbForm({ herb }: { herb: HerbProduct }) {
+interface WellnessOption {
+  key: string;
+  label: string;
+}
+
+export function EditHerbForm({
+  herb,
+  wellnessCategories,
+}: {
+  herb: HerbProduct;
+  wellnessCategories: WellnessOption[];
+}) {
   const lead = getLeadVariant(herb);
   const boundAction = updateHerbProductAction.bind(null, herb.id, herb.image);
   const [state, formAction, isPending] = useActionState(
@@ -49,21 +60,6 @@ export function EditHerbForm({ herb }: { herb: HerbProduct }) {
           </select>
         </div>
         <div className="col-md-4 form-group">
-          <label htmlFor="wellness">Wellness Category</label>
-          <select
-            id="wellness"
-            name="wellness"
-            className="form-control"
-            defaultValue={herb.wellnessCategories[0]}
-          >
-            {WELLNESS_CATEGORIES.map((c) => (
-              <option key={c.key} value={c.key}>
-                {c.label}
-              </option>
-            ))}
-          </select>
-        </div>
-        <div className="col-md-4 form-group">
           <label htmlFor="botanicalName">Botanical Name</label>
           <input
             id="botanicalName"
@@ -71,6 +67,22 @@ export function EditHerbForm({ herb }: { herb: HerbProduct }) {
             className="form-control"
             defaultValue={herb.botanicalName ?? ''}
           />
+        </div>
+      </div>
+      <div className="form-group">
+        <label>Wellness Categories</label>
+        <div>
+          {wellnessCategories.map((c) => (
+            <label key={c.key} style={{ display: 'inline-block', marginRight: 16 }}>
+              <input
+                type="checkbox"
+                name="wellness"
+                value={c.key}
+                defaultChecked={herb.wellnessCategories.includes(c.key)}
+              />{' '}
+              {c.label}
+            </label>
+          ))}
         </div>
       </div>
       <div className="row">
@@ -165,6 +177,33 @@ export function EditHerbForm({ herb }: { herb: HerbProduct }) {
         <p className="text-muted" style={{ fontSize: 11.5, marginTop: 4 }}>
           JPEG, PNG or WebP, up to 5MB. Leave empty to keep the current image.
         </p>
+      </div>
+      <div className="row">
+        <div className="col-md-6 form-group">
+          <label htmlFor="metaTitle">SEO Title</label>
+          <input
+            id="metaTitle"
+            name="metaTitle"
+            className="form-control"
+            defaultValue={herb.metaTitle}
+          />
+          <p className="text-muted" style={{ fontSize: 11.5, marginTop: 4 }}>
+            Leave empty to auto-generate as &quot;{'{Product Name}'} | Spaks Herbs&quot;.
+          </p>
+        </div>
+        <div className="col-md-6 form-group">
+          <label htmlFor="metaDescription">SEO Description</label>
+          <textarea
+            id="metaDescription"
+            name="metaDescription"
+            className="form-control"
+            rows={2}
+            defaultValue={herb.metaDescription}
+          />
+          <p className="text-muted" style={{ fontSize: 11.5, marginTop: 4 }}>
+            Leave empty to reuse the Short Description above.
+          </p>
+        </div>
       </div>
       <button type="submit" className="btn btn-primary" disabled={isPending}>
         {isPending ? 'Saving…' : 'Save Changes'}

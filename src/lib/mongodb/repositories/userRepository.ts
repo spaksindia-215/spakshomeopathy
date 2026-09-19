@@ -92,6 +92,64 @@ export class UserRepository extends ValidatedRepository<User> {
   }
 
   /**
+   * CR-006 Phase 9 (`docs/CR-006-PHASE-9-PLAN.md` §2.4) — lists every
+   * admin account (`utype===1`) for `/admin/admin-users-list`. No source
+   * equivalent (there is no admin-user-listing screen in Laravel; the
+   * one real admin account was never manageable through any UI).
+   */
+  async findAllAdmins(): Promise<User[]> {
+    return this.find({ utype: 1 } as Partial<User>);
+  }
+
+  /**
+   * Admin "forgot password" flow — looks up whichever user (if any)
+   * currently holds this exact token hash. The hash is a SHA-256 digest
+   * of a cryptographically random 32-byte value (`passwordReset.ts`),
+   * so an exact match is unambiguous; no additional scoping (e.g. by
+   * email) is needed for correctness. Returns `null` for no match — the
+   * caller treats that identically to an expired token (see
+   * `reset-password/[token]/page.tsx`), never distinguishing the two,
+   * so no information about which failure mode occurred leaks to the
+   * requester.
+   */
+  async findByPasswordResetTokenHash(tokenHash: string): Promise<User | null> {
+    return this.findOne({ passwordResetTokenHash: tokenHash } as Partial<User>);
+  }
+
+  /** Sets a new password and clears the reset token in one write — a
+   * successful reset consumes the token immediately, so it can never be
+   * replayed. */
+  async resetPasswordByLegacyId(legacyId: number, newHashedPassword: string): Promise<void> {
+    await this.collection.updateOne({ legacyId } as Filter<User>, {
+      $set: {
+        password: newHashedPassword,
+        passwordResetTokenHash: null,
+        passwordResetExpiresAt: null,
+        updatedAt: new Date(),
+      },
+    });
+    // `changedFields` records only field NAMES, never the password
+    // value itself — same posture `updatePasswordByLegacyId` already
+    // established.
+    await this.logMutation('update', legacyId, ['password', 'passwordResetTokenHash']);
+  }
+
+  /**
+   * CR-006 Phase 9 — sets an admin's RBAC role
+   * (`schemas/user.ts`'s additive `role` field). Does not touch any
+   * other field — mirrors `updatePasswordByLegacyId`'s narrow,
+   * single-purpose update shape rather than reusing the generic base
+   * `updateOne` (which would also work, but a named method documents
+   * the intent at call sites).
+   */
+  async updateRoleByLegacyId(legacyId: number, role: User['role']): Promise<void> {
+    await this.collection.updateOne({ legacyId } as Filter<User>, {
+      $set: { role, updatedAt: new Date() },
+    });
+    await this.logMutation('update', legacyId, ['role']);
+  }
+
+  /**
    * Mirrors `BuyerController@UpdateProfile`'s two `DB::table(...)->update(...)`
    * calls (`BuyerController.php:49-66`), combined into one MongoDB update
    * since `buyerProfile` is embedded (per DR-01-adjacent M3 decision, see
@@ -123,6 +181,7 @@ export class UserRepository extends ValidatedRepository<User> {
         updatedAt: new Date(),
       },
     });
+    await this.logMutation('update', legacyId, ['name', 'mobile', 'buyerProfile']);
   }
 
   /**
@@ -138,6 +197,9 @@ export class UserRepository extends ValidatedRepository<User> {
     await this.collection.updateOne({ legacyId } as Filter<User>, {
       $set: { password: newHashedPassword, updatedAt: new Date() },
     });
+    // `changedFields` records only the field NAME, never the value — the
+    // audit log never sees the password itself, hashed or otherwise.
+    await this.logMutation('update', legacyId, ['password']);
   }
 
   /**
@@ -219,5 +281,8 @@ export class UserRepository extends ValidatedRepository<User> {
         },
       });
     }
+    // CR-006 Phase 9: both branches above bypass the base class's own
+    // instrumented `updateOne`, so this method logs once for either.
+    await this.logMutation('update', legacyId, ['buyerProfile']);
   }
 }

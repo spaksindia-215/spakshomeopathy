@@ -16,7 +16,9 @@
 
 import { getHerbsDb, isHerbsDbConfigured } from './client';
 import { HerbProductRepository } from './herbProductRepository';
+import { WellnessCategoryRepository } from './wellnessCategoryRepository';
 import type { HerbProductDoc } from './schema';
+import type { WellnessCategoryDoc } from './wellnessCategorySchema';
 
 export interface SaveResult {
   persisted: boolean;
@@ -26,6 +28,11 @@ export interface SaveResult {
 async function getRepository(): Promise<HerbProductRepository> {
   const db = await getHerbsDb();
   return new HerbProductRepository(db);
+}
+
+async function getWellnessCategoryRepository(): Promise<WellnessCategoryRepository> {
+  const db = await getHerbsDb();
+  return new WellnessCategoryRepository(db);
 }
 
 /** Reads all herb products from the database, or `null` if no database
@@ -67,6 +74,55 @@ export async function deleteHerbProduct(id: string): Promise<SaveResult> {
   try {
     const repo = await getRepository();
     await repo.deleteById(id);
+    return { persisted: true };
+  } catch (err) {
+    return {
+      persisted: false,
+      reason: err instanceof Error ? err.message : 'Unknown database error.',
+    };
+  }
+}
+
+/** Reads all wellness categories from the database, or `null` if no
+ * database is configured — callers fall back to the static
+ * `WELLNESS_CATEGORIES` constant in `@/lib/herbs/data/taxonomy`, same
+ * degrade-gracefully posture as `readHerbProductsFromDb`. */
+export async function readWellnessCategoriesFromDb(): Promise<WellnessCategoryDoc[] | null> {
+  if (!isHerbsDbConfigured()) return null;
+  try {
+    const repo = await getWellnessCategoryRepository();
+    return await repo.findAll();
+  } catch {
+    return null;
+  }
+}
+
+export async function saveWellnessCategory(doc: WellnessCategoryDoc): Promise<SaveResult> {
+  if (!isHerbsDbConfigured()) {
+    return { persisted: false, reason: 'No database configured for the Herbs Store.' };
+  }
+  try {
+    const repo = await getWellnessCategoryRepository();
+    await repo.upsert(doc);
+    return { persisted: true };
+  } catch (err) {
+    return {
+      persisted: false,
+      reason: err instanceof Error ? err.message : 'Unknown database error.',
+    };
+  }
+}
+
+/** Soft delete (`status: 'hidden'`) — see `WellnessCategoryRepository.hide`'s
+ * header for why this project doesn't hard-delete categories that
+ * existing herb documents may still reference. */
+export async function hideWellnessCategory(key: string): Promise<SaveResult> {
+  if (!isHerbsDbConfigured()) {
+    return { persisted: false, reason: 'No database configured for the Herbs Store.' };
+  }
+  try {
+    const repo = await getWellnessCategoryRepository();
+    await repo.hide(key);
     return { persisted: true };
   } catch (err) {
     return {

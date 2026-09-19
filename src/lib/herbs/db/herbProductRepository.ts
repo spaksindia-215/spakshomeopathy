@@ -34,16 +34,20 @@ export class HerbProductRepository extends ValidatedRepository<HerbProductDoc> {
    * NOT `legacyId`; there is no legacy row for a Herbs Store product to
    * trace to, so `ValidatedRepository.upsertByLegacyId` does not apply
    * here). Used by the admin add/edit forms: add creates a new `id`,
-   * edit reuses the existing one. */
+   * edit reuses the existing one. Calls `this.logMutation()` directly
+   * (CR-006 Phase 9) since this bypasses the base class's own
+   * instrumented `updateOne`. */
   async upsert(doc: HerbProductDoc): Promise<HerbProductDoc> {
     const validated = this.validate(doc);
     // `this.collection` is `protected` on ValidatedRepository — directly
     // reachable here since this class extends it.
     await this.collection.updateOne({ id: validated.id }, { $set: validated }, { upsert: true });
+    await this.logMutation('update', validated.id);
     return validated;
   }
 
   async deleteById(id: string): Promise<void> {
     await this.collection.deleteOne({ id });
+    await this.logMutation('delete', id);
   }
 }

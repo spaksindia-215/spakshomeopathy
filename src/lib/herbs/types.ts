@@ -27,20 +27,20 @@ export type HerbForm =
   | 'herbal-tea'
   | 'herbal-combinations';
 
-export type WellnessCategory =
-  | 'hair-care'
-  | 'skin-care'
-  | 'digestion'
-  | 'immunity'
-  | 'joint-care'
-  | 'stress-relaxation'
-  | 'womens-wellness'
-  | 'mens-wellness'
-  | 'respiratory-wellness'
-  | 'general-wellness'
-  | 'weight-management'
-  | 'heart-wellness'
-  | 'brain-memory';
+/**
+ * Widened from a closed union of 13 literals to a plain string in CR-006
+ * Phase 6 (`docs/CR-006-PHASE-6-PLAN.md` §2.2): the wellness taxonomy is
+ * now a database-backed, admin-manageable collection
+ * (`@/lib/herbs/db/wellnessCategorySchema`), not a fixed compile-time
+ * set — an admin can add a 14th category without a code change. The
+ * original 13 keys (hair-care, skin-care, digestion, immunity,
+ * joint-care, stress-relaxation, womens-wellness, mens-wellness,
+ * respiratory-wellness, general-wellness, weight-management,
+ * heart-wellness, brain-memory) remain the seed data
+ * (`scripts/seed-wellness-categories.ts`) and every existing herb
+ * document's `wellnessCategories` values, unchanged.
+ */
+export type WellnessCategory = string;
 
 export interface HerbVariant {
   /** e.g. "50g", "100g", "250g", "1kg" */

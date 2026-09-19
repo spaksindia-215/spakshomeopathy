@@ -21,6 +21,63 @@
 
 import type { Collection, Db, Document, Filter, OptionalUnlessRequiredId } from 'mongodb';
 import type { ZodType } from 'zod';
+import { getCurrentActor } from '@/lib/audit/context';
+
+/** Collections that must NEVER be audit-logged, to avoid a write loop —
+ * `auditLog` logging its own writes. Checked by name (not by importing
+ * `AUDIT_LOG_COLLECTION`, which would create a dependency cycle between
+ * `base.ts` and `src/lib/audit/repository.ts`, itself a
+ * `ValidatedRepository` subclass). */
+const AUDIT_LOG_COLLECTION_NAME = 'auditLog';
+
+/** Best-effort id extraction for the audit entry's `targetId` — checks
+ * the field names every schema in this codebase actually uses for its
+ * own identifier, in the order most-to-least common (`legacyId` covers
+ * every governed, legacy-traced schema; `id`/`key`/`slug` cover the
+ * net-new collections Phases 6-9 added, e.g. `wellnessCategories.key`,
+ * `pages.slug`). `null` (not a thrown error) when none match — a
+ * document shape this helper doesn't recognize should not break the
+ * underlying write. Exported so subclasses' own `logMutation()` calls
+ * (see `ValidatedRepository.logMutation` below) can reuse it. */
+export function extractTargetId(doc: Record<string, unknown>): string | number | null {
+  for (const field of ['legacyId', 'id', 'key', 'slug']) {
+    const value = doc[field];
+    if (typeof value === 'string' || typeof value === 'number') return value;
+  }
+  return null;
+}
+
+/**
+ * Writes one audit-log entry directly via the raw `Db` handle — NOT
+ * through `AuditLogRepository`/`ValidatedRepository`, to avoid a
+ * circular write (see `AuditLogRepository`'s own header). Best-effort:
+ * a logging failure is caught and swallowed, never allowed to fail the
+ * underlying business write it describes (CR-006 Phase 9 plan §2.1).
+ */
+async function logMutationImpl(
+  db: Db,
+  collectionName: string,
+  action: 'insert' | 'update' | 'delete' | 'upsertByLegacyId',
+  targetId: string | number | null,
+  changedFields?: string[]
+): Promise<void> {
+  if (collectionName === AUDIT_LOG_COLLECTION_NAME) return;
+  try {
+    const actor = getCurrentActor();
+    await db.collection(AUDIT_LOG_COLLECTION_NAME).insertOne({
+      id: `al-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 8)}`,
+      actorUserId: actor?.userId ?? null,
+      actorEmail: actor?.email ?? null,
+      action,
+      collectionName,
+      targetId: targetId === null ? null : String(targetId),
+      ...(changedFields ? { changedFields } : {}),
+      timestamp: new Date().toISOString(),
+    });
+  } catch {
+    // Never let an audit-logging failure fail the write it describes.
+  }
+}
 
 /**
  * Wraps a MongoDB collection with Zod validation on read and write, so a
@@ -46,6 +103,30 @@ export class ValidatedRepository<T extends Document> {
     return this.schema.parse(doc);
   }
 
+  /**
+   * CR-006 Phase 9 — writes one audit-log entry. Exposed as `protected`
+   * (not just used internally by `insertOne`/`updateOne`/`deleteOne`/
+   * `upsertByLegacyId` below) so a subclass with its own custom write
+   * method that calls `this.collection.updateOne/insertOne/deleteOne`
+   * DIRECTLY (bypassing the instrumented base methods — e.g.
+   * `RedirectRepository.upsert()`'s upsert-by-own-`id`, which the base
+   * class's `insertOne`/`updateOne` don't support) can still log that
+   * write, by calling `this.logMutation(...)` right after its own direct
+   * collection call. Found necessary during end-to-end testing: roughly
+   * a dozen existing custom write methods across Phases 6-9's own
+   * repositories (`redirects`, `pages`, herbs, wellness categories,
+   * mother tincture, orders, `userRepository`) do exactly this and were
+   * silently NOT being logged before this method existed — see
+   * `docs/GATE-REPORT-CR006-PHASE-9.md` for the full account.
+   */
+  protected async logMutation(
+    action: 'insert' | 'update' | 'delete' | 'upsertByLegacyId',
+    targetId: string | number | null,
+    changedFields?: string[]
+  ): Promise<void> {
+    await logMutationImpl(this.db, this.collectionName, action, targetId, changedFields);
+  }
+
   async findOne(filter: Filter<T>): Promise<T | null> {
     const doc = await this.collection.findOne(filter);
     if (doc === null) return null;
@@ -60,6 +141,7 @@ export class ValidatedRepository<T extends Document> {
   async insertOne(doc: T): Promise<T> {
     const validated = this.validate(doc);
     await this.collection.insertOne(validated as OptionalUnlessRequiredId<T>);
+    await this.logMutation('insert', extractTargetId(validated as unknown as Record<string, unknown>));
     return validated;
   }
 
@@ -82,6 +164,7 @@ export class ValidatedRepository<T extends Document> {
     const validated = this.validate(doc) as unknown as D;
     const { upsertByLegacyId } = await import('../migrationState');
     await upsertByLegacyId(this.collection as unknown as Collection<D>, validated);
+    await this.logMutation('upsertByLegacyId', validated.legacyId);
     return validated;
   }
 
@@ -101,6 +184,11 @@ export class ValidatedRepository<T extends Document> {
    */
   async updateOne(filter: Filter<T>, update: Partial<T>): Promise<void> {
     await this.collection.updateOne(filter, { $set: update });
+    await this.logMutation(
+      'update',
+      extractTargetId(filter as unknown as Record<string, unknown>),
+      Object.keys(update)
+    );
   }
 
   /**
@@ -112,6 +200,7 @@ export class ValidatedRepository<T extends Document> {
    */
   async deleteOne(filter: Filter<T>): Promise<void> {
     await this.collection.deleteOne(filter);
+    await this.logMutation('delete', extractTargetId(filter as unknown as Record<string, unknown>));
   }
 
   /**

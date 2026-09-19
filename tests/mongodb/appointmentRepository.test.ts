@@ -14,11 +14,14 @@ import type { Db, Collection, Document, Filter, OptionalUnlessRequiredId } from 
 
 function createFakeDb(seedAppointments: Appointment[] = []) {
   const store: Document[] = [...seedAppointments] as unknown as Document[];
+  // CR-006 Phase 9: `auditLog` writes route to their own isolated
+  // bucket, not `store` — same fix as `tests/mongodb/fakeDb.ts`.
+  const auditLogStore: Document[] = [];
   const db = {
-    collection: () =>
+    collection: (name: string) =>
       ({
         insertOne: async (doc: OptionalUnlessRequiredId<Document>) => {
-          store.push(doc as unknown as Document);
+          (name === 'auditLog' ? auditLogStore : store).push(doc as unknown as Document);
           return { acknowledged: true, insertedId: null };
         },
         findOne: async (filter: Filter<Document>) => {

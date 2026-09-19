@@ -2,7 +2,12 @@ import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { AdminStylesheets } from '@/components/admin/AdminStylesheets';
 import { HERB_PRODUCTS } from '@/lib/herbs/data/products';
-import { readHerbProductsFromDb, isHerbsDbConfigured } from '@/lib/herbs/db';
+import { WELLNESS_CATEGORIES } from '@/lib/herbs/data/taxonomy';
+import {
+  readHerbProductsFromDb,
+  readWellnessCategoriesFromDb,
+  isHerbsDbConfigured,
+} from '@/lib/herbs/db';
 import { EditHerbForm } from './EditHerbForm';
 
 interface Props {
@@ -30,6 +35,12 @@ export default async function AdminEditHerbPage({ params }: Props) {
   const herb =
     (dbProducts ?? []).find((h) => h.id === id) ?? HERB_PRODUCTS.find((h) => h.id === id);
   if (!herb) notFound();
+
+  const dbWellness = dbConfigured ? await readWellnessCategoriesFromDb() : null;
+  const wellnessCategories =
+    dbWellness && dbWellness.length > 0
+      ? dbWellness.filter((c) => c.status === 'active')
+      : WELLNESS_CATEGORIES;
 
   return (
     <>
@@ -61,7 +72,7 @@ export default async function AdminEditHerbPage({ params }: Props) {
                     : 'No database is configured for the Herbs Store — saving will show a clear ' +
                       '"not saved" notice instead of persisting.'}
                 </p>
-                <EditHerbForm herb={herb} />
+                <EditHerbForm herb={herb} wellnessCategories={wellnessCategories} />
               </div>
             </div>
           </div>

@@ -19,6 +19,8 @@
     "test:e2e:ui": "playwright test --ui",
     "test:e2e:herbs": "playwright test --config=playwright.herbs.config.ts",
     "test:e2e:herbs:ui": "playwright test --config=playwright.herbs.config.ts --ui",
+    "test:e2e:admin": "playwright test --config=playwright.admin.config.ts",
+    "test:e2e:admin:ui": "playwright test --config=playwright.admin.config.ts --ui",
     "baseline:capture": "tsx scripts/capture-baseline.ts",
     "baseline:capture-raw": "tsx scripts/capture-raw-html.ts",
     "baseline:db": "tsx scripts/capture-db-baseline.ts",
@@ -33,6 +35,8 @@
     "migrate:dry-run": "tsx scripts/migrate.ts",
     "migrate:mongodb": "tsx scripts/migrate-to-mongodb.ts",
     "migrate:mongodb:dry-run": "tsx scripts/migrate-to-mongodb.ts --dry-run",
+    "backfill:disease-category-ids:dry-run": "tsx scripts/backfill-disease-category-ids.ts",
+    "backfill:disease-category-ids:execute": "tsx scripts/backfill-disease-category-ids.ts --execute",
     "mongodb:check": "tsx scripts/check-mongodb-connection.ts",
     "mongodb:verify-readonly": "tsx scripts/m3d-atlas-readonly-verify.ts",
     "mongodb:apply-dr04-index": "tsx scripts/apply-dr04-index.ts",
@@ -51,6 +55,7 @@
     "razorpay": "^2.9.8",
     "react": "19.2.8",
     "react-dom": "19.2.8",
+    "resend": "^6.28.1",
     "zod": "^4.4.3"
   },
   "devDependencies": {

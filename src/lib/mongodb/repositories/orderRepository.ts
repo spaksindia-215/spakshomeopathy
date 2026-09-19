@@ -64,9 +64,13 @@ export class OrderRepository extends ValidatedRepository<Order> {
   /** Mirrors `DB::table('orders')->where('GroupId', $GroupId)->update(['OrderStatus'=>$status])`
    * (`BuyerController.php:98`) — the `orders` header row is exactly one
    * document per GroupId, so `updateOne` matches source's own effective
-   * single-row update. */
+   * single-row update. Calls `this.logMutation()` directly (CR-006
+   * Phase 9) since this bypasses the base class's own instrumented
+   * `updateOne` (a filter keyed by `groupId`, not the base method's
+   * generic filter/update shape used elsewhere in this repository). */
   async updateStatusByGroupId(groupId: number, orderStatus: number): Promise<void> {
     await this.collection.updateOne({ groupId } as Partial<Order>, { $set: { orderStatus } });
+    await this.logMutation('update', groupId, ['orderStatus']);
   }
 
   /**

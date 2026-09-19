@@ -22,9 +22,15 @@
 
 import { revalidatePath } from 'next/cache';
 import { herbProductDocSchema } from './schema';
-import { saveHerbProduct, deleteHerbProduct } from './service';
+import { wellnessCategoryDocSchema } from './wellnessCategorySchema';
+import {
+  saveHerbProduct,
+  deleteHerbProduct,
+  saveWellnessCategory,
+  hideWellnessCategory,
+} from './service';
 import { saveHerbImageUpload } from '../uploads';
-import type { HerbForm, WellnessCategory } from '../types';
+import type { HerbForm } from '../types';
 
 export interface HerbFormActionResult {
   ok: boolean;
@@ -95,9 +101,10 @@ async function parseHerbForm(
     gallery: [image],
     form: String(formData.get('form') ?? 'whole-herbs') as HerbForm,
     categoryLabel: String(formData.get('form') ?? 'Whole Herbs'),
-    wellnessCategories: [
-      String(formData.get('wellness') ?? 'general-wellness') as WellnessCategory,
-    ],
+    wellnessCategories:
+      formData.getAll('wellness').length > 0
+        ? formData.getAll('wellness').map((v) => String(v))
+        : ['general-wellness'],
     variants: [
       {
         label: 'Default',
@@ -116,8 +123,14 @@ async function parseHerbForm(
     bestseller: formData.get('bestseller') === 'on',
     newArrival: formData.get('newArrival') === 'on',
     tags: [] as string[],
-    metaTitle: `${name} | Spaks Herbs`,
-    metaDescription: String(formData.get('shortDescription') ?? ''),
+    // CR-006 Phase 8: admin-supplied SEO fields, falling back to the
+    // pre-Phase-8 auto-derivation when left blank — so a herb saved
+    // through the old form (or with these fields left empty) keeps
+    // exactly its previous behavior; nothing regresses silently.
+    metaTitle: String(formData.get('metaTitle') ?? '').trim() || `${name} | Spaks Herbs`,
+    metaDescription:
+      String(formData.get('metaDescription') ?? '').trim() ||
+      String(formData.get('shortDescription') ?? ''),
     createdAt: now,
     updatedAt: now,
   };
@@ -185,5 +198,88 @@ export async function deleteHerbProductAction(id: string): Promise<HerbFormActio
     ok: false,
     persisted: false,
     message: result.reason ?? 'Not deleted — no database configured for the Herbs Store.',
+  };
+}
+
+/**
+ * Server Actions for the Wellness Category admin forms
+ * (`/admin/wellness-categories`, `/admin/add-wellness-category`,
+ * `/admin/edit-wellness-category/[key]`) — CR-006 Phase 6.
+ * Same auth posture as the herb-product actions above: relies on
+ * `admin/(shell)/layout.tsx`'s route-level `requireAdminSession()`.
+ */
+
+function parseWellnessCategoryForm(
+  formData: FormData,
+  existingKey?: string
+): ReturnType<typeof wellnessCategoryDocSchema.parse> {
+  const label = String(formData.get('label') ?? '').trim();
+  const now = new Date().toISOString();
+  const sortOrderRaw = formData.get('sortOrder');
+
+  const doc = {
+    key: existingKey ?? slugify(label),
+    label,
+    description: String(formData.get('description') ?? ''),
+    icon: String(formData.get('icon') ?? ''),
+    sortOrder: sortOrderRaw ? Number(sortOrderRaw) : 0,
+    status: (formData.get('status') === 'hidden' ? 'hidden' : 'active') as 'active' | 'hidden',
+    createdAt: now,
+    updatedAt: now,
+  };
+
+  return wellnessCategoryDocSchema.parse(doc);
+}
+
+export async function createWellnessCategoryAction(
+  formData: FormData
+): Promise<HerbFormActionResult> {
+  const parsed = parseWellnessCategoryForm(formData);
+  const result = await saveWellnessCategory(parsed);
+  if (result.persisted) {
+    revalidatePath('/admin/wellness-categories');
+    revalidatePath('/herbs/wellness');
+    return { ok: true, persisted: true, message: `Saved "${parsed.label}".` };
+  }
+  return {
+    ok: false,
+    persisted: false,
+    message: result.reason ?? 'Not saved — no database configured for the Herbs Store.',
+  };
+}
+
+export async function updateWellnessCategoryAction(
+  key: string,
+  createdAt: string,
+  formData: FormData
+): Promise<HerbFormActionResult> {
+  const parsed = parseWellnessCategoryForm(formData, key);
+  const result = await saveWellnessCategory({ ...parsed, createdAt });
+  if (result.persisted) {
+    revalidatePath('/admin/wellness-categories');
+    revalidatePath(`/admin/edit-wellness-category/${key}`);
+    revalidatePath('/herbs/wellness');
+    revalidatePath(`/herbs/wellness/${key}`);
+    return { ok: true, persisted: true, message: `Updated "${parsed.label}".` };
+  }
+  return {
+    ok: false,
+    persisted: false,
+    message: result.reason ?? 'Not saved — no database configured for the Herbs Store.',
+  };
+}
+
+/** Soft delete only — see `WellnessCategoryRepository.hide`'s header. */
+export async function hideWellnessCategoryAction(key: string): Promise<HerbFormActionResult> {
+  const result = await hideWellnessCategory(key);
+  if (result.persisted) {
+    revalidatePath('/admin/wellness-categories');
+    revalidatePath('/herbs/wellness');
+    return { ok: true, persisted: true, message: 'Hidden.' };
+  }
+  return {
+    ok: false,
+    persisted: false,
+    message: result.reason ?? 'Not hidden — no database configured for the Herbs Store.',
   };
 }

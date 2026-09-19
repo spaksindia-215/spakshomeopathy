@@ -14,38 +14,51 @@ import type { Db, Collection, Document, Filter, OptionalUnlessRequiredId } from 
 
 function createFakeDb(seed: HerbProductDoc[] = []) {
   const store: Document[] = [...seed] as unknown as Document[];
+  // CR-006 Phase 9: `auditLog` writes (from `ValidatedRepository`'s
+  // `logMutation()`, which `HerbProductRepository.upsert()`/`deleteById()`
+  // now call directly since they bypass the base class's instrumented
+  // methods) route to their own isolated bucket, not `store`.
+  const auditLogStore: Document[] = [];
+  function backingStore(name: string): Document[] {
+    return name === 'auditLog' ? auditLogStore : store;
+  }
   const db = {
-    collection: () =>
+    collection: (name: string) =>
       ({
         insertOne: async (doc: OptionalUnlessRequiredId<Document>) => {
-          store.push(doc as unknown as Document);
+          backingStore(name).push(doc as unknown as Document);
           return { acknowledged: true, insertedId: null };
         },
         findOne: async (filter: Filter<Document>) => {
-          return store.find((d) => Object.entries(filter).every(([k, v]) => d[k] === v)) ?? null;
+          return (
+            backingStore(name).find((d) => Object.entries(filter).every(([k, v]) => d[k] === v)) ??
+            null
+          );
         },
         find: () => ({
-          toArray: async () => [...store],
+          toArray: async () => [...backingStore(name)],
         }),
         updateOne: async (
           filter: Filter<Document>,
           update: { $set: Document },
           options?: { upsert?: boolean }
         ) => {
-          const idx = store.findIndex((d) => Object.entries(filter).every(([k, v]) => d[k] === v));
+          const bs = backingStore(name);
+          const idx = bs.findIndex((d) => Object.entries(filter).every(([k, v]) => d[k] === v));
           if (idx >= 0) {
-            store[idx] = { ...store[idx], ...update.$set };
+            bs[idx] = { ...bs[idx], ...update.$set };
             return { acknowledged: true, matchedCount: 1, modifiedCount: 1, upsertedCount: 0 };
           }
           if (options?.upsert) {
-            store.push(update.$set);
+            bs.push(update.$set);
             return { acknowledged: true, matchedCount: 0, modifiedCount: 0, upsertedCount: 1 };
           }
           return { acknowledged: true, matchedCount: 0, modifiedCount: 0, upsertedCount: 0 };
         },
         deleteOne: async (filter: Filter<Document>) => {
-          const idx = store.findIndex((d) => Object.entries(filter).every(([k, v]) => d[k] === v));
-          if (idx >= 0) store.splice(idx, 1);
+          const bs = backingStore(name);
+          const idx = bs.findIndex((d) => Object.entries(filter).every(([k, v]) => d[k] === v));
+          if (idx >= 0) bs.splice(idx, 1);
           return { acknowledged: true, deletedCount: idx >= 0 ? 1 : 0 };
         },
       }) as unknown as Collection<Document>,

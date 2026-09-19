@@ -1,7 +1,8 @@
 import type { Metadata } from 'next';
 import { AdminStylesheets } from '@/components/admin/AdminStylesheets';
 import { CKEditorPlaceholder } from '@/components/admin/CKEditorPlaceholder';
-import { getAllCategories } from '@/lib/demo';
+import { getDb } from '@/lib/mongodb/client';
+import { CategoryRepository } from '@/lib/mongodb/repositories/categoryRepository';
 
 /**
  * `/admin/add-product` — ported from `admin/add-product.blade.php` (730
@@ -13,9 +14,17 @@ import { getAllCategories } from '@/lib/demo';
  * directly this session in `AdminController@AddProduct`, line 205), NOT
  * a `product_category`/`tbl_homeopathy` table despite the field name
  * `p_cat` and this page's "Product" framing — the same misleadingly-named
- * pattern documented for Posts (P-04's sibling finding). Uses
- * `getAllCategories()` from `@/lib/demo`, not a products-specific
- * category accessor.
+ * pattern documented for Posts (P-04's sibling finding).
+ *
+ * CR-006 Phase 4: switched this ONE dropdown from `@/lib/demo`'s
+ * `getAllCategories()` (a static, generated-at-build-time snapshot) to
+ * live `CategoryRepository.findAllByNameAscending()` — the exact same
+ * method/query `cat-list`/`add-post` already use for the identical
+ * `name ASC`, no-type-filter read. This is a small, additive live-wiring
+ * fix, NOT a rewrite of this page's own (still `@/lib/demo`-backed, still
+ * out of this phase's scope) form submission or field set — see
+ * `docs/CR-006-PHASE-4-PLAN.md` §1 for why the rest of this page's
+ * write-path live-wiring is deliberately not touched here.
  *
  * 10 VARIANT SLOTS, individually named fields (matches `schemas/product.ts`'s
  * explicit F-20 "do not restructure into an array" contract) — slot 1 has
@@ -59,8 +68,9 @@ export const metadata: Metadata = {
   title: 'Admin Panel | Add Product',
 };
 
-export default function AdminAddProductPage() {
-  const categories = getAllCategories();
+export default async function AdminAddProductPage() {
+  const db = await getDb();
+  const categories = await new CategoryRepository(db).findAllByNameAscending();
 
   return (
     <>

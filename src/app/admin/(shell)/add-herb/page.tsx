@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { AdminStylesheets } from '@/components/admin/AdminStylesheets';
-import { isHerbsDbConfigured } from '@/lib/herbs/db';
+import { WELLNESS_CATEGORIES } from '@/lib/herbs/data/taxonomy';
+import { isHerbsDbConfigured, readWellnessCategoriesFromDb } from '@/lib/herbs/db';
 import { AddHerbForm } from './AddHerbForm';
 
 /**
@@ -18,8 +19,13 @@ export const metadata: Metadata = {
   title: 'Admin Panel | Add Herb',
 };
 
-export default function AdminAddHerbPage() {
+export default async function AdminAddHerbPage() {
   const dbConfigured = isHerbsDbConfigured();
+  const dbWellness = dbConfigured ? await readWellnessCategoriesFromDb() : null;
+  const wellnessCategories =
+    dbWellness && dbWellness.length > 0
+      ? dbWellness.filter((c) => c.status === 'active')
+      : WELLNESS_CATEGORIES;
 
   return (
     <>
@@ -51,7 +57,7 @@ export default function AdminAddHerbPage() {
                     : 'No database is configured for the Herbs Store — submissions will show a ' +
                       'clear "not saved" notice instead of persisting.'}
                 </p>
-                <AddHerbForm />
+                <AddHerbForm wellnessCategories={wellnessCategories} />
               </div>
             </div>
           </div>

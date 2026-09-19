@@ -35,21 +35,20 @@ export const herbFormSchema = z.enum([
   'herbal-combinations',
 ]);
 
-export const wellnessCategorySchema = z.enum([
-  'hair-care',
-  'skin-care',
-  'digestion',
-  'immunity',
-  'joint-care',
-  'stress-relaxation',
-  'womens-wellness',
-  'mens-wellness',
-  'respiratory-wellness',
-  'general-wellness',
-  'weight-management',
-  'heart-wellness',
-  'brain-memory',
-]);
+/**
+ * Loosened from a closed `z.enum([...13 literals])` to a plain non-empty
+ * string in CR-006 Phase 6 (`docs/CR-006-PHASE-6-PLAN.md` §2.2): the
+ * wellness taxonomy is now database-backed
+ * (`./wellnessCategorySchema.ts`'s `wellnessCategories` collection), so
+ * new categories can be added by an admin without a code change — a
+ * closed compile-time enum would reject any key added after this file
+ * was written. Referential validity (does this key correspond to a real,
+ * active category) is enforced at the admin-form layer, which only offers
+ * keys from `WellnessCategoryRepository.findAllActive()`, not at this
+ * Zod-schema layer — same "don't tighten validation beyond source"
+ * convention Phase 5 used for `diseaseCategoryIds`.
+ */
+export const wellnessCategorySchema = z.string().min(1);
 
 export const herbVariantSchema = z.object({
   label: z.string().min(1),

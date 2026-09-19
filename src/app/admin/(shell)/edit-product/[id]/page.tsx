@@ -2,7 +2,9 @@ import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { AdminStylesheets } from '@/components/admin/AdminStylesheets';
 import { CKEditorPlaceholder } from '@/components/admin/CKEditorPlaceholder';
-import { getAllCategories, getProductByLegacyId } from '@/lib/demo';
+import { getProductByLegacyId } from '@/lib/demo';
+import { getDb } from '@/lib/mongodb/client';
+import { CategoryRepository } from '@/lib/mongodb/repositories/categoryRepository';
 import type { VariantSlot } from '@/lib/mongodb/schemas';
 
 /**
@@ -16,6 +18,12 @@ import type { VariantSlot } from '@/lib/mongodb/schemas';
  * `AddProduct` line 205) — a genuine small inconsistency, preserved by
  * sorting the client-side copy descending on this page only, not
  * normalized to match Add.
+ *
+ * CR-006 Phase 4: switched to live `CategoryRepository.findAllByNameAscending()`
+ * then re-sorted DESCENDING in application code — same fix as
+ * `add-product`, same DESC-preservation reasoning as above; the product
+ * itself (`getProductByLegacyId`) remains `@/lib/demo`-backed, unchanged,
+ * per this phase's deliberately narrow scope (the dropdown only).
  *
  * FLAGSHIP PRESERVED BUG, verified directly this session (source lines
  * 492 and 530): the slot-9 and slot-10 "Product How to Use" textareas
@@ -60,7 +68,8 @@ export default async function AdminEditProductPage({
   }
 
   // Ordered `name DESC` on this page only — see file header.
-  const categories = [...getAllCategories()].sort((a, b) =>
+  const db = await getDb();
+  const categories = (await new CategoryRepository(db).findAllByNameAscending()).sort((a, b) =>
     (b.name ?? '').localeCompare(a.name ?? '')
   );
 

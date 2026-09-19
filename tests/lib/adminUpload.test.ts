@@ -13,6 +13,7 @@ import path from 'path';
 import {
   saveAdminUpload,
   deleteAdminUpload,
+  uploadedFilesRoot,
   UploadRejectedError,
   ALLOWED_UPLOAD_EXTENSIONS,
 } from '@/lib/uploads/adminUpload';
@@ -131,5 +132,19 @@ describe('deleteAdminUpload', () => {
 
   it('is a silent no-op for an empty filename (mirrors source\'s `$old_image!=""` guard)', async () => {
     await expect(deleteAdminUpload('', 'slider')).resolves.toBeUndefined();
+  });
+});
+
+describe('uploadedFilesRoot (CR-006 Phase 8 — exported for /admin/media-library)', () => {
+  it('returns the same root saveAdminUpload/deleteAdminUpload already write to', async () => {
+    await mkdir(path.join(tempRoot, 'slider'), { recursive: true });
+    const filename = await saveAdminUpload(makeFile('probe.png'), 'slider');
+
+    const resolvedPath = path.join(uploadedFilesRoot(), 'slider', filename);
+    await expect(readFile(resolvedPath, 'utf-8')).resolves.toBe('fake-image-bytes');
+  });
+
+  it('respects the ADMIN_UPLOAD_ROOT override, same as the upload/delete functions', () => {
+    expect(uploadedFilesRoot()).toBe(path.resolve(tempRoot));
   });
 });

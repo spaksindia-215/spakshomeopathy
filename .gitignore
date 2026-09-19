@@ -55,7 +55,11 @@ yarn-error.log*
 
 # Playwright
 test-results/
+test-results-herbs/
+test-results-admin/
 playwright-report/
+playwright-report-herbs/
+playwright-report-admin/
 playwright/.cache/
 
 # NOTE: public/assets/, public/admin-assets/, public/uploaded_files/,

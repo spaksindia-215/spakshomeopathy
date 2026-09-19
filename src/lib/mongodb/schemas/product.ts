@@ -30,6 +30,12 @@
  * value resolves against is pure application logic (which controller/route
  * is reading it), unaffected by storage engine — do not "fix" this by
  * disambiguating the field.
+ *
+ * `diseaseCategoryIds` (CR-006 Phase 5, docs/CR-006-PHASE-5-PLAN.md §2.1,
+ * docs/D-11-FOLLOWUP-CR006-SCHEMA-AUTHORIZATION.md): the ONE additive,
+ * genuinely new field in this schema — no source column. See its own
+ * inline doc comment below for the full justification. `pCat` is
+ * UNCHANGED by this addition.
  */
 
 import { z } from 'zod';
@@ -142,6 +148,35 @@ export const productSchema = z.object({
   images: z.array(productImageSchema),
   reviews: z.array(productReviewSchema),
   specifications: z.array(productSpecificationSchema),
+
+  /**
+   * CR-006 Phase 5 (docs/CR-006-PHASE-5-PLAN.md §2.1;
+   * docs/D-11-FOLLOWUP-CR006-SCHEMA-AUTHORIZATION.md). ADDITIVE, NEW —
+   * no source column to mirror. `pCat` (above) is a Laravel-source field
+   * and MUST remain untouched: it is a single scalar, one disease
+   * category per product, and every EXISTING read path that depends on
+   * it (`GetCatProducts`'s marketplace-tree reading,
+   * `ActiveProducts`/`InactiveProducts`, `ManageOrders`'s admin-list
+   * join, etc.) keeps working unchanged.
+   *
+   * `diseaseCategoryIds` is a NEW capability layered on top: multiple
+   * `categories` (type='N') ids per product, closing the specific gap
+   * Phase 1's analysis flagged (a medicine associated with several
+   * conditions, e.g. "Arnica Montana → Muscle Pain, Joint Pain, Injury,
+   * Bruising" — impossible with `pCat` alone, since it holds one value).
+   *
+   * `.optional()`, NOT required — an existing product document that
+   * predates this field must still validate (this codebase's own
+   * established "don't tighten validation beyond what's actually
+   * populated" convention, same reasoning as `buyerProfile.optional()`
+   * on `userSchema`). A one-time, NOT-YET-RUN backfill script
+   * (`scripts/backfill-disease-category-ids.ts`) sets this to `[pCat]`
+   * (or `[]`) for every existing product — until that backfill runs, a
+   * migrated product legitimately has no `diseaseCategoryIds` field at
+   * all, which callers must handle (see
+   * `ProductRepository.findByDiseaseCategoryIds`'s own header).
+   */
+  diseaseCategoryIds: z.array(z.number().int()).optional(),
 });
 
 export type Product = z.infer<typeof productSchema>;

@@ -51,6 +51,36 @@ export class ProductRepository extends ValidatedRepository<Product> {
   }
 
   /**
+   * CR-006 Phase 5 (docs/CR-006-PHASE-5-PLAN.md §2.1) — GENUINELY NEW
+   * capability, not a mirror of any single Laravel query. Finds products
+   * whose `diseaseCategoryIds` array CONTAINS `categoryId`, via MongoDB's
+   * implicit array-element match (`{ diseaseCategoryIds: categoryId }`
+   * matches any document where the field is an array containing that
+   * value — no `$elemMatch`/`$in` needed for a single scalar target).
+   *
+   * DOES NOT REPLACE `findByCategory` above: that method (and every
+   * existing caller of it) is UNCHANGED and continues to serve the
+   * original, still-live single-`pCat` read paths untouched. This is an
+   * ADDITIVE alternative for callers that want the new multi-disease
+   * capability specifically (currently: `productsbydisease/[slug]`,
+   * post-Phase-5 live-wiring).
+   *
+   * PRE-BACKFILL BEHAVIOR, DISCLOSED: a product that predates the
+   * `diseaseCategoryIds` backfill (`scripts/backfill-disease-category-ids.ts`,
+   * written this phase but NOT YET RUN per the owner's explicit
+   * instruction) has no `diseaseCategoryIds` field at all and will NOT be
+   * found by this method, even if its `pCat` would have matched
+   * `findByCategory`. Callers migrating a page from `findByCategory` to
+   * this method should fall back to `findByCategory` when this method
+   * returns no results, until the backfill has actually been run — this
+   * is exactly what `productsbydisease/[slug]/page.tsx` does; see that
+   * file's own header.
+   */
+  async findByDiseaseCategoryIds(categoryId: number, pStatus = 1): Promise<Product[]> {
+    return this.find({ diseaseCategoryIds: categoryId, pStatus });
+  }
+
+  /**
    * Mirrors the `products.id` join half of `ManageOrders`'
    * (`orderproducts JOIN products ON orderproducts.ProductId = products.id`,
    * `BuyerController.php:73`) and B-12's corrected `view-order` lookup
@@ -99,5 +129,53 @@ export class ProductRepository extends ValidatedRepository<Product> {
    */
   async searchByCategoryAndName(pCat: number, term: string, pStatus = 1): Promise<Product[]> {
     return this.find({ pCat, pStatus, pName: { $regex: term, $options: 'i' } });
+  }
+
+  /**
+   * CR-006 Phase 7 — every product, unfiltered. Needed by the new
+   * `/admin/review-list` screen, which must flatten EVERY product's
+   * embedded `reviews` array into one list, mirroring
+   * `ReviewList()`'s `product_review JOIN products` (no `p_status`/
+   * `pCat` filter in that source query — see
+   * `AdminController.php:1295-1301`). Thin wrapper, same shape as
+   * `HerbProductRepository.findAll()`.
+   */
+  async findAll(): Promise<Product[]> {
+    return this.find({});
+  }
+
+  /**
+   * CR-006 Phase 7 — mirrors `ReviewUpdate($id, $status)`
+   * (`AdminController.php:1303-1308`): toggles one review's `rStatus`
+   * (0/1) without touching the rest of the product document.
+   *
+   * Uses a positional array-filtered update (`arrayFilters`) rather than
+   * `ValidatedRepository.updateOne` — that method's `$set` is a flat,
+   * whole-document field replace and has no way to target one element
+   * inside an embedded array. This is new, narrowly-scoped surface area
+   * (docs/CR-006-PHASE-7-PLAN.md §2.1); no other array field in this
+   * codebase has needed element-level patching yet — every other array
+   * field added so far (`diseaseCategoryIds`, etc.) is replaced wholesale.
+   *
+   * Does not re-validate the merged document against `productSchema`
+   * (the same disclosed limitation `ValidatedRepository.updateOne`'s own
+   * header already carries) — callers that need a validated read-back
+   * should `findByLegacyId` again after calling this.
+   *
+   * CR-006 Phase 9: calls `this.logMutation()` directly, since this
+   * bypasses the base class's own instrumented `updateOne` for the
+   * reason explained above.
+   */
+  async updateReviewStatus(
+    productLegacyId: number,
+    reviewLegacyId: number,
+    rStatus: number
+  ): Promise<void> {
+    await this.collection.updateOne(
+      { legacyId: productLegacyId },
+      { $set: { 'reviews.$[r].rStatus': rStatus } },
+      { arrayFilters: [{ 'r.legacyId': reviewLegacyId }] }
+    );
+    await this.logMutation('update', productLegacyId, [`reviews[${reviewLegacyId}].rStatus`]);
   }
 }

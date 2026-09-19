@@ -4,6 +4,8 @@ import { PublicHeader } from '@/components/layout/PublicHeader';
 import { PublicFooter } from '@/components/layout/PublicFooter';
 import { PublicScripts } from '@/components/layout/PublicScripts';
 import { PublicStylesheets } from '@/components/layout/PublicStylesheets';
+import { getDb } from '@/lib/mongodb/client';
+import { PageRepository } from '@/lib/pages/repository';
 
 /**
  * `/terms` — ported from `terms.blade.php`. Body verified byte-identical to
@@ -24,7 +26,28 @@ export const metadata: Metadata = {
   },
 };
 
-export default function TermsPage() {
+/**
+ * CR-006 Phase 7 (`docs/CR-006-PHASE-7-PLAN.md` §2.2) — reads an
+ * admin-saved override for this page's content region, if one exists.
+ * Wrapped in try/catch: `getDb()` throws when `MONGODB_*` env vars are
+ * unset (fail-fast by design for this connection, see `src/lib/env.ts`);
+ * a missing/unreachable database must not break this otherwise-static
+ * page, so it degrades to `null` (render the original hardcoded content
+ * below) exactly like every other DB-optional read in this codebase.
+ */
+async function getPageOverride() {
+  try {
+    const db = await getDb();
+    const repo = new PageRepository(db);
+    return await repo.findBySlug('terms');
+  } catch {
+    return null;
+  }
+}
+
+export default async function TermsPage() {
+  const override = await getPageOverride();
+
   return (
     <>
       <div className="page-wrapper">
@@ -66,6 +89,16 @@ export default function TermsPage() {
         </section>
         {/* /.feature-two */}
 
+        {override ? (
+          <section className="cover-page feature-two homeabout">
+            <div className="container">
+              <div
+                className="row"
+                dangerouslySetInnerHTML={{ __html: override.bodyHtml }}
+              />
+            </div>
+          </section>
+        ) : (
         <section className="cover-page feature-two homeabout">
           <div className="container">
             <div className="row">
@@ -217,6 +250,7 @@ export default function TermsPage() {
             {/* 18 */}
           </div>
         </section>
+        )}
         {/* /.about-two */}
         {/* /.fun-fact-one */}
         {/* /.testimonials-one */}

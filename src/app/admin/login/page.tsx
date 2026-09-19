@@ -18,10 +18,16 @@ import { generateCsrfToken } from '@/lib/auth/csrf';
  *   - "Remember Me" checkbox has NO `name` attribute in source — it never
  *     submits a value. Reproduced identically (no `name` prop below).
  *   - Hidden `backuser=admin` field — harmless, kept as a static value.
- *   - "I forgot my password" link exists in source but is HTML-commented
- *     out (`<!-- <a href="#">I forgot my password</a><br> -->`) — dead,
- *     not reproduced even as a rendered (let alone functional) link.
  *   - Neither email nor password inputs have `required` in source.
+ *
+ * "I FORGOT MY PASSWORD" — NOW A LIVE, FUNCTIONAL LINK, NOT A MIGRATION:
+ * source has this link but HTML-commented out
+ * (`<!-- <a href="#">I forgot my password</a><br> -->`) and dead — no
+ * working backend ever existed in Laravel either (see
+ * `src/app/admin/forgot-password/page.tsx`'s own header). Added as a
+ * genuinely new, working capability at the owner's explicit request
+ * (2026-09-16) after the one real admin account's password was lost
+ * with no database access available to reset it directly.
  *
  * M4 (2026-08-21, owner-authorized): the form now really authenticates
  * (`action="/admin/user-login"` → `src/app/admin/user-login/route.ts`,
@@ -124,6 +130,10 @@ export default function AdminLoginPage() {
                 </div>
               </div>
             </form>
+
+            <p style={{ marginTop: 10 }}>
+              <a href="/admin/forgot-password">I forgot my password</a>
+            </p>
 
             {/* DEMO ONLY — see file header. Not part of the real Laravel UI. */}
             <div
