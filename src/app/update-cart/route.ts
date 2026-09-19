@@ -27,6 +27,7 @@
  */
 
 import { NextRequest, NextResponse } from 'next/server';
+import { redirectTo } from '@/lib/http/redirect';
 import { updateCart } from '@/lib/cart';
 
 async function handle(request: NextRequest): Promise<NextResponse> {
@@ -43,7 +44,7 @@ async function handle(request: NextRequest): Promise<NextResponse> {
   }
 
   await updateCart(id, quantity);
-  return NextResponse.redirect(new URL('/cart-list', request.nextUrl.origin), 303);
+  return redirectTo('/cart-list', 303);
 }
 
 export async function POST(request: NextRequest): Promise<NextResponse> {

@@ -7,6 +7,7 @@
  */
 
 import { NextRequest, NextResponse } from 'next/server';
+import { redirectTo } from '@/lib/http/redirect';
 import { getDb } from '@/lib/mongodb/client';
 import { requireAdminSession } from '@/lib/auth/guard';
 import { requirePermissionForSession } from '@/lib/auth/rbac-guard';
@@ -17,13 +18,12 @@ import { UserRepository } from '@/lib/mongodb/repositories/userRepository';
 
 export async function POST(request: NextRequest): Promise<NextResponse> {
   const formData = await request.formData();
-  const origin = request.nextUrl.origin;
 
   const id = String(formData.get('id') ?? '');
 
   if (!verifyCsrfToken(formData.get('_token') as string | null)) {
     await setFlash('message', 'CSRF token mismatch.');
-    return NextResponse.redirect(new URL(`/admin/edit-admin-user/${id}`, origin), 303);
+    return redirectTo(`/admin/edit-admin-user/${id}`, 303);
   }
 
   const session = await requireAdminSession();
@@ -38,12 +38,12 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
 
   if (!Number.isFinite(legacyId)) {
     await setFlash('message', 'Invalid admin user.');
-    return NextResponse.redirect(new URL('/admin/admin-users-list', origin), 303);
+    return redirectTo('/admin/admin-users-list', 303);
   }
 
   const repo = new UserRepository(db);
   await repo.updateRoleByLegacyId(legacyId, role);
 
   await setFlash('message', 'Role updated successfully.');
-  return NextResponse.redirect(new URL('/admin/admin-users-list', origin), 303);
+  return redirectTo('/admin/admin-users-list', 303);
 }

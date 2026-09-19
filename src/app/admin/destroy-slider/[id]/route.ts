@@ -22,6 +22,7 @@
  */
 
 import { NextRequest, NextResponse } from 'next/server';
+import { redirectTo } from '@/lib/http/redirect';
 import { getDb } from '@/lib/mongodb/client';
 import { requireAdminSession } from '@/lib/auth/guard';
 import { setFlash } from '@/lib/auth/flash';
@@ -60,5 +61,5 @@ export async function GET(
   // — back() always resolves to /admin/slider-list, the only page linking
   // to this route.
   await setFlash('message', 'Record deleted successfully.');
-  return NextResponse.redirect(new URL('/admin/slider-list', request.nextUrl.origin), 303);
+  return redirectTo('/admin/slider-list', 303);
 }

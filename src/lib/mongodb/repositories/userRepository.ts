@@ -102,6 +102,54 @@ export class UserRepository extends ValidatedRepository<User> {
   }
 
   /**
+   * Mirrors `AdminController::GetBuyers` (AdminController.php:986-990):
+   * `DB::table('users')->where('utype',3)->get()` — every buyer account,
+   * for `/admin/manage-buyers`.
+   */
+  async findAllBuyers(): Promise<User[]> {
+    return this.find({ utype: 3 } as Partial<User>);
+  }
+
+  /**
+   * Mirrors `AdminController::UsersList` (AdminController.php:1228, per
+   * `users-list/page.tsx`'s own header): `utype===2` (seller — VESTIGIAL,
+   * can never log in, per userSchema.ts). Confirmed 0 real rows in
+   * production; this renders honestly empty rather than repurposing the
+   * page to show buyers instead. For `/admin/users-list`.
+   */
+  async findAllSellers(): Promise<User[]> {
+    return this.find({ utype: 2 } as Partial<User>);
+  }
+
+  /**
+   * Mirrors `AdminController::UpdateUserStatus` (AdminController.php:970-982):
+   * reads the current `status`, flips 0↔1, writes it back. Used by
+   * `/admin/update-user-status/{id}` (the toggle link on `view-buyer`).
+   */
+  async toggleStatusByLegacyId(legacyId: number): Promise<void> {
+    const user = await this.findByLegacyId(legacyId);
+    if (!user) return;
+    const newStatus = user.status === 0 ? 1 : 0;
+    await this.collection.updateOne({ legacyId } as Filter<User>, {
+      $set: { status: newStatus, updatedAt: new Date() },
+    });
+    await this.logMutation('update', legacyId, ['status']);
+  }
+
+  /**
+   * Mirrors `AdminController::DestroyUser` (AdminController.php:1232-1270)
+   * for the `utype===3` (buyer) branch: source deletes the `buyer_profile`
+   * row then the `users` row. `buyerProfile` is embedded on this schema
+   * (see userSchema.ts), so deleting the user document here covers both
+   * in one write. The `utype===2` (seller) branch's document-file cleanup
+   * has no callers in this app (sellers can never log in — see
+   * userSchema.ts) and is not reproduced. Used by `/admin/destroy-user/{id}`.
+   */
+  async deleteByLegacyId(legacyId: number): Promise<void> {
+    await this.deleteOne({ legacyId } as Partial<User>);
+  }
+
+  /**
    * Admin "forgot password" flow — looks up whichever user (if any)
    * currently holds this exact token hash. The hash is a SHA-256 digest
    * of a cryptographically random 32-byte value (`passwordReset.ts`),

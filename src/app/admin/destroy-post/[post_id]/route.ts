@@ -26,6 +26,7 @@
  */
 
 import { NextRequest, NextResponse } from 'next/server';
+import { redirectTo } from '@/lib/http/redirect';
 import { getDb } from '@/lib/mongodb/client';
 import { requireAdminSession } from '@/lib/auth/guard';
 import { setFlash } from '@/lib/auth/flash';
@@ -48,5 +49,5 @@ export async function GET(
 
   // Mirrors redirect()->back()->with('message', 'Post deleted successfully.')
   await setFlash('message', 'Post deleted successfully.');
-  return NextResponse.redirect(new URL('/admin/post-list', request.nextUrl.origin), 303);
+  return redirectTo('/admin/post-list', 303);
 }

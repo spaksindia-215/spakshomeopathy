@@ -21,6 +21,7 @@
  */
 
 import { NextRequest, NextResponse } from 'next/server';
+import { redirectTo } from '@/lib/http/redirect';
 import { requireAdminSession } from '@/lib/auth/guard';
 import { requirePermissionForSession } from '@/lib/auth/rbac-guard';
 import { PERMISSIONS } from '@/lib/auth/permissions';
@@ -38,7 +39,7 @@ const ALLOWED_SUBDIRECTORIES = [
 ];
 
 export async function GET(
-  request: NextRequest,
+  _request: NextRequest,
   { params }: { params: Promise<{ subdirectory: string; filename: string }> }
 ): Promise<NextResponse> {
   const session = await requireAdminSession();
@@ -46,7 +47,6 @@ export async function GET(
   await requirePermissionForSession(db, session, PERMISSIONS.MEDIA_MANAGE);
 
   const { subdirectory, filename } = await params;
-  const origin = request.nextUrl.origin;
 
   // `filename` arrives already URL-decoded — Next.js decodes dynamic
   // route segments itself before this handler runs, so no additional
@@ -56,8 +56,5 @@ export async function GET(
   }
 
   await setFlash('message', 'File deleted successfully.');
-  return NextResponse.redirect(
-    new URL(`/admin/media-library?dir=${subdirectory}`, origin),
-    303
-  );
+  return redirectTo(`/admin/media-library?dir=${subdirectory}`, 303);
 }

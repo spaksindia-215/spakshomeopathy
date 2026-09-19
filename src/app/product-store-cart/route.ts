@@ -16,10 +16,11 @@
  */
 
 import { NextRequest, NextResponse } from 'next/server';
+import { redirectTo } from '@/lib/http/redirect';
 import { handleStoreCart } from '@/lib/cartActions';
 
 export async function GET(request: NextRequest): Promise<NextResponse> {
   await handleStoreCart(request.nextUrl.searchParams);
   // CartController.php:289 — redirect()->route('cartList')
-  return NextResponse.redirect(new URL('/cart-list', request.nextUrl.origin), 303);
+  return redirectTo('/cart-list', 303);
 }

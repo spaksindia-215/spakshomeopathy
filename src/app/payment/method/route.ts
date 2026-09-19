@@ -48,6 +48,7 @@
  */
 
 import { NextRequest, NextResponse } from 'next/server';
+import { redirectTo } from '@/lib/http/redirect';
 import { getSession } from '@/lib/auth/session';
 import { verifyCsrfToken } from '@/lib/auth/csrf';
 import { getDb } from '@/lib/mongodb/client';
@@ -116,5 +117,5 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     'message',
     'Your order has been successfully placed. Thank you for shopping with Spakshomeopathy!'
   );
-  return NextResponse.redirect(new URL('/manage-orders', request.nextUrl.origin), 303);
+  return redirectTo('/manage-orders', 303);
 }

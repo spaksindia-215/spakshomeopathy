@@ -20,6 +20,7 @@
  */
 
 import { NextRequest, NextResponse } from 'next/server';
+import { redirectTo } from '@/lib/http/redirect';
 import { getDb } from '@/lib/mongodb/client';
 import { requireAdminSession } from '@/lib/auth/guard';
 import { requirePermissionForSession } from '@/lib/auth/rbac-guard';
@@ -32,11 +33,10 @@ import { convertToSlug } from '@/lib/adminSlug';
 
 export async function POST(request: NextRequest): Promise<NextResponse> {
   const formData = await request.formData();
-  const origin = request.nextUrl.origin;
 
   if (!verifyCsrfToken(formData.get('_token') as string | null)) {
     await setFlash('message', 'CSRF token mismatch.');
-    return NextResponse.redirect(new URL('/admin/add-homeopathy', origin), 303);
+    return redirectTo('/admin/add-homeopathy', 303);
   }
 
   const session = await requireAdminSession();
@@ -54,7 +54,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     } catch (error) {
       if (error instanceof UploadRejectedError) {
         await setFlash('message', error.message);
-        return NextResponse.redirect(new URL('/admin/add-homeopathy', origin), 303);
+        return redirectTo('/admin/add-homeopathy', 303);
       }
       throw error;
     }
@@ -73,5 +73,5 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
   });
 
   await setFlash('message', 'Homeopathy entry saved successfully.');
-  return NextResponse.redirect(new URL('/admin/homeopathy-list', origin), 303);
+  return redirectTo('/admin/homeopathy-list', 303);
 }

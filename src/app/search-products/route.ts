@@ -107,30 +107,27 @@
  */
 
 import { NextRequest, NextResponse } from 'next/server';
+import { redirectTo } from '@/lib/http/redirect';
 import { verifyCsrfToken } from '@/lib/auth/csrf';
 
 export async function POST(request: NextRequest): Promise<NextResponse> {
   const formData = await request.formData();
-  const origin = request.nextUrl.origin;
 
   if (!verifyCsrfToken(formData.get('_token') as string | null)) {
-    return NextResponse.redirect(new URL('/home', origin), 303);
+    return redirectTo('/home', 303);
   }
 
   const pType = String(formData.get('p_type') ?? '');
   const pName = String(formData.get('p_name') ?? '');
 
   if (pType === 'Diseases') {
-    const url = new URL('/diseases-list', origin);
-    url.searchParams.set('p_name', pName);
-    return NextResponse.redirect(url, 303);
+    const params = new URLSearchParams({ p_name: pName });
+    return redirectTo(`/diseases-list?${params.toString()}`, 303);
   }
 
   // Herbs branch — B-14: carries the raw term twice, matching source's own
   // two independent uses of `$p_name` (the stray echo, and the LIKE filter
   // — both read the exact same unsanitized value).
-  const url = new URL('/search-results', origin);
-  url.searchParams.set('p_name', pName);
-  url.searchParams.set('echoed', pName);
-  return NextResponse.redirect(url, 303);
+  const params = new URLSearchParams({ p_name: pName, echoed: pName });
+  return redirectTo(`/search-results?${params.toString()}`, 303);
 }

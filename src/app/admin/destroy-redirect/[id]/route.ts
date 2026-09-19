@@ -6,6 +6,7 @@
  */
 
 import { NextRequest, NextResponse } from 'next/server';
+import { redirectTo } from '@/lib/http/redirect';
 import { getDb } from '@/lib/mongodb/client';
 import { requireAdminSession } from '@/lib/auth/guard';
 import { requirePermissionForSession } from '@/lib/auth/rbac-guard';
@@ -27,5 +28,5 @@ export async function GET(
   await repo.deleteById(id);
 
   await setFlash('message', 'Redirect deleted successfully.');
-  return NextResponse.redirect(new URL('/admin/redirects-list', request.nextUrl.origin), 303);
+  return redirectTo('/admin/redirects-list', 303);
 }

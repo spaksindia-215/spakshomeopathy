@@ -38,6 +38,7 @@
  */
 
 import { NextRequest, NextResponse } from 'next/server';
+import { redirectTo } from '@/lib/http/redirect';
 import { getDb } from '@/lib/mongodb/client';
 import { requireAdminSession } from '@/lib/auth/guard';
 import { verifyCsrfToken } from '@/lib/auth/csrf';
@@ -46,7 +47,6 @@ import { PinCodeRepository } from '@/lib/mongodb/repositories/pinCodeRepository'
 
 export async function POST(request: NextRequest): Promise<NextResponse> {
   const formData = await request.formData();
-  const origin = request.nextUrl.origin;
 
   // Global VerifyCsrfToken, no route exceptions — same precedence as
   // every other protected route in this app (CSRF checked before the
@@ -54,7 +54,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
   // order — the `web` group's VerifyCsrfToken runs before `userAuth`).
   if (!verifyCsrfToken(formData.get('_token') as string | null)) {
     await setFlash('message', 'CSRF token mismatch.');
-    return NextResponse.redirect(new URL('/admin/add-pin-code', origin), 303);
+    return redirectTo('/admin/add-pin-code', 303);
   }
 
   await requireAdminSession();
@@ -84,5 +84,5 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
   // fixed-target-instead-of-Referer-parsing convention established by
   // update-profile/route.ts.
   await setFlash('message', 'Record saved successfully.');
-  return NextResponse.redirect(new URL('/admin/add-pin-code', origin), 303);
+  return redirectTo('/admin/add-pin-code', 303);
 }

@@ -1,7 +1,8 @@
 import type { Metadata } from 'next';
 import { AdminStylesheets } from '@/components/admin/AdminStylesheets';
 import { isMotherTinctureDbConfigured } from '@/lib/motherTincture/db/config';
-import { getCategoriesByType } from '@/lib/demo/categories';
+import { getDb } from '@/lib/mongodb/client';
+import { CategoryRepository } from '@/lib/mongodb/repositories/categoryRepository';
 import { AddMotherTinctureForm } from './AddMotherTinctureForm';
 
 /**
@@ -23,14 +24,21 @@ import { AddMotherTinctureForm } from './AddMotherTinctureForm';
  * Route protection: this page lives under `src/app/admin/(shell)/`, so
  * `admin/(shell)/layout.tsx`'s `requireAdminSession()` gates it for free
  * — no separate auth check needed here.
+ *
+ * Category dropdown reads live `categories` (type "N") via the main
+ * `CategoryRepository` — the same migrated collection every other admin
+ * category dropdown reads, not the Mother-Tincture-specific database
+ * `isMotherTinctureDbConfigured()` gates (categories aren't
+ * Mother-Tincture-specific data).
  */
 export const metadata: Metadata = {
   title: 'Admin Panel | Add Mother Tincture',
 };
 
-export default function AdminAddMotherTincturePage() {
+export default async function AdminAddMotherTincturePage() {
   const dbConfigured = isMotherTinctureDbConfigured();
-  const categories = getCategoriesByType('N', 1);
+  const db = await getDb();
+  const categories = await new CategoryRepository(db).findByType('N', 1);
 
   return (
     <>

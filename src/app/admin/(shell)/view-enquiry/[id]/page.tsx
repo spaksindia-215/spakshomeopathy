@@ -1,24 +1,14 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { AdminStylesheets } from '@/components/admin/AdminStylesheets';
-import { getAdminEnquiryByLegacyId } from '@/lib/demo/admin';
+import { getDb } from '@/lib/mongodb/client';
+import { getAdminEnquiryByLegacyId } from '@/lib/services/adminEnquiryService';
 
 /**
- * `/admin/view-enquiry/[id]` — ported from `admin/view-enquiry.blade.php`
- * (139 lines), `AdminController@ViewEnquiry`. Read-only detail table —
- * no defects found on this specific page (title/heading/breadcrumb are
- * all correctly labeled "View Enquiry", unlike its List sibling).
- *
- * `Date` row prints the raw `created_at` timestamp value directly
- * (`{{$getenqData->created_at}}`, no `date()`/format call in source) —
- * reproduced as a raw ISO-ish timestamp string, not reformatted to a
- * friendlier display.
- *
- * LIVE `.DataTable()` init (same options/dead `#example1` call as every
- * other List/View page with a live init in this module set) — present
- * even though this page's `#example2` table has no sortable/paginated
- * tabular data (just a fixed 5-row key/value layout); reproduced anyway
- * since source unconditionally includes it.
+ * `/admin/view-enquiry/[id]` — ported from `admin/view-enquiry.blade.php`,
+ * `AdminController@ViewEnquiry`. Reads live `enquiries` data via
+ * `getAdminEnquiryByLegacyId` (real `EnquiryRepository`, not the fixture
+ * layer).
  */
 export const metadata: Metadata = {
   title: 'Admin Panel | View Enquiry',
@@ -31,7 +21,8 @@ export default async function AdminViewEnquiryPage({
 }) {
   const { id } = await params;
   const legacyId = Number(id);
-  const enquiry = Number.isFinite(legacyId) ? getAdminEnquiryByLegacyId(legacyId) : undefined;
+  const db = await getDb();
+  const enquiry = Number.isFinite(legacyId) ? await getAdminEnquiryByLegacyId(db, legacyId) : null;
 
   if (!enquiry) {
     notFound();
@@ -49,7 +40,7 @@ export default async function AdminViewEnquiryPage({
         <h1>View Enquiry</h1>
         <ol className="breadcrumb">
           <li>
-            <a href="#">
+            <a href="/admin/home">
               <i className="fa fa-dashboard"></i> Dashboard
             </a>
           </li>
@@ -98,7 +89,6 @@ export default async function AdminViewEnquiryPage({
         dangerouslySetInnerHTML={{
           __html: `
 $(function () {
-$('#example1').DataTable()
 $('#example2').DataTable({
 'paging'      : true,
 'lengthChange': false,

@@ -24,6 +24,7 @@
  */
 
 import { NextRequest, NextResponse } from 'next/server';
+import { redirectTo } from '@/lib/http/redirect';
 import { updateCart } from '@/lib/cart';
 
 export async function GET(request: NextRequest): Promise<NextResponse> {
@@ -32,6 +33,8 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
   await updateCart(pid, quantity);
 
   const referer = request.headers.get('referer');
-  const target = referer ?? new URL('/cart-list', request.nextUrl.origin).toString();
-  return NextResponse.redirect(target, 303);
+  if (referer) {
+    return NextResponse.redirect(referer, 303);
+  }
+  return redirectTo('/cart-list', 303);
 }

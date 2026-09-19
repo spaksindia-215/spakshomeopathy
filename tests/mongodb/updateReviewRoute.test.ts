@@ -50,7 +50,7 @@ describe('GET /admin/update-review/[productId]/[reviewId]/[status]', () => {
 
     expect(updateReviewStatusMock).toHaveBeenCalledWith(5, 1, 0);
     expect(response.status).toBe(303);
-    expect(response.headers.get('location')).toBe('http://localhost:3000/admin/review-list');
+    expect(response.headers.get('location')).toBe('/admin/review-list');
     expect(setFlashMock).toHaveBeenCalledWith('message', 'Review status updated successfully.');
   });
 
@@ -76,7 +76,7 @@ describe('GET /admin/update-review/[productId]/[reviewId]/[status]', () => {
     });
 
     expect(response.status).toBe(303);
-    expect(response.headers.get('location')).toBe('http://localhost:3000/admin/review-list');
+    expect(response.headers.get('location')).toBe('/admin/review-list');
   });
 
   it('requires an admin session before doing anything', async () => {

@@ -36,6 +36,7 @@
  */
 
 import { NextRequest, NextResponse } from 'next/server';
+import { redirectTo } from '@/lib/http/redirect';
 import { getDb } from '@/lib/mongodb/client';
 import { requireAdminSession } from '@/lib/auth/guard';
 import { setFlash } from '@/lib/auth/flash';
@@ -43,7 +44,7 @@ import { ProductCategoryRepository } from '@/lib/mongodb/repositories/categoryRe
 import { deleteAdminUpload } from '@/lib/uploads/adminUpload';
 
 export async function GET(
-  request: NextRequest,
+  _request: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ): Promise<NextResponse> {
   await requireAdminSession();
@@ -67,8 +68,5 @@ export async function GET(
   // list) same as every other route.ts in this project's own
   // fixed-target-instead-of-Referer-parsing convention.
   await setFlash('message', 'Category deleted successfully.');
-  return NextResponse.redirect(
-    new URL('/admin/product-category-list', request.nextUrl.origin),
-    303
-  );
+  return redirectTo('/admin/product-category-list', 303);
 }

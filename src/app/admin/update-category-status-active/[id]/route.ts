@@ -30,6 +30,7 @@
  */
 
 import { NextRequest, NextResponse } from 'next/server';
+import { redirectTo } from '@/lib/http/redirect';
 import { getDb } from '@/lib/mongodb/client';
 import { requireAdminSession } from '@/lib/auth/guard';
 import { setFlash } from '@/lib/auth/flash';
@@ -51,5 +52,5 @@ export async function GET(
   }
 
   await setFlash('message', 'Category Updated successfully.');
-  return NextResponse.redirect(new URL('/admin/cat-list', request.nextUrl.origin), 303);
+  return redirectTo('/admin/cat-list', 303);
 }

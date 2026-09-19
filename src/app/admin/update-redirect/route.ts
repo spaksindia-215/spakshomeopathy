@@ -5,6 +5,7 @@
  */
 
 import { NextRequest, NextResponse } from 'next/server';
+import { redirectTo } from '@/lib/http/redirect';
 import { getDb } from '@/lib/mongodb/client';
 import { requireAdminSession } from '@/lib/auth/guard';
 import { requirePermissionForSession } from '@/lib/auth/rbac-guard';
@@ -15,13 +16,12 @@ import { RedirectRepository } from '@/lib/redirects/repository';
 
 export async function POST(request: NextRequest): Promise<NextResponse> {
   const formData = await request.formData();
-  const origin = request.nextUrl.origin;
 
   const id = String(formData.get('id') ?? '');
 
   if (!verifyCsrfToken(formData.get('_token') as string | null)) {
     await setFlash('message', 'CSRF token mismatch.');
-    return NextResponse.redirect(new URL(`/admin/edit-redirect/${id}`, origin), 303);
+    return redirectTo(`/admin/edit-redirect/${id}`, 303);
   }
 
   const session = await requireAdminSession();
@@ -33,7 +33,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
 
   if (!existing) {
     await setFlash('message', 'Invalid redirect.');
-    return NextResponse.redirect(new URL('/admin/redirects-list', origin), 303);
+    return redirectTo('/admin/redirects-list', 303);
   }
 
   const fromPath = String(formData.get('fromPath') ?? '');
@@ -49,5 +49,5 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
   });
 
   await setFlash('message', 'Redirect updated successfully.');
-  return NextResponse.redirect(new URL('/admin/redirects-list', origin), 303);
+  return redirectTo('/admin/redirects-list', 303);
 }

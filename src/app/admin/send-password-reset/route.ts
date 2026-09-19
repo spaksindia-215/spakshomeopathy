@@ -16,6 +16,7 @@
  */
 
 import { NextRequest, NextResponse } from 'next/server';
+import { redirectTo } from '@/lib/http/redirect';
 import { getDb } from '@/lib/mongodb/client';
 import { UserRepository } from '@/lib/mongodb/repositories/userRepository';
 import { verifyCsrfToken } from '@/lib/auth/csrf';
@@ -32,7 +33,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
 
   if (!verifyCsrfToken(formData.get('_token') as string | null)) {
     await setFlash('message', 'CSRF token mismatch.');
-    return NextResponse.redirect(new URL('/admin/forgot-password', origin), 303);
+    return redirectTo('/admin/forgot-password', 303);
   }
 
   const email = String(formData.get('email') ?? '')
@@ -71,5 +72,5 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
   }
 
   await setFlash('message', GENERIC_MESSAGE);
-  return NextResponse.redirect(new URL('/admin/forgot-password', origin), 303);
+  return redirectTo('/admin/forgot-password', 303);
 }

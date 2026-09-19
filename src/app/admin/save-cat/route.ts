@@ -72,6 +72,7 @@
  */
 
 import { NextRequest, NextResponse } from 'next/server';
+import { redirectTo } from '@/lib/http/redirect';
 import { getDb } from '@/lib/mongodb/client';
 import { requireAdminSession } from '@/lib/auth/guard';
 import { verifyCsrfToken } from '@/lib/auth/csrf';
@@ -81,11 +82,10 @@ import { saveAdminUpload, UploadRejectedError } from '@/lib/uploads/adminUpload'
 
 export async function POST(request: NextRequest): Promise<NextResponse> {
   const formData = await request.formData();
-  const origin = request.nextUrl.origin;
 
   if (!verifyCsrfToken(formData.get('_token') as string | null)) {
     await setFlash('message', 'CSRF token mismatch.');
-    return NextResponse.redirect(new URL('/admin/add-hurbcat', origin), 303);
+    return redirectTo('/admin/add-hurbcat', 303);
   }
 
   await requireAdminSession();
@@ -99,14 +99,14 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     // See file header — source has no null guard here at all and would
     // fatal; this is a disclosed, non-fatal rejection instead.
     await setFlash('message', 'No image file was uploaded.');
-    return NextResponse.redirect(new URL('/admin/add-hurbcat', origin), 303);
+    return redirectTo('/admin/add-hurbcat', 303);
   }
 
   if (type !== 'N' && type !== 'H') {
     // See file header's `type` FIDELITY GAP note — disclosed rejection,
     // not a silent coercion to a value the visitor didn't choose.
     await setFlash('message', 'Please select a category type.');
-    return NextResponse.redirect(new URL('/admin/add-hurbcat', origin), 303);
+    return redirectTo('/admin/add-hurbcat', 303);
   }
 
   let filename: string;
@@ -115,7 +115,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
   } catch (error) {
     if (error instanceof UploadRejectedError) {
       await setFlash('message', error.message);
-      return NextResponse.redirect(new URL('/admin/add-hurbcat', origin), 303);
+      return redirectTo('/admin/add-hurbcat', 303);
     }
     throw error;
   }
@@ -141,5 +141,5 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
   // — back() always resolves to /admin/add-hurbcat, the only page with
   // this form action.
   await setFlash('message', 'Category saved successfully.');
-  return NextResponse.redirect(new URL('/admin/add-hurbcat', origin), 303);
+  return redirectTo('/admin/add-hurbcat', 303);
 }

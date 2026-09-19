@@ -19,6 +19,7 @@
  */
 
 import { NextRequest, NextResponse } from 'next/server';
+import { redirectTo } from '@/lib/http/redirect';
 import { getSession } from '@/lib/auth/session';
 import { getDb } from '@/lib/mongodb/client';
 import { successOrderLegacy } from '@/lib/services/checkoutService';
@@ -76,5 +77,5 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
   // (a just-completed POST /success-order) sees real content.
   await stashSuccessOrderRow(result.row);
 
-  return NextResponse.redirect(new URL('/order-placed', request.nextUrl.origin), 303);
+  return redirectTo('/order-placed', 303);
 }

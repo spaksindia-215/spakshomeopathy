@@ -46,6 +46,7 @@
  */
 
 import { NextRequest, NextResponse } from 'next/server';
+import { redirectTo } from '@/lib/http/redirect';
 import { getDb } from '@/lib/mongodb/client';
 import { requireAdminSession } from '@/lib/auth/guard';
 import { verifyCsrfToken } from '@/lib/auth/csrf';
@@ -54,13 +55,12 @@ import { PinCodeRepository } from '@/lib/mongodb/repositories/pinCodeRepository'
 
 export async function POST(request: NextRequest): Promise<NextResponse> {
   const formData = await request.formData();
-  const origin = request.nextUrl.origin;
 
   const pinId = String(formData.get('pin_id') ?? '');
 
   if (!verifyCsrfToken(formData.get('_token') as string | null)) {
     await setFlash('message', 'CSRF token mismatch.');
-    return NextResponse.redirect(new URL(`/admin/edit-pincode/${pinId}`, origin), 303);
+    return redirectTo(`/admin/edit-pincode/${pinId}`, 303);
   }
 
   await requireAdminSession();
@@ -92,5 +92,5 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
   // — `back()` always resolves to /admin/edit-pincode/{id}, the only page
   // with this form action, same fixed-target convention as elsewhere.
   await setFlash('message', 'Record updated successfully.');
-  return NextResponse.redirect(new URL(`/admin/edit-pincode/${pinId}`, origin), 303);
+  return redirectTo(`/admin/edit-pincode/${pinId}`, 303);
 }

@@ -14,6 +14,7 @@
  */
 
 import { NextRequest, NextResponse } from 'next/server';
+import { redirectTo } from '@/lib/http/redirect';
 import { getDb } from '@/lib/mongodb/client';
 import { requireAdminSession } from '@/lib/auth/guard';
 import { requirePermissionForSession } from '@/lib/auth/rbac-guard';
@@ -25,11 +26,10 @@ import { hashPassword } from '@/lib/auth/password';
 
 export async function POST(request: NextRequest): Promise<NextResponse> {
   const formData = await request.formData();
-  const origin = request.nextUrl.origin;
 
   if (!verifyCsrfToken(formData.get('_token') as string | null)) {
     await setFlash('message', 'CSRF token mismatch.');
-    return NextResponse.redirect(new URL('/admin/add-admin-user', origin), 303);
+    return redirectTo('/admin/add-admin-user', 303);
   }
 
   const session = await requireAdminSession();
@@ -46,7 +46,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
 
   if (await repo.emailExists(email)) {
     await setFlash('message', 'An account with that email already exists.');
-    return NextResponse.redirect(new URL('/admin/add-admin-user', origin), 303);
+    return redirectTo('/admin/add-admin-user', 303);
   }
 
   const legacyId = await repo.nextLegacyId();
@@ -70,5 +70,5 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
   });
 
   await setFlash('message', 'Admin user created successfully.');
-  return NextResponse.redirect(new URL('/admin/admin-users-list', origin), 303);
+  return redirectTo('/admin/admin-users-list', 303);
 }

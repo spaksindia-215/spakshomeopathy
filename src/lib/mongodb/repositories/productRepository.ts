@@ -14,7 +14,7 @@
  * the mapping document), not a silent one.
  */
 
-import type { Db } from 'mongodb';
+import type { Db, Filter } from 'mongodb';
 import { ValidatedRepository } from './base';
 import { COLLECTIONS } from '../collections';
 import { productSchema, type Product } from '../schemas';
@@ -142,6 +142,35 @@ export class ProductRepository extends ValidatedRepository<Product> {
    */
   async findAll(): Promise<Product[]> {
     return this.find({});
+  }
+
+  /**
+   * Mirrors `AdminController::DestroyProduct` (AdminController.php:675-693)
+   * for the row deletion itself. `product_images` is embedded on this
+   * schema (see file header), so deleting the product document removes
+   * them too. Source's `unlink()` calls against the uploaded image files
+   * on disk are not reproduced here — same disclosed boundary as
+   * `destroy-post`'s route handler (no filesystem cleanup for this
+   * migration's admin destroy actions).
+   */
+  async deleteByLegacyId(legacyId: number): Promise<void> {
+    await this.deleteOne({ legacyId } as Partial<Product>);
+  }
+
+  /**
+   * Mirrors `AdminController::UpdateProductStatus`
+   * (AdminController.php:720-732): reads the current `pStatus`, flips
+   * 0↔1, writes it back.
+   */
+  async toggleStatusByLegacyId(legacyId: number): Promise<void> {
+    const product = await this.findByLegacyId(legacyId);
+    if (!product) return;
+    const newStatus = product.pStatus === 0 ? 1 : 0;
+    await this.collection.updateOne(
+      { legacyId } as Filter<Product>,
+      { $set: { pStatus: newStatus } }
+    );
+    await this.logMutation('update', legacyId, ['pStatus']);
   }
 
   /**

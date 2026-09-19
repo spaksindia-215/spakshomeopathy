@@ -38,6 +38,7 @@
  */
 
 import { NextRequest, NextResponse } from 'next/server';
+import { redirectTo } from '@/lib/http/redirect';
 import { getDb } from '@/lib/mongodb/client';
 import { requireAdminSession } from '@/lib/auth/guard';
 import { verifyCsrfToken } from '@/lib/auth/csrf';
@@ -48,11 +49,10 @@ import { convertToSlug } from '@/lib/adminSlug';
 
 export async function POST(request: NextRequest): Promise<NextResponse> {
   const formData = await request.formData();
-  const origin = request.nextUrl.origin;
 
   if (!verifyCsrfToken(formData.get('_token') as string | null)) {
     await setFlash('message', 'CSRF token mismatch.');
-    return NextResponse.redirect(new URL('/admin/add-blog', origin), 303);
+    return redirectTo('/admin/add-blog', 303);
   }
 
   await requireAdminSession();
@@ -66,7 +66,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
 
   if (!(imageFile instanceof File) || imageFile.size === 0) {
     await setFlash('message', 'No image file was uploaded.');
-    return NextResponse.redirect(new URL('/admin/add-blog', origin), 303);
+    return redirectTo('/admin/add-blog', 303);
   }
 
   let filename: string;
@@ -75,7 +75,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
   } catch (error) {
     if (error instanceof UploadRejectedError) {
       await setFlash('message', error.message);
-      return NextResponse.redirect(new URL('/admin/add-blog', origin), 303);
+      return redirectTo('/admin/add-blog', 303);
     }
     throw error;
   }
@@ -105,5 +105,5 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
   // module set ("Blog saved" vs. the usual "Record saved") — preserved
   // exactly, not normalized.
   await setFlash('message', 'Blog saved successfully.');
-  return NextResponse.redirect(new URL('/admin/add-blog', origin), 303);
+  return redirectTo('/admin/add-blog', 303);
 }

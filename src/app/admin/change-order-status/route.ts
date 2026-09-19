@@ -35,6 +35,7 @@
  */
 
 import { NextRequest, NextResponse } from 'next/server';
+import { redirectTo } from '@/lib/http/redirect';
 import { getDb } from '@/lib/mongodb/client';
 import { requireAdminSession } from '@/lib/auth/guard';
 import { requirePermissionForSession } from '@/lib/auth/rbac-guard';
@@ -49,7 +50,6 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
   await requirePermissionForSession(db, session, PERMISSIONS.ORDERS_UPDATE);
 
   const orderId = request.nextUrl.searchParams.get('order_id');
-  const origin = request.nextUrl.origin;
 
   const groupId = orderId !== null ? decryptGroupId(orderId) : null;
   if (groupId === null) {
@@ -58,11 +58,11 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
     // buyer-side cancel-order route's header). A minimal rejection,
     // not an invented business feature.
     await setFlash('message', 'Invalid or expired request.');
-    return NextResponse.redirect(new URL('/admin/order-list', origin), 303);
+    return redirectTo('/admin/order-list', 303);
   }
 
   await shipOrder(db, groupId);
 
   await setFlash('message', 'Order shipped successfully!!');
-  return NextResponse.redirect(new URL('/admin/order-list', origin), 303);
+  return redirectTo('/admin/order-list', 303);
 }

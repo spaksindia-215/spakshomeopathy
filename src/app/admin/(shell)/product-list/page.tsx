@@ -1,36 +1,30 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { AdminStylesheets } from '@/components/admin/AdminStylesheets';
-import { getAllProducts } from '@/lib/demo';
+import { getDb } from '@/lib/mongodb/client';
+import { ProductRepository } from '@/lib/mongodb/repositories/productRepository';
+import { readAndClearFlash } from '@/lib/auth/flash';
 
 /**
  * `/admin/product-list` — ported from `admin/product-list.blade.php`
- * (147 lines), `AdminController@ProductList`.
+ * (147 lines), `AdminController@ProductList`. Reads live `products` data
+ * via `ProductRepository.findAll()` (real Mongo, not the fixture layer).
  *
- * Reuses the PUBLIC demo product data (`@/lib/demo`'s `getAllProducts`)
- * — same real, curated 125 rows the public site's product pages show,
- * not a separate admin fixture (both surfaces read the same underlying
- * `products` collection).
- *
- * PRESERVED DEFECTS, verified directly this session:
- *   - Status column: `href="#"` dead badges (Active/"Deativate", typo
- *     preserved) — NOT a working toggle on this page (contrast with
- *     `cat-list`, whose Status column IS a live toggle).
- *   - DataTables CSS/JS is loaded but `.DataTable()` is never called in
- *     source — reproduced as inert `<link>`/`<script>` tags with no init
- *     script.
- *   - Source's double-`class` attribute on the edit/delete `<i>` icons
- *     (`class="fa fa-pencil" class="btn btn-info btn-sm"`) cannot be
- *     literally reproduced in JSX (only one `className` prop is
- *     possible) — the one unavoidable simplification for this defect;
- *     documented rather than silently dropped.
+ * PRESERVED DEFECT, verified against source: Status column `href="#"`
+ * badges (Active/"Deativate", typo preserved) are genuinely dead links in
+ * the original Blade template too — not a working toggle on this page
+ * (contrast with `cat-list`, whose Status column IS a live toggle). Left
+ * as-is; not in scope for this pass.
  */
 export const metadata: Metadata = {
   title: 'Admin Panel | Product List',
 };
 
-export default function AdminProductListPage() {
-  const products = getAllProducts();
+export default async function AdminProductListPage() {
+  const db = await getDb();
+  const repo = new ProductRepository(db);
+  const products = await repo.findAll();
+  const message = await readAndClearFlash('message');
 
   return (
     <>
@@ -44,7 +38,7 @@ export default function AdminProductListPage() {
         <h1>Product List</h1>
         <ol className="breadcrumb">
           <li>
-            <a href="#">
+            <a href="/admin/home">
               <i className="fa fa-dashboard"></i> Dashboard
             </a>
           </li>
@@ -54,6 +48,7 @@ export default function AdminProductListPage() {
 
       <section className="content">
         <div className="row">
+          {message !== null && <div className="alert alert-success">{message}</div>}
           <div className="col-xs-12">
             <div className="box">
               <div className="box-body">
@@ -100,10 +95,7 @@ export default function AdminProductListPage() {
                             <i className="fa fa-pencil btn btn-info btn-sm"></i>
                           </Link>
                           &nbsp;&nbsp;&nbsp;&nbsp;
-                          <a
-                            href={`/admin/destroy-product/${product.legacyId}`}
-                            className="demo-destroy-link"
-                          >
+                          <a href={`/admin/destroy-product/${product.legacyId}`}>
                             <i className="fa fa-trash btn btn-danger btn-sm"></i>
                           </a>
                         </td>
@@ -111,36 +103,11 @@ export default function AdminProductListPage() {
                     ))}
                   </tbody>
                 </table>
-                <center>
-                  <div>
-                    {/* Pagination: demo dataset is one page, no links() equivalent needed */}
-                  </div>
-                </center>
               </div>
             </div>
           </div>
         </div>
       </section>
-
-      {/* DEMO ONLY — intercepts the destroy links' confirm()/navigation so
-          nothing actually deletes or 404s. Matches source's own
-          `onclick="return confirm(...)"` dialog, wired via a plain script
-          (not a React onClick, which cannot be passed from a Server
-          Component) — same convention as `product-details/[slug]`. */}
-      <script
-        dangerouslySetInnerHTML={{
-          __html: `
-document.querySelectorAll('.demo-destroy-link').forEach(function (el) {
-  el.addEventListener('click', function (e) {
-    e.preventDefault();
-    if (window.confirm('Are you sure you want to delete?')) {
-      window.alert('Demo only — no real data was deleted.');
-    }
-  });
-});
-`,
-        }}
-      />
     </>
   );
 }

@@ -67,7 +67,7 @@ describe('POST /admin/update-admin-user-role', () => {
     const response = await POST(request);
 
     expect(response.status).toBe(303);
-    expect(response.headers.get('location')).toBe('http://localhost:3000/admin/edit-admin-user/2');
+    expect(response.headers.get('location')).toBe('/admin/edit-admin-user/2');
     expect(setFlashMock).toHaveBeenCalledWith('message', 'CSRF token mismatch.');
     expect(requireAdminSessionMock).not.toHaveBeenCalled();
     expect(updateRoleByLegacyIdMock).not.toHaveBeenCalled();
@@ -83,7 +83,7 @@ describe('POST /admin/update-admin-user-role', () => {
 
     expect(updateRoleByLegacyIdMock).toHaveBeenCalledWith(2, 'CATALOG_MANAGER');
     expect(response.status).toBe(303);
-    expect(response.headers.get('location')).toBe('http://localhost:3000/admin/admin-users-list');
+    expect(response.headers.get('location')).toBe('/admin/admin-users-list');
     expect(setFlashMock).toHaveBeenCalledWith('message', 'Role updated successfully.');
   });
 
@@ -117,7 +117,7 @@ describe('POST /admin/update-admin-user-role', () => {
     const response = await POST(formRequest({ id: 'not-a-number', role: 'ADMIN', _token: 'good' }));
 
     expect(updateRoleByLegacyIdMock).not.toHaveBeenCalled();
-    expect(response.headers.get('location')).toBe('http://localhost:3000/admin/admin-users-list');
+    expect(response.headers.get('location')).toBe('/admin/admin-users-list');
     expect(setFlashMock).toHaveBeenCalledWith('message', 'Invalid admin user.');
   });
 });

@@ -1,25 +1,24 @@
 import type { Metadata } from 'next';
 import { AdminStylesheets } from '@/components/admin/AdminStylesheets';
-import { getAllAdminUsers } from '@/lib/demo/admin';
+import { getDb } from '@/lib/mongodb/client';
+import { UserRepository } from '@/lib/mongodb/repositories/userRepository';
 
 /**
  * `/admin/users-list` — ported from `admin/users-list.blade.php` (146
  * lines), `AdminController@UsersList`.
  *
- * NAMING INVERSION, confirmed directly this session (`AdminController@
- * UsersList` line 1228): filters `utype=2` — SELLERS, per
- * `schemas/user.ts`'s own header ("2=seller, VESTIGIAL — can never log
- * in") — NOT buyers, despite the page's generic "Users" naming. The
- * sidebar's own "Manage Users" nav link actually goes to a DIFFERENT
- * route (`manage-buyers`, `utype=3`), deferred to Phase 2. This page
+ * NAMING INVERSION, confirmed against source (`AdminController@UsersList`
+ * line 1228): filters `utype=2` — SELLERS, per `schemas/user.ts`'s own
+ * header ("2=seller, VESTIGIAL — can never log in") — NOT buyers, despite
+ * the page's generic "Users" naming. The sidebar's "Manage Users" nav link
+ * goes to a separate route, `/admin/manage-buyers` (`utype=3`). This page
  * mirrors the real, literal `users-list` route/controller — not the
- * sidebar's more intuitive label.
+ * sidebar's more intuitive label. URL-only: no sidebar entry points here.
  *
  * CONFIRMED ZERO REAL ROWS: `utype=2` has 0 rows in production (1 admin,
  * 818 buyers, 0 sellers — verified against the real dump). Renders
- * honestly empty, not padded with invented seller accounts. Owner
- * confirmed (2026-08-21) keeping this behavior as-is rather than
- * swapping the module to show buyers instead.
+ * honestly empty via live `UserRepository.findAllSellers()`, not padded
+ * with invented seller accounts.
  *
  * FLAGSHIP PRESERVED DEFECT: the View action link is literally
  * `view-product/{id}` (source line 84) — a copy-paste leftover from the
@@ -35,8 +34,10 @@ export const metadata: Metadata = {
   title: 'Admin Panel | Users List',
 };
 
-export default function AdminUsersListPage() {
-  const users = getAllAdminUsers();
+export default async function AdminUsersListPage() {
+  const db = await getDb();
+  const repo = new UserRepository(db);
+  const users = await repo.findAllSellers();
 
   return (
     <>
@@ -50,7 +51,7 @@ export default function AdminUsersListPage() {
         <h1>Users List</h1>
         <ol className="breadcrumb">
           <li>
-            <a href="#">
+            <a href="/admin/home">
               <i className="fa fa-dashboard"></i> Dashboard
             </a>
           </li>
@@ -108,7 +109,6 @@ export default function AdminUsersListPage() {
         dangerouslySetInnerHTML={{
           __html: `
 $(function () {
-$('#example1').DataTable()
 $('#example2').DataTable({
 'paging'      : true,
 'lengthChange': false,

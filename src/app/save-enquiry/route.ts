@@ -24,6 +24,7 @@
  */
 
 import { NextRequest, NextResponse } from 'next/server';
+import { redirectTo } from '@/lib/http/redirect';
 import { getDb } from '@/lib/mongodb/client';
 import { EnquiryRepository } from '@/lib/mongodb/repositories/enquiryRepository';
 import { submitEnquiry } from '@/lib/services/enquiryService';
@@ -32,11 +33,10 @@ import { verifyCsrfToken } from '@/lib/auth/csrf';
 
 export async function POST(request: NextRequest): Promise<NextResponse> {
   const formData = await request.formData();
-  const origin = request.nextUrl.origin;
 
   if (!verifyCsrfToken(formData.get('_token') as string | null)) {
     await setFlash('message', 'CSRF token mismatch.');
-    return NextResponse.redirect(new URL('/contact', origin), 303);
+    return redirectTo('/contact', 303);
   }
 
   const name = String(formData.get('name') ?? '');
@@ -66,10 +66,10 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     // (masking a real failure), not a faithful reproduction.
     const reason = err instanceof Error ? err.message : 'Please fill in all required fields.';
     await setFlash('message', reason);
-    return NextResponse.redirect(new URL('/contact', origin), 303);
+    return redirectTo('/contact', 303);
   }
 
   // Mirrors HomeController.php:340 exactly.
   await setFlash('message', 'Thank you. We will contact soon.');
-  return NextResponse.redirect(new URL('/contact', origin), 303);
+  return redirectTo('/contact', 303);
 }

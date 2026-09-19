@@ -53,6 +53,7 @@
  */
 
 import { NextRequest, NextResponse } from 'next/server';
+import { redirectTo } from '@/lib/http/redirect';
 import { getDb } from '@/lib/mongodb/client';
 import { requireAdminSession } from '@/lib/auth/guard';
 import { verifyCsrfToken } from '@/lib/auth/csrf';
@@ -63,11 +64,10 @@ import { convertToSlug } from '@/lib/adminSlug';
 
 export async function POST(request: NextRequest): Promise<NextResponse> {
   const formData = await request.formData();
-  const origin = request.nextUrl.origin;
 
   if (!verifyCsrfToken(formData.get('_token') as string | null)) {
     await setFlash('message', 'CSRF token mismatch.');
-    return NextResponse.redirect(new URL('/admin/add-product-category', origin), 303);
+    return redirectTo('/admin/add-product-category', 303);
   }
 
   await requireAdminSession();
@@ -83,7 +83,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     } catch (error) {
       if (error instanceof UploadRejectedError) {
         await setFlash('message', error.message);
-        return NextResponse.redirect(new URL('/admin/add-product-category', origin), 303);
+        return redirectTo('/admin/add-product-category', 303);
       }
       throw error;
     }
@@ -108,5 +108,5 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
   });
 
   await setFlash('message', 'Record saved successfully.');
-  return NextResponse.redirect(new URL('/admin/add-product-category', origin), 303);
+  return redirectTo('/admin/add-product-category', 303);
 }

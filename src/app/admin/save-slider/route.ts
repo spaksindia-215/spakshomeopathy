@@ -33,6 +33,7 @@
  */
 
 import { NextRequest, NextResponse } from 'next/server';
+import { redirectTo } from '@/lib/http/redirect';
 import { getDb } from '@/lib/mongodb/client';
 import { requireAdminSession } from '@/lib/auth/guard';
 import { verifyCsrfToken } from '@/lib/auth/csrf';
@@ -42,11 +43,10 @@ import { saveAdminUpload, UploadRejectedError } from '@/lib/uploads/adminUpload'
 
 export async function POST(request: NextRequest): Promise<NextResponse> {
   const formData = await request.formData();
-  const origin = request.nextUrl.origin;
 
   if (!verifyCsrfToken(formData.get('_token') as string | null)) {
     await setFlash('message', 'CSRF token mismatch.');
-    return NextResponse.redirect(new URL('/admin/add-slider', origin), 303);
+    return redirectTo('/admin/add-slider', 303);
   }
 
   await requireAdminSession();
@@ -66,7 +66,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     // project-wide to B-06-style null-dereference cases that aren't
     // themselves in the BROKEN register.
     await setFlash('message', 'No image file was uploaded.');
-    return NextResponse.redirect(new URL('/admin/add-slider', origin), 303);
+    return redirectTo('/admin/add-slider', 303);
   }
 
   let filename: string;
@@ -75,7 +75,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
   } catch (error) {
     if (error instanceof UploadRejectedError) {
       await setFlash('message', error.message);
-      return NextResponse.redirect(new URL('/admin/add-slider', origin), 303);
+      return redirectTo('/admin/add-slider', 303);
     }
     throw error;
   }
@@ -98,5 +98,5 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
   // — back() always resolves to /admin/add-slider, the only page with this
   // form action.
   await setFlash('message', 'Record saved successfully.');
-  return NextResponse.redirect(new URL('/admin/add-slider', origin), 303);
+  return redirectTo('/admin/add-slider', 303);
 }

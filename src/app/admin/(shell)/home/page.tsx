@@ -1,27 +1,23 @@
 import type { Metadata } from 'next';
 import { AdminStylesheets } from '@/components/admin/AdminStylesheets';
-import { getAllProducts } from '@/lib/demo';
-import { getAllAdminEnquiries } from '@/lib/demo/admin';
+import { getDb } from '@/lib/mongodb/client';
+import { EnquiryRepository } from '@/lib/mongodb/repositories/enquiryRepository';
+import { UserRepository } from '@/lib/mongodb/repositories/userRepository';
+import { ProductRepository } from '@/lib/mongodb/repositories/productRepository';
+import { OrderProductRepository } from '@/lib/mongodb/repositories/orderRepository';
 
 /**
  * `/admin/home` — ported from `admin/index.blade.php` (199 lines), the
  * dashboard, `AdminController@index`.
  *
- * Real dynamic content: exactly 4 stat boxes.
- *   - `$CountEnq` → `enquiries` row count. Demo shows the CURATED count
- *     (15), not the real production total (16,386) — matching this
- *     migration's own curation discipline throughout (the demo layer
- *     never claims to hold the full table).
- *   - `$CountBuyer` → `users WHERE utype=3` count (real buyers) — NOTE:
- *     the dashboard box itself is unambiguous ("Total Buyer"), unlike the
- *     `users-list` naming inversion documented elsewhere; this box is
- *     built correctly against buyer count semantics, no ambiguity here.
+ * Real dynamic content: exactly 4 stat boxes, all backed by live counts.
+ *   - `$CountEnq` → `enquiries` row count.
+ *   - `$CountBuyer` → `users WHERE utype=3` count (real buyers).
  *   - `$CountProducts` → `products` row count.
- *   - `$CountOrders` → confirmed this session: counts `orderproducts`
+ *   - `$CountOrders` → confirmed against source: counts `orderproducts`
  *     ROWS (line items), not distinct orders, despite the "Total Orders"
- *     label — a real semantic quirk in source, not a migration artifact.
- *     Orders module is Phase 2 (deferred) — this box is NOT built this
- *     phase; see below.
+ *     label — a real semantic quirk in source, preserved here rather than
+ *     "fixed" to count distinct orders.
  *
  * Below the 4 stat boxes, source's entire remaining dashboard content is
  * a HOLLOW EMPTY SHELL — one empty `box box-primary` with only comments,
@@ -34,10 +30,14 @@ export const metadata: Metadata = {
   title: 'Admin Panel | Dashboard',
 };
 
-export default function AdminDashboardPage() {
-  const countEnq = getAllAdminEnquiries().length;
-  const countBuyer = 818; // real production count of utype=3 users, per this session's direct dump check — see src/lib/demo/admin/users.ts's header for the utype=2/3 distinction
-  const countProducts = getAllProducts().length;
+export default async function AdminDashboardPage() {
+  const db = await getDb();
+  const [countEnq, countBuyer, countProducts, countOrders] = await Promise.all([
+    new EnquiryRepository(db).count(),
+    new UserRepository(db).count({ utype: 3 }),
+    new ProductRepository(db).count(),
+    new OrderProductRepository(db).count(),
+  ]);
 
   return (
     <>
@@ -66,7 +66,7 @@ export default function AdminDashboardPage() {
         </h1>
         <ol className="breadcrumb">
           <li>
-            <a href="#">
+            <a href="/admin/home">
               <i className="fa fa-dashboard"></i> Home
             </a>
           </li>
@@ -124,17 +124,7 @@ export default function AdminDashboardPage() {
           <div className="col-lg-3 col-xs-6">
             <div className="small-box bg-red">
               <div className="inner">
-                {/* Orders module is Phase 2 (deferred) — this box is real
-                    in source (confirmed it actually counts orderproducts
-                    ROWS, not distinct orders) but is left as an explicit
-                    "not built yet" marker rather than a real number with
-                    no module behind it to click into, or a fabricated
-                    count. The link below still points at the real
-                    `order-list` route path, which will 404/not-found
-                    until Phase 2 builds it — that is itself an accurate
-                    signal of this phase's boundary, not a broken link to
-                    hide. */}
-                <h3 title="Orders module deferred to Phase 2">N/A</h3>
+                <h3>{countOrders}</h3>
                 <p>Total Orders</p>
               </div>
               <div className="icon">

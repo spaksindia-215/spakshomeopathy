@@ -21,6 +21,7 @@
  */
 
 import { NextRequest, NextResponse } from 'next/server';
+import { redirectTo } from '@/lib/http/redirect';
 import { getDb } from '@/lib/mongodb/client';
 import { requireBuyerSession } from '@/lib/auth/guard';
 import { updateProfile } from '@/lib/services/profileService';
@@ -32,7 +33,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
 
   if (!verifyCsrfToken(formData.get('_token') as string | null)) {
     await setFlash('message', 'CSRF token mismatch.');
-    return NextResponse.redirect(new URL('/profile', request.nextUrl.origin), 303);
+    return redirectTo('/profile', 303);
   }
 
   // Route Handlers, unlike Server Component renders, ARE allowed to
@@ -70,5 +71,5 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
   // handles "back" redirects (e.g. save-user/route.ts redirects to a fixed
   // target, not a parsed Referer).
   await setFlash('message', 'Profile Updated successfully!!');
-  return NextResponse.redirect(new URL('/profile', request.nextUrl.origin), 303);
+  return redirectTo('/profile', 303);
 }

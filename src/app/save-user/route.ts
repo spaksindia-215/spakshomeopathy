@@ -29,6 +29,7 @@
  */
 
 import { NextRequest, NextResponse } from 'next/server';
+import { redirectTo } from '@/lib/http/redirect';
 import { getDb } from '@/lib/mongodb/client';
 import { registerBuyer } from '@/lib/services/authService';
 import { setFlash } from '@/lib/auth/flash';
@@ -37,11 +38,10 @@ import { verifyCsrfToken } from '@/lib/auth/csrf';
 export async function POST(request: NextRequest): Promise<NextResponse> {
   const formData = await request.formData();
   const utype = String(formData.get('utype') ?? '');
-  const origin = request.nextUrl.origin;
 
   if (!verifyCsrfToken(formData.get('_token') as string | null)) {
     await setFlash('message', 'CSRF token mismatch.');
-    return NextResponse.redirect(new URL('/register', origin), 303);
+    return redirectTo('/register', 303);
   }
 
   if (utype !== '3') {
@@ -81,11 +81,11 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
         ? 'The email has already been taken.'
         : `The following fields are required: ${result.fields.join(', ')}.`;
     await setFlash('message', reason);
-    return NextResponse.redirect(new URL('/register', origin), 303);
+    return redirectTo('/register', 303);
   }
 
   // Mirrors RegisterController.php:152 exactly, including source's own
   // typo ("registraterd") — not corrected, per contract F-17/NN-4.
   await setFlash('message', 'you registraterd successfully please login here.');
-  return NextResponse.redirect(new URL('/login', origin), 303);
+  return redirectTo('/login', 303);
 }

@@ -24,6 +24,7 @@
  */
 
 import { NextRequest, NextResponse } from 'next/server';
+import { redirectTo } from '@/lib/http/redirect';
 import { getDb } from '@/lib/mongodb/client';
 import { requireAdminSession } from '@/lib/auth/guard';
 import { setFlash } from '@/lib/auth/flash';
@@ -54,5 +55,5 @@ export async function GET(
   // Mirrors redirect()->back()->with('message', 'Record deleted successfully.')
   // — back() always resolves to /admin/blog-category-list.
   await setFlash('message', 'Record deleted successfully.');
-  return NextResponse.redirect(new URL('/admin/blog-category-list', request.nextUrl.origin), 303);
+  return redirectTo('/admin/blog-category-list', 303);
 }

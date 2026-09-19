@@ -11,6 +11,7 @@
  */
 
 import { NextRequest, NextResponse } from 'next/server';
+import { redirectTo } from '@/lib/http/redirect';
 import { getDb } from '@/lib/mongodb/client';
 import { UserRepository } from '@/lib/mongodb/repositories/userRepository';
 import { hashToken, verifyResetToken } from '@/lib/auth/passwordReset';
@@ -20,13 +21,12 @@ import { setFlash } from '@/lib/auth/flash';
 
 export async function POST(request: NextRequest): Promise<NextResponse> {
   const formData = await request.formData();
-  const origin = request.nextUrl.origin;
 
   const token = String(formData.get('token') ?? '');
 
   if (!verifyCsrfToken(formData.get('_token') as string | null)) {
     await setFlash('message', 'CSRF token mismatch.');
-    return NextResponse.redirect(new URL(`/admin/reset-password/${token}`, origin), 303);
+    return redirectTo(`/admin/reset-password/${token}`, 303);
   }
 
   const password = String(formData.get('password') ?? '');
@@ -34,26 +34,30 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
 
   if (password.length < 8) {
     await setFlash('message', 'Password must be at least 8 characters.');
-    return NextResponse.redirect(new URL(`/admin/reset-password/${token}`, origin), 303);
+    return redirectTo(`/admin/reset-password/${token}`, 303);
   }
   if (password !== passwordConfirmation) {
     await setFlash('message', 'Passwords do not match.');
-    return NextResponse.redirect(new URL(`/admin/reset-password/${token}`, origin), 303);
+    return redirectTo(`/admin/reset-password/${token}`, 303);
   }
 
   const db = await getDb();
   const repo = new UserRepository(db);
   const user = await repo.findByPasswordResetTokenHash(hashToken(token));
-  const isValid = verifyResetToken(token, user?.passwordResetTokenHash, user?.passwordResetExpiresAt);
+  const isValid = verifyResetToken(
+    token,
+    user?.passwordResetTokenHash,
+    user?.passwordResetExpiresAt
+  );
 
   if (!isValid || !user) {
     await setFlash('message', 'This reset link is invalid or has expired.');
-    return NextResponse.redirect(new URL('/admin/forgot-password', origin), 303);
+    return redirectTo('/admin/forgot-password', 303);
   }
 
   const newHashedPassword = await hashPassword(password);
   await repo.resetPasswordByLegacyId(user.legacyId, newHashedPassword);
 
   await setFlash('message', 'Your password has been reset. Please sign in.');
-  return NextResponse.redirect(new URL('/admin/login', origin), 303);
+  return redirectTo('/admin/login', 303);
 }

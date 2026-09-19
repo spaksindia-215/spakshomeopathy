@@ -47,6 +47,7 @@
  */
 
 import { NextRequest, NextResponse } from 'next/server';
+import { redirectTo } from '@/lib/http/redirect';
 import { getDb } from '@/lib/mongodb/client';
 import { requireAdminSession } from '@/lib/auth/guard';
 import { verifyCsrfToken } from '@/lib/auth/csrf';
@@ -56,13 +57,12 @@ import { saveAdminUpload, UploadRejectedError } from '@/lib/uploads/adminUpload'
 
 export async function POST(request: NextRequest): Promise<NextResponse> {
   const formData = await request.formData();
-  const origin = request.nextUrl.origin;
 
   const id = String(formData.get('id') ?? '');
 
   if (!verifyCsrfToken(formData.get('_token') as string | null)) {
     await setFlash('message', 'CSRF token mismatch.');
-    return NextResponse.redirect(new URL(`/admin/edit-category/${id}`, origin), 303);
+    return redirectTo(`/admin/edit-category/${id}`, 303);
   }
 
   await requireAdminSession();
@@ -79,7 +79,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     // save-cat/route.ts, even though this path is far less likely to be
     // reached in practice.
     await setFlash('message', 'Please select a category type.');
-    return NextResponse.redirect(new URL(`/admin/edit-category/${id}`, origin), 303);
+    return redirectTo(`/admin/edit-category/${id}`, 303);
   }
 
   // Mirrors source's `empty($prod_image)` check — same "no file supplied"
@@ -92,7 +92,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     } catch (error) {
       if (error instanceof UploadRejectedError) {
         await setFlash('message', error.message);
-        return NextResponse.redirect(new URL(`/admin/edit-category/${id}`, origin), 303);
+        return redirectTo(`/admin/edit-category/${id}`, 303);
       }
       throw error;
     }
@@ -116,5 +116,5 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
   // every other update route this project has built.
 
   await setFlash('message', 'Category Updated successfully.');
-  return NextResponse.redirect(new URL(`/admin/edit-category/${id}`, origin), 303);
+  return redirectTo(`/admin/edit-category/${id}`, 303);
 }

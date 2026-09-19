@@ -49,7 +49,7 @@ describe('middleware (CR-006 Phase 8, tested CR-006 Phase 10)', () => {
     const response = await middleware(new NextRequest('http://localhost:3000/old-page'));
 
     expect(response.status).toBe(301);
-    expect(response.headers.get('location')).toBe('http://localhost:3000/new-page');
+    expect(response.headers.get('location')).toBe('/new-page');
   });
 
   it('respects a 302 status code when configured', async () => {

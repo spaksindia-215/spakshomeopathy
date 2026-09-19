@@ -44,6 +44,7 @@
  */
 
 import { NextRequest, NextResponse } from 'next/server';
+import { redirectTo } from '@/lib/http/redirect';
 import { getDb } from '@/lib/mongodb/client';
 import { requireAdminSession } from '@/lib/auth/guard';
 import { verifyCsrfToken } from '@/lib/auth/csrf';
@@ -54,13 +55,12 @@ import { saveAdminUpload, UploadRejectedError } from '@/lib/uploads/adminUpload'
 
 export async function POST(request: NextRequest): Promise<NextResponse> {
   const formData = await request.formData();
-  const origin = request.nextUrl.origin;
 
   const postId = String(formData.get('post_id') ?? '');
 
   if (!verifyCsrfToken(formData.get('_token') as string | null)) {
     await setFlash('message', 'CSRF token mismatch.');
-    return NextResponse.redirect(new URL(`/admin/edit-post/${postId}`, origin), 303);
+    return redirectTo(`/admin/edit-post/${postId}`, 303);
   }
 
   await requireAdminSession();
@@ -84,7 +84,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     : null;
   if (!category) {
     await setFlash('message', 'Selected category was not found.');
-    return NextResponse.redirect(new URL(`/admin/edit-post/${postId}`, origin), 303);
+    return redirectTo(`/admin/edit-post/${postId}`, 303);
   }
 
   // Mirrors source's `empty($prod_image)` check.
@@ -95,7 +95,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     } catch (error) {
       if (error instanceof UploadRejectedError) {
         await setFlash('message', error.message);
-        return NextResponse.redirect(new URL(`/admin/edit-post/${postId}`, origin), 303);
+        return redirectTo(`/admin/edit-post/${postId}`, 303);
       }
       throw error;
     }
@@ -118,5 +118,5 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
 
   // Mirrors redirect()->back()->with('message', 'Post updated successfully!!')
   await setFlash('message', 'Post updated successfully!!');
-  return NextResponse.redirect(new URL(`/admin/edit-post/${postId}`, origin), 303);
+  return redirectTo(`/admin/edit-post/${postId}`, 303);
 }

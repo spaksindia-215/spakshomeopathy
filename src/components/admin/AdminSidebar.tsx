@@ -25,6 +25,12 @@
  * `homeopathyMasterRepository.ts`'s header), not to be confused with the
  * pre-existing "Category List" item above, which manages the SEPARATE
  * `categories` collection.
+ *
+ * FIXED (production launch cleanup): "Setting > Logout" now points at
+ * `/admin/user-logout`, not the public `/logout` — both destroyed the
+ * session identically, but `/logout`'s redirect target (`/home`, the
+ * public storefront) left a signed-out admin looking at the public site
+ * instead of the login screen. See `user-logout/route.ts`'s own header.
  */
 export function AdminSidebar() {
   return (
@@ -182,7 +188,7 @@ export function AdminSidebar() {
                 </a>
               </li>
               <li>
-                <a href="/logout">
+                <a href="/admin/user-logout">
                   <i className="fa fa-circle-o"></i> Logout
                 </a>
               </li>

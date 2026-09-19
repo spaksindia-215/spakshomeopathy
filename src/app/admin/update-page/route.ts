@@ -14,6 +14,7 @@
  */
 
 import { NextRequest, NextResponse } from 'next/server';
+import { redirectTo } from '@/lib/http/redirect';
 import { getDb } from '@/lib/mongodb/client';
 import { requireAdminSession } from '@/lib/auth/guard';
 import { requirePermissionForSession } from '@/lib/auth/rbac-guard';
@@ -25,13 +26,12 @@ import { pageSlugSchema } from '@/lib/pages/schema';
 
 export async function POST(request: NextRequest): Promise<NextResponse> {
   const formData = await request.formData();
-  const origin = request.nextUrl.origin;
 
   const rawSlug = String(formData.get('slug') ?? '');
 
   if (!verifyCsrfToken(formData.get('_token') as string | null)) {
     await setFlash('message', 'CSRF token mismatch.');
-    return NextResponse.redirect(new URL(`/admin/edit-page/${rawSlug}`, origin), 303);
+    return redirectTo(`/admin/edit-page/${rawSlug}`, 303);
   }
 
   const session = await requireAdminSession();
@@ -41,7 +41,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
   const parsedSlug = pageSlugSchema.safeParse(rawSlug);
   if (!parsedSlug.success) {
     await setFlash('message', 'Invalid page.');
-    return NextResponse.redirect(new URL('/admin/pages-list', origin), 303);
+    return redirectTo('/admin/pages-list', 303);
   }
   const slug = parsedSlug.data;
 
@@ -57,5 +57,5 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
   });
 
   await setFlash('message', 'Page updated successfully.');
-  return NextResponse.redirect(new URL('/admin/pages-list', origin), 303);
+  return redirectTo('/admin/pages-list', 303);
 }

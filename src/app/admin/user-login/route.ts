@@ -27,6 +27,7 @@
  */
 
 import { NextRequest, NextResponse } from 'next/server';
+import { redirectTo } from '@/lib/http/redirect';
 import { getDb } from '@/lib/mongodb/client';
 import { login } from '@/lib/services/authService';
 import { createSession } from '@/lib/auth/session';
@@ -39,16 +40,15 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
   const email = String(formData.get('email') ?? '');
   const password = String(formData.get('password') ?? '');
   const backuser = String(formData.get('backuser') ?? '');
-  const origin = request.nextUrl.origin;
 
   if (!verifyCsrfToken(formData.get('_token') as string | null)) {
     await setFlash('message', 'Wrong Login Details');
-    return NextResponse.redirect(new URL('/admin/login', origin), 303);
+    return redirectTo('/admin/login', 303);
   }
 
   if (!email || !password) {
     await setFlash('message', 'Wrong Login Details');
-    return NextResponse.redirect(new URL('/admin/login', origin), 303);
+    return redirectTo('/admin/login', 303);
   }
 
   const db = await getDb();
@@ -58,7 +58,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
 
   if ('redirect' in result && result.redirect === 'wrong-credentials') {
     await setFlash('message', 'Wrong Login Details');
-    return NextResponse.redirect(new URL('/admin/login', origin), 303);
+    return redirectTo('/admin/login', 303);
   }
 
   const { user, redirect } = result as Exclude<typeof result, { redirect: 'wrong-credentials' }>;
@@ -73,5 +73,5 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
           ? '/cart-list'
           : '/myaccount';
 
-  return NextResponse.redirect(new URL(target, origin), 303);
+  return redirectTo(target, 303);
 }

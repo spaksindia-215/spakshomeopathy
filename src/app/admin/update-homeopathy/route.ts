@@ -7,6 +7,7 @@
  */
 
 import { NextRequest, NextResponse } from 'next/server';
+import { redirectTo } from '@/lib/http/redirect';
 import { getDb } from '@/lib/mongodb/client';
 import { requireAdminSession } from '@/lib/auth/guard';
 import { requirePermissionForSession } from '@/lib/auth/rbac-guard';
@@ -18,13 +19,12 @@ import { saveAdminUpload, UploadRejectedError } from '@/lib/uploads/adminUpload'
 
 export async function POST(request: NextRequest): Promise<NextResponse> {
   const formData = await request.formData();
-  const origin = request.nextUrl.origin;
 
   const id = String(formData.get('id') ?? '');
 
   if (!verifyCsrfToken(formData.get('_token') as string | null)) {
     await setFlash('message', 'CSRF token mismatch.');
-    return NextResponse.redirect(new URL(`/admin/edit-homeopathy/${id}`, origin), 303);
+    return redirectTo(`/admin/edit-homeopathy/${id}`, 303);
   }
 
   const session = await requireAdminSession();
@@ -44,7 +44,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     } catch (error) {
       if (error instanceof UploadRejectedError) {
         await setFlash('message', error.message);
-        return NextResponse.redirect(new URL(`/admin/edit-homeopathy/${id}`, origin), 303);
+        return redirectTo(`/admin/edit-homeopathy/${id}`, 303);
       }
       throw error;
     }
@@ -52,7 +52,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
 
   if (!Number.isFinite(legacyId)) {
     await setFlash('message', 'Invalid homeopathy entry.');
-    return NextResponse.redirect(new URL('/admin/homeopathy-list', origin), 303);
+    return redirectTo('/admin/homeopathy-list', 303);
   }
 
   const repo = new HomeopathyMasterRepository(db);
@@ -63,5 +63,5 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
   });
 
   await setFlash('message', 'Homeopathy entry updated successfully.');
-  return NextResponse.redirect(new URL('/admin/homeopathy-list', origin), 303);
+  return redirectTo('/admin/homeopathy-list', 303);
 }

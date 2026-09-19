@@ -23,6 +23,7 @@
  */
 
 import { NextRequest, NextResponse } from 'next/server';
+import { redirectTo } from '@/lib/http/redirect';
 import { getDb } from '@/lib/mongodb/client';
 import { AppointmentRepository } from '@/lib/mongodb/repositories/appointmentRepository';
 import { bookAppointment } from '@/lib/services/appointmentService';
@@ -44,11 +45,10 @@ function toNullableInt(value: FormDataEntryValue | null): number | null {
 
 export async function POST(request: NextRequest): Promise<NextResponse> {
   const formData = await request.formData();
-  const origin = request.nextUrl.origin;
 
   if (!verifyCsrfToken(formData.get('_token') as string | null)) {
     await setFlash('message', 'CSRF token mismatch.');
-    return NextResponse.redirect(new URL('/consultancy', origin), 303);
+    return redirectTo('/consultancy', 303);
   }
 
   const name = formData.get('name');
@@ -81,5 +81,5 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
   // 'Thank you. We will contact soon.', verified directly against both
   // methods this slice.
   await setFlash('message', 'Thank you. We will contact soon.');
-  return NextResponse.redirect(new URL('/consultancy', origin), 303);
+  return redirectTo('/consultancy', 303);
 }

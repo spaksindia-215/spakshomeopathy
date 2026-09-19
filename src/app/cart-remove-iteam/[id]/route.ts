@@ -11,6 +11,7 @@
  */
 
 import { NextRequest, NextResponse } from 'next/server';
+import { redirectTo } from '@/lib/http/redirect';
 import { removeFromCart } from '@/lib/cart';
 
 export async function GET(
@@ -19,5 +20,5 @@ export async function GET(
 ): Promise<NextResponse> {
   const { id } = await params;
   await removeFromCart(Number(id));
-  return NextResponse.redirect(new URL('/cart-list', request.nextUrl.origin), 303);
+  return redirectTo('/cart-list', 303);
 }

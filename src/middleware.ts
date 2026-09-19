@@ -41,6 +41,7 @@
  */
 
 import { NextResponse, type NextRequest } from 'next/server';
+import { redirectTo } from '@/lib/http/redirect';
 
 interface RedirectRule {
   fromPath: string;
@@ -76,8 +77,7 @@ export async function middleware(request: NextRequest): Promise<NextResponse> {
   const match = rules.get(request.nextUrl.pathname);
 
   if (match) {
-    const destination = new URL(match.toPath, request.nextUrl.origin);
-    return NextResponse.redirect(destination, match.statusCode);
+    return redirectTo(match.toPath, match.statusCode);
   }
 
   return NextResponse.next();

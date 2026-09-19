@@ -45,6 +45,7 @@
  */
 
 import { NextRequest, NextResponse } from 'next/server';
+import { redirectTo } from '@/lib/http/redirect';
 import { getDb } from '@/lib/mongodb/client';
 import { requireBuyerSession } from '@/lib/auth/guard';
 import { decryptGroupId } from '@/lib/auth/orderToken';
@@ -55,7 +56,6 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
   const session = await requireBuyerSession();
 
   const cnclId = request.nextUrl.searchParams.get('cncl_id');
-  const origin = request.nextUrl.origin;
 
   const groupId = cnclId !== null ? decryptGroupId(cnclId) : null;
   if (groupId === null) {
@@ -63,7 +63,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
     // missing/invalid/tampered cncl_id — not its literal debug-crash
     // presentation. See file header.
     await setFlash('message', 'Invalid or expired cancel request.');
-    return NextResponse.redirect(new URL('/manage-orders', origin), 303);
+    return redirectTo('/manage-orders', 303);
   }
 
   const db = await getDb();
@@ -75,10 +75,10 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
     // order" identically, deliberately not distinguishable by the caller
     // (same reasoning as `getOwnedOrderByGroupId`'s own header).
     await setFlash('message', 'Order not found.');
-    return NextResponse.redirect(new URL('/manage-orders', origin), 303);
+    return redirectTo('/manage-orders', 303);
   }
 
   // Mirrors BuyerController.php:100's exact text, verbatim.
   await setFlash('message', 'Order cancelled successfully!!');
-  return NextResponse.redirect(new URL('/manage-orders', origin), 303);
+  return redirectTo('/manage-orders', 303);
 }

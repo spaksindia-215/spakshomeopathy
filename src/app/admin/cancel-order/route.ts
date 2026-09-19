@@ -40,6 +40,7 @@
  */
 
 import { NextRequest, NextResponse } from 'next/server';
+import { redirectTo } from '@/lib/http/redirect';
 import { getDb } from '@/lib/mongodb/client';
 import { requireAdminSession } from '@/lib/auth/guard';
 import { requirePermissionForSession } from '@/lib/auth/rbac-guard';
@@ -54,16 +55,15 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
   await requirePermissionForSession(db, session, PERMISSIONS.ORDERS_UPDATE);
 
   const cnclId = request.nextUrl.searchParams.get('cncl_id');
-  const origin = request.nextUrl.origin;
 
   const groupId = cnclId !== null ? decryptGroupId(cnclId) : null;
   if (groupId === null) {
     await setFlash('message', 'Invalid or expired request.');
-    return NextResponse.redirect(new URL('/admin/order-list', origin), 303);
+    return redirectTo('/admin/order-list', 303);
   }
 
   await adminCancelOrder(db, groupId);
 
   await setFlash('message', 'Order cancelled successfully!!');
-  return NextResponse.redirect(new URL('/admin/order-list', origin), 303);
+  return redirectTo('/admin/order-list', 303);
 }

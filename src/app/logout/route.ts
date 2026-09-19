@@ -5,10 +5,11 @@
  */
 
 import { NextRequest, NextResponse } from 'next/server';
+import { redirectTo } from '@/lib/http/redirect';
 import { destroySession } from '@/lib/auth/session';
 import { LOGOUT_REDIRECT } from '@/lib/services/authService';
 
-export async function GET(request: NextRequest): Promise<NextResponse> {
+export async function GET(_request: NextRequest): Promise<NextResponse> {
   await destroySession();
-  return NextResponse.redirect(new URL(LOGOUT_REDIRECT, request.nextUrl.origin), 303);
+  return redirectTo(LOGOUT_REDIRECT, 303);
 }

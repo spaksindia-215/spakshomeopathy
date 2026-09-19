@@ -28,6 +28,7 @@
  */
 
 import { NextRequest, NextResponse } from 'next/server';
+import { redirectTo } from '@/lib/http/redirect';
 import { getDb } from '@/lib/mongodb/client';
 import { requireAdminSession } from '@/lib/auth/guard';
 import { requirePermissionForSession } from '@/lib/auth/rbac-guard';
@@ -40,12 +41,11 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
   await requirePermissionForSession(db, session, PERMISSIONS.ORDERS_UPDATE);
 
   const payId = request.nextUrl.searchParams.get('payId');
-  const origin = request.nextUrl.origin;
   const paymentLegacyId = payId !== null ? Number(payId) : NaN;
 
   if (Number.isFinite(paymentLegacyId)) {
     await updatePaymentStatus(db, paymentLegacyId);
   }
 
-  return NextResponse.redirect(new URL('/admin/manage-payments', origin), 303);
+  return redirectTo('/admin/manage-payments', 303);
 }
