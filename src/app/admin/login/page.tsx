@@ -61,7 +61,21 @@ import { generateCsrfToken } from '@/lib/auth/csrf';
  * M5-B: added the `_token` hidden field, wired to `csrf.ts` (source has
  * `@csrf` here — `admin/login.blade.php:51`, confirmed directly this
  * slice) — `admin/user-login/route.ts` now verifies it.
+ *
+ * BUGFIX (2026-09-20): this page has no `cookies()`/`headers()` call, so
+ * Next.js had no signal to treat it as dynamic and was statically
+ * prerendering it at build time (confirmed via `next build` output: `○
+ * /admin/login`, i.e. static). That froze `generateCsrfToken()`'s output
+ * at build time — every deployed login attempt failed `verifyCsrfToken()`'s
+ * 1-hour expiry check once the build aged past an hour, silently
+ * redirecting back to this same static page with no visible error (see
+ * the "PRESERVED GAP" note above). `next dev` never exhibited this because
+ * dev never statically caches pages. Forcing dynamic rendering ensures a
+ * fresh token on every request, matching the trust model `csrf.ts`
+ * documents (a token computed at render time, not at build time).
  */
+export const dynamic = 'force-dynamic';
+
 export const metadata: Metadata = {
   title: 'Admin Panel | Log in',
 };
