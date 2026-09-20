@@ -67,6 +67,15 @@ export function AdminScripts() {
               console.error(err);
             }
           }
+          if (cancelled) return;
+          // adminlte.min.js/demo.js gate their widget init (treeview,
+          // pushMenu, box collapse, etc.) behind $(window).on('load', ...).
+          // These scripts are injected after hydration, so the browser's
+          // real `load` event has already fired by the time jQuery binds
+          // those listeners — without this, they never run and every
+          // treeview toggle link (href="#") falls through to a plain
+          // anchor navigation instead of expanding its submenu.
+          window.dispatchEvent(new Event('load'));
         })();
       });
     });
