@@ -41,6 +41,18 @@ const compat = new FlatCompat({ baseDirectory: __dirname });
  *   mechanism — see PublicStylesheets.tsx). The rule's suggested
  *   alternative (a CSS import) does not exist for these Laravel-served,
  *   unbundled stylesheet files.
+ *
+ * - `@next/next/google-font-display` is disabled. The admin pages load
+ *   Google's "Source Sans Pro" via a raw <link> to the exact URL Laravel's
+ *   Blade views use (see AdminStylesheets.tsx). Appending the rule's
+ *   suggested `&display=optional` would change that external CSS request
+ *   and its resulting font-loading behavior — a rendered-output change
+ *   contract §5.2 forbids for migrated markup.
+ *
+ * - `@next/next/no-page-custom-font` is disabled. It assumes the Pages
+ *   Router's `pages/_document.js`, which does not exist in this App
+ *   Router project; there is no equivalent location that would satisfy
+ *   the rule, so it can only ever produce noise here.
  */
 const eslintConfig = [
   ...compat.extends('next/core-web-vitals', 'next/typescript'),
@@ -49,6 +61,8 @@ const eslintConfig = [
       '@next/next/no-img-element': 'off',
       '@next/next/no-sync-scripts': 'off',
       '@next/next/no-css-tags': 'off',
+      '@next/next/google-font-display': 'off',
+      '@next/next/no-page-custom-font': 'off',
       'jsx-a11y/alt-text': 'off',
       'jsx-a11y/aria-props': 'off',
       'jsx-a11y/aria-proptypes': 'off',
