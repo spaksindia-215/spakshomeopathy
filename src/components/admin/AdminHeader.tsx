@@ -27,7 +27,7 @@ export function AdminHeader() {
   return (
     <header className="main-header">
       {/* Logo */}
-      <a href="/home" className="logo">
+      <a href="/admin/home" className="logo">
         {/* mini logo for sidebar mini 50x50 pixels */}
         <span className="logo-mini">
           <b>S</b>H
