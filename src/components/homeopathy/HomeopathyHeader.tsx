@@ -110,13 +110,18 @@ export function HomeopathyHeader() {
             <HomeopathyIcon name="filter" size={22} />
           </button>
 
-          <Link href="/homeopathy" className="hm-brand">
+          <a
+            href="https://spakshomeopathy.elitesfly.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hm-brand"
+          >
             <img src="/assets/images/resources/logo.png" alt="Spaks Homeopathy" />
             <span className="hm-brand__text">
               <span className="hm-brand__name">Spaks Homeopathy</span>
               <span className="hm-brand__sub">Medicine Store</span>
             </span>
-          </Link>
+          </a>
 
           <nav aria-label="Homeopathy store navigation">
             <ul className="hm-nav">

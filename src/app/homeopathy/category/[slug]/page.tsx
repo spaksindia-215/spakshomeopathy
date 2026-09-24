@@ -3,7 +3,7 @@ import { notFound } from 'next/navigation';
 import { HomeopathyShell } from '@/components/homeopathy/HomeopathyShell';
 import { HomeopathyCatalog } from '@/components/homeopathy/HomeopathyCatalog';
 import { getCategoriesByType, getCategoryBySlug } from '@/lib/demo/categories';
-import { getProductsByCategory } from '@/lib/demo/products';
+import { getProductsByCategoryLive } from '@/lib/homeopathy/liveQueries';
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -29,9 +29,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 /**
  * `/homeopathy/category/[slug]` — products filtered by one real disease/
  * medicine category. Resolves the route's `slug` to a real `Category`
- * row (`type: 'N'`), then its `legacyId` against `product.pCat` via the
- * real `getProductsByCategory()` accessor — recreating the Herbs Store's
- * `/herbs/category/[form]` page pattern.
+ * row (`type: 'N'`), then its `legacyId` against `product.pCat` via
+ * `getProductsByCategoryLive()`, which reads the full `products`
+ * collection in MongoDB (397 rows) rather than the 125-row curated demo
+ * fixture — recreating the Herbs Store's `/herbs/category/[form]` page
+ * pattern over the complete catalogue.
  *
  * Uses the same `HomeopathyCatalog` filter+grid as `/homeopathy/products`
  * (category locked via `lockedCategoryId`) so this page gets the same
@@ -44,7 +46,7 @@ export default async function HomeopathyCategoryPage({ params }: Props) {
   const category = getCategoryBySlug(slug);
   if (!category || category.type !== 'N' || category.status !== 1) notFound();
 
-  const products = getProductsByCategory(category.legacyId, 1);
+  const products = await getProductsByCategoryLive(category.legacyId, 1);
 
   return (
     <HomeopathyShell>

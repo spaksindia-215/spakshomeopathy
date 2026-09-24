@@ -1,29 +1,15 @@
 /**
- * Query/derivation helpers for the `/homeopathy` storefront. This is a
- * thin presentation-layer helper on top of the REAL data accessors in
- * `@/lib/demo/products` and `@/lib/demo/categories` — it does not define
- * a parallel schema or invent any product/category content. Every
- * function here operates on the real `Product`/`Category` types from
- * `@/lib/mongodb/schemas`.
- *
- * DEVIATION NOTE: the curated demo dataset behind `getAllProducts()` has
- * 125 real active products (`pStatus: 1`) — not the 287 total rows the
- * task brief assumed (287 is the full generated-fixture row count before
- * the demo curation/status filtering the accessors themselves apply).
- * Likewise `getFeaturedProducts()`, `getTopProducts()` and
- * `getTrendingProducts()` all return an empty array because every row's
- * `pFeatured`/`pTop`/`pTrending` flag is `null` in this curated set (not
- * populated during curation). Rather than render empty homepage sections,
- * "Featured" / "Bestsellers" / "New Arrivals" below are derived
- * deterministically from real fields that ARE populated on every row
- * (`pRating`, discount depth from `pMrp` vs `pPrice`, and `createdAt`),
- * exactly as a real storefront would rank by rating/discount/recency
- * when explicit merchandising flags aren't set — no product data is
- * invented, only the derivation is: it always resolves against the real
- * catalogue.
+ * Pure, client-safe derivation helpers for the `/homeopathy` storefront —
+ * ranking, filtering-by-already-fetched-pool, grouping, and text
+ * excerpting. No MongoDB/Node-only imports belong in this file: it is
+ * imported directly by `'use client'` components (`HomeopathyCatalog`,
+ * `QuickViewModal`). The MongoDB-backed fetchers (`getActiveProducts()`,
+ * `getProductsByCategoryLive()`, etc.) live in `./liveQueries.ts`, a
+ * server-only sibling module — see that file's header for why the split
+ * exists and what replaced the 125-row curated demo fixture these once
+ * read from.
  */
 
-import { getAllProducts, getProductsByCategory } from '@/lib/demo/products';
 import type { Product } from '@/lib/mongodb/schemas';
 
 export type SortOption = 'featured' | 'newest' | 'price-asc' | 'price-desc' | 'rating';
@@ -36,14 +22,6 @@ export const SORT_LABELS: Record<SortOption, string> = {
   rating: 'Rating',
 };
 
-/** All active (`pStatus: 1`) real products — the base catalogue for the
- * storefront. `getAllProducts()` already returns only curated rows, all
- * of which are `pStatus: 1` in the current dataset, but this filter is
- * kept explicit so behavior stays correct if that ever changes. */
-export function getActiveProducts(): Product[] {
-  return getAllProducts().filter((p) => p.pStatus === 1);
-}
-
 function discountDepth(p: Product): number {
   const mrp = p.pMrp ?? 0;
   const price = p.pPrice ?? 0;
@@ -52,9 +30,12 @@ function discountDepth(p: Product): number {
 }
 
 /** Deterministic "featured" ranking — see file header DEVIATION NOTE.
- * Highest rating first, then deepest discount, stable by name otherwise. */
-export function getHomeopathyFeaturedProducts(limit: number, pool?: Product[]): Product[] {
-  const source = pool ?? getActiveProducts();
+ * Highest rating first, then deepest discount, stable by name otherwise.
+ * `pool` is required (not fetched internally) since this is also called
+ * from client components, which cannot reach MongoDB directly — callers
+ * fetch with `getActiveProducts()` server-side and pass the result down. */
+export function getHomeopathyFeaturedProducts(limit: number, pool: Product[]): Product[] {
+  const source = pool;
   return [...source]
     .sort((a, b) => {
       const ratingDiff = (b.pRating ?? 0) - (a.pRating ?? 0);
@@ -67,8 +48,8 @@ export function getHomeopathyFeaturedProducts(limit: number, pool?: Product[]): 
 /** Deterministic "bestsellers" ranking — highest rating, deepest discount
  * as tiebreaker, offset from the featured slice so the homepage's
  * Featured/Bestsellers sections don't show identical products. */
-export function getHomeopathyBestsellers(limit: number, pool?: Product[]): Product[] {
-  const source = pool ?? getActiveProducts();
+export function getHomeopathyBestsellers(limit: number, pool: Product[]): Product[] {
+  const source = pool;
   const ranked = [...source].sort((a, b) => {
     const ratingDiff = (b.pRating ?? 0) - (a.pRating ?? 0);
     if (ratingDiff !== 0) return ratingDiff;
@@ -78,8 +59,8 @@ export function getHomeopathyBestsellers(limit: number, pool?: Product[]): Produ
 }
 
 /** Real `createdAt`-based "new arrivals". */
-export function getHomeopathyNewArrivals(limit: number, pool?: Product[]): Product[] {
-  const source = pool ?? getActiveProducts();
+export function getHomeopathyNewArrivals(limit: number, pool: Product[]): Product[] {
+  const source = pool;
   return [...source]
     .sort((a, b) => {
       const at = a.createdAt ? new Date(a.createdAt).getTime() : 0;
@@ -95,55 +76,10 @@ export interface HomeopathyProductFilters {
   sort?: SortOption;
 }
 
-export function filterAndSortHomeopathyProducts(filters: HomeopathyProductFilters): Product[] {
-  const base =
-    filters.categoryId !== undefined
-      ? getProductsByCategory(filters.categoryId, 1)
-      : getActiveProducts();
-
-  const sorted = [...base];
-  switch (filters.sort) {
-    case 'price-asc':
-      sorted.sort((a, b) => (a.pPrice ?? 0) - (b.pPrice ?? 0));
-      break;
-    case 'price-desc':
-      sorted.sort((a, b) => (b.pPrice ?? 0) - (a.pPrice ?? 0));
-      break;
-    case 'rating':
-      sorted.sort((a, b) => (b.pRating ?? 0) - (a.pRating ?? 0));
-      break;
-    case 'newest':
-      sorted.sort((a, b) => {
-        const at = a.createdAt ? new Date(a.createdAt).getTime() : 0;
-        const bt = b.createdAt ? new Date(b.createdAt).getTime() : 0;
-        return bt - at;
-      });
-      break;
-    case 'featured':
-    default:
-      sorted.sort((a, b) => {
-        const ratingDiff = (b.pRating ?? 0) - (a.pRating ?? 0);
-        if (ratingDiff !== 0) return ratingDiff;
-        return discountDepth(b) - discountDepth(a);
-      });
-      break;
-  }
-  return sorted;
-}
-
-export function getHomeopathyPriceRange(pool?: Product[]): { min: number; max: number } {
-  const source = pool ?? getActiveProducts();
-  const prices = source.map((p) => p.pPrice ?? 0).filter((p) => p > 0);
+export function getHomeopathyPriceRange(pool: Product[]): { min: number; max: number } {
+  const prices = pool.map((p) => p.pPrice ?? 0).filter((p) => p > 0);
   if (prices.length === 0) return { min: 0, max: 0 };
   return { min: Math.min(...prices), max: Math.max(...prices) };
-}
-
-/** Related products: same `pCat`, excluding the product itself. */
-export function getRelatedHomeopathyProducts(product: Product, limit: number): Product[] {
-  if (product.pCat === null || product.pCat === undefined) return [];
-  return getProductsByCategory(product.pCat, 1)
-    .filter((p) => p.legacyId !== product.legacyId)
-    .slice(0, limit);
 }
 
 /** One disease "bucket" within a category — see `groupProductsByDisease`. */

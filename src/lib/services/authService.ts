@@ -53,14 +53,15 @@ export type LoginRedirect =
   | { kind: 'seller-myaccount' }
   | { kind: 'cart-list' }
   | { kind: 'myaccount' }
+  | { kind: 'partner-home' }
   | { kind: 'wrong-credentials' };
 
 export interface LoginInput {
   email: string;
   password: string;
-  /** `'admin'` (from /admin/login) or `'seller_buyer'` (from the public
-   * /login form) — mirrors the hidden `backuser` field on each form
-   * exactly; there is no third value in source. */
+  /** `'admin'` (from /admin/login), `'seller_buyer'` (from the public
+   * /login form), or `'partner'` (from /partner/login — Partner Panel
+   * feature, genuinely new, no source form uses this value). */
   backuser: string;
   /** Mirrors `session()->get('TotalCartItem')` — the live source checks a
    * session cart-count to choose between `cart-list` and `myaccount` for a
@@ -138,6 +139,12 @@ export async function login(
       user: authenticated,
       redirect: input.cartTotal > 0 ? { kind: 'cart-list' } : { kind: 'myaccount' },
     };
+  }
+  // Partner Panel feature — GENUINELY NEW branch, no source equivalent.
+  // Added alongside the other three following this function's own
+  // established (utype, backuser) pairing convention.
+  if (user.utype === 5 && input.backuser === 'partner') {
+    return { user: authenticated, redirect: { kind: 'partner-home' } };
   }
 
   // Matches source exactly: password was right, but utype/backuser

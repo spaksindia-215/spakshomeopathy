@@ -28,6 +28,13 @@ import { readAndClearFlash } from '@/lib/auth/flash';
  * (they are embedded on `products`), so there is no dedicated
  * `reviews.*` permission to reuse or invent; gating on the product
  * permissions they're embedded under is the narrowest fit.
+ *
+ * Review add/edit CRUD feature addition: Edit/Delete links added to each
+ * row (`/admin/edit-review/[productId]/[reviewId]`,
+ * `/admin/destroy-review/[productId]/[reviewId]`), plus a per-product
+ * "Add Review" link. Previously this list only offered the status toggle
+ * — see `add-review/[productId]/page.tsx`'s header for why manual review
+ * authoring has no Laravel precedent.
  */
 export const metadata: Metadata = {
   title: 'Admin Panel | Review List',
@@ -77,6 +84,43 @@ export default async function AdminReviewListPage() {
       <section className="content">
         <div className="row">
           {message !== null && <div className="alert alert-success">{message}</div>}
+
+          <div className="col-xs-12">
+            <div className="box box-default">
+              <div className="box-header with-border">
+                <h3 className="box-title">Add a Review to a Product</h3>
+              </div>
+              <div className="box-body">
+                <form method="get" action="" style={{ display: 'flex', gap: 8 }}>
+                  <select
+                    className="form-control"
+                    style={{ maxWidth: 400 }}
+                    name="product_id"
+                    id="review-add-product-select"
+                  >
+                    {products.map((product) => (
+                      <option key={product.legacyId} value={product.legacyId}>
+                        {product.pName ?? product.pHeading}
+                      </option>
+                    ))}
+                  </select>
+                </form>
+                <script
+                  dangerouslySetInnerHTML={{
+                    __html: `
+document.getElementById('review-add-product-select').addEventListener('change', function () {
+  window.location.href = '/admin/add-review/' + this.value;
+});
+`,
+                  }}
+                />
+                <p className="help-block" style={{ marginTop: 8 }}>
+                  Select a product to add a review for it.
+                </p>
+              </div>
+            </div>
+          </div>
+
           <div className="col-xs-12">
             <div className="box">
               <div className="box-body">
@@ -88,6 +132,7 @@ export default async function AdminReviewListPage() {
                       <th>Name</th>
                       <th>Review</th>
                       <th>Status</th>
+                      <th>Action</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -114,8 +159,21 @@ export default async function AdminReviewListPage() {
                             </a>
                           )}
                         </td>
+                        <td>
+                          <a href={`/admin/edit-review/${row.productLegacyId}/${row.reviewLegacyId}`}>
+                            <i className="fa fa-pencil btn btn-info btn-sm"></i>
+                          </a>{' '}
+                          <a href={`/admin/destroy-review/${row.productLegacyId}/${row.reviewLegacyId}`}>
+                            <i className="fa fa-trash btn btn-danger btn-sm"></i>
+                          </a>
+                        </td>
                       </tr>
                     ))}
+                    {rows.length === 0 && (
+                      <tr>
+                        <td colSpan={6}>No reviews yet.</td>
+                      </tr>
+                    )}
                   </tbody>
                 </table>
               </div>

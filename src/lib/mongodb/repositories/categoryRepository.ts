@@ -76,6 +76,12 @@ export class CategoryRepository extends ValidatedRepository<Category> {
     return this.findOne({ legacyId });
   }
 
+  /** Resolves a category by its `slug` — used by the `/homeopathy/category/
+   * [slug]` and `/diseases-details/[slug]` route params. */
+  async findBySlug(slug: string): Promise<Category | null> {
+    return this.findOne({ slug });
+  }
+
   /** Mirrors `AdminController::Savecategory`'s `insertGetId`. Source uses
    * `insertGetId` (returns the new auto-increment id) rather than plain
    * `insert` — functionally equivalent here since `nextLegacyIdGeneric()`

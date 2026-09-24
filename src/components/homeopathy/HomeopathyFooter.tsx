@@ -1,6 +1,8 @@
 import Link from 'next/link';
 import { HomeopathyIcon } from './HomeopathyIcon';
 import { getCategoriesByType } from '@/lib/demo/categories';
+import { getDb } from '@/lib/mongodb/client';
+import { getSiteSettings } from '@/lib/settings/repository';
 
 /**
  * Homeopathy Store footer. New, self-contained — recreated from the
@@ -8,9 +10,15 @@ import { getCategoriesByType } from '@/lib/demo/categories';
  * instead of a static taxonomy file. Reuses the same real Spaks contact
  * details already public on the legacy footer/Herbs footer, not invented
  * contact information.
+ *
+ * SITE SETTINGS WIRING (Site Settings feature follow-up, 2026-09-20): see
+ * `HerbsFooter.tsx`'s matching header comment — same reasoning, same
+ * source of truth.
  */
-export function HomeopathyFooter() {
+export async function HomeopathyFooter() {
   const categories = getCategoriesByType('N', 1);
+  const db = await getDb();
+  const settings = await getSiteSettings(db);
 
   return (
     <div className="homeopathy-scope">
@@ -24,9 +32,9 @@ export function HomeopathyFooter() {
                 genuine remedies, dispensed under clinical supervision.
               </p>
               <p className="hm-footer__text" style={{ marginTop: 14 }}>
-                <HomeopathyIcon name="support" size={14} /> spakshomeopathy@gmail.com
+                <HomeopathyIcon name="support" size={14} /> {settings.contactEmail}
                 <br />
-                +91 8700458818
+                {settings.contactPhone}
               </p>
             </div>
             <div>

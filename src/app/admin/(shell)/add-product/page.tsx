@@ -3,6 +3,8 @@ import { AdminStylesheets } from '@/components/admin/AdminStylesheets';
 import { CKEditorPlaceholder } from '@/components/admin/CKEditorPlaceholder';
 import { getDb } from '@/lib/mongodb/client';
 import { CategoryRepository } from '@/lib/mongodb/repositories/categoryRepository';
+import { generateCsrfToken } from '@/lib/auth/csrf';
+import { readAndClearFlash } from '@/lib/auth/flash';
 
 /**
  * `/admin/add-product` — ported from `admin/add-product.blade.php` (730
@@ -63,7 +65,17 @@ import { CategoryRepository } from '@/lib/mongodb/repositories/categoryRepositor
  *     hardcoded `value` attributes in source, preserved as defaultValues.
  *   - Status `<select>` offers only blank/"Active"/"Inactive" — no
  *     "Draft" or other state; reproduced exactly.
+ *
+ * Partner Panel feature: this form now posts to a REAL handler
+ * (`/admin/save-product/route.ts`, newly built — source was never ported)
+ * instead of a nonexistent one, and carries a CSRF `_token` field the
+ * handler requires (same pattern every other admin form POST uses).
+ * Forced dynamic for the same reason as the login pages: a
+ * statically-prerendered page would freeze `generateCsrfToken()`'s output
+ * at build time.
  */
+export const dynamic = 'force-dynamic';
+
 export const metadata: Metadata = {
   title: 'Admin Panel | Add Product',
 };
@@ -71,6 +83,8 @@ export const metadata: Metadata = {
 export default async function AdminAddProductPage() {
   const db = await getDb();
   const categories = await new CategoryRepository(db).findAllByNameAscending();
+  const csrfToken = generateCsrfToken();
+  const message = await readAndClearFlash('message');
 
   return (
     <>
@@ -95,7 +109,9 @@ export default async function AdminAddProductPage() {
 
       <section className="content">
         <div className="row">
+          {message !== null && <div className="alert alert-success">{message}</div>}
           <form method="post" action="/admin/save-product" encType="multipart/form-data">
+            <input type="hidden" name="_token" value={csrfToken} />
             {/* left column */}
             <div className="col-md-6">
               <div className="box box-success">

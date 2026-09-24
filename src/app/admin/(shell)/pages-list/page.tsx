@@ -4,6 +4,7 @@ import { AdminStylesheets } from '@/components/admin/AdminStylesheets';
 import { getDb } from '@/lib/mongodb/client';
 import { PageRepository } from '@/lib/pages/repository';
 import { pageSlugSchema } from '@/lib/pages/schema';
+import { AboutPageRepository } from '@/lib/about/repository';
 import { requireAdminSession } from '@/lib/auth/guard';
 import { requirePermissionForSession } from '@/lib/auth/rbac-guard';
 import { PERMISSIONS } from '@/lib/auth/permissions';
@@ -15,11 +16,17 @@ import { readAndClearFlash } from '@/lib/auth/flash';
  * Laravel admin equivalent — see `src/lib/pages/schema.ts`'s header.
  *
  * Fixed 3-row list (the closed `pageSlugSchema` enum — Terms, Privacy
- * Policy, Return Policy; `/about` is deliberately excluded, see
- * `src/lib/pages/schema.ts`'s header) — no add/delete, matching the
- * design decision that this is NOT a general page-builder. Rows without
- * a saved document yet show "Not customized" (the public page still
- * renders its original hardcoded content until an admin saves one).
+ * Policy, Return Policy) — no add/delete, matching the design decision
+ * that this is NOT a general page-builder. Rows without a saved document
+ * yet show "Not customized" (the public page still renders its original
+ * hardcoded content until an admin saves one).
+ *
+ * ADDED (About Page editor feature): a 4th row for `/about`, appended
+ * after the 3 `pageSlugSchema` rows. About still isn't part of
+ * `pageSlugSchema` (its own `aboutPage` collection/editor exists instead,
+ * see `src/lib/about/schema.ts`'s header for why) — this row just links
+ * out to `/admin/edit-about` so all 4 static pages are discoverable from
+ * one list, without pretending About fits the same raw-HTML-blob shape.
  */
 export const metadata: Metadata = {
   title: 'Admin Panel | Pages',
@@ -39,6 +46,9 @@ export default async function AdminPagesListPage() {
   const repo = new PageRepository(db);
   const saved = await repo.findAll();
   const savedBySlug = new Map(saved.map((p) => [p.slug, p]));
+
+  const aboutRepo = new AboutPageRepository(db);
+  const aboutSaved = await aboutRepo.findAbout();
 
   const message = await readAndClearFlash('message');
 
@@ -101,6 +111,27 @@ export default async function AdminPagesListPage() {
                         </tr>
                       );
                     })}
+                    <tr>
+                      <td>{pageSlugSchema.options.length + 1}</td>
+                      <td>{aboutSaved?.heading ?? 'About Us'}</td>
+                      <td>
+                        <a href="/about" target="_blank" rel="noreferrer">
+                          /about
+                        </a>
+                      </td>
+                      <td>
+                        {aboutSaved ? (
+                          <span className="btn btn-success btn-xs">Customized</span>
+                        ) : (
+                          <span className="btn btn-default btn-xs">Not customized</span>
+                        )}
+                      </td>
+                      <td>
+                        <Link href="/admin/edit-about">
+                          <i className="fa fa-pencil btn btn-info btn-sm"></i>
+                        </Link>
+                      </td>
+                    </tr>
                   </tbody>
                 </table>
               </div>

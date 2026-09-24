@@ -7,8 +7,25 @@
  * value in the rendered HTML. That is reproduced here exactly — it is
  * cosmetically odd but observably part of the shipped markup (contract
  * NN-5), not a defect this project may correct.
+ *
+ * SITE SETTINGS WIRING (Site Settings feature): every text value that was
+ * previously hardcoded here (company name, blurb, email, phone, address,
+ * copyright line, social hrefs) now reads from `getSiteSettings()`
+ * (`src/lib/settings/repository.ts`), admin-editable at
+ * `/admin/site-settings`. `DEFAULT_SETTINGS` there is copied verbatim from
+ * this file's own previously-hardcoded values, so byte-parity with
+ * production (contract NN-5) holds unless/until an admin changes
+ * something — no markup, class, or whitespace-parity `{' '}` separator
+ * below was touched, only the text nodes and `href`s. A blank social URL
+ * hides that platform's `<li>` entirely (Twitter/Pinterest default to
+ * blank, matching production, which has those two commented out).
  */
-export function PublicFooter() {
+import { getDb } from '@/lib/mongodb/client';
+import { getSiteSettings } from '@/lib/settings/repository';
+
+export async function PublicFooter() {
+  const db = await getDb();
+  const settings = await getSiteSettings(db);
   return (
     <footer className="footer-one">
       {/* /.footer-one__top */}
@@ -18,11 +35,8 @@ export function PublicFooter() {
             <div className="row align-items-center">
               <div className="col-lg-5 col-md-5 col-sm-5">
                 <div className="footer-one__widget about-widget">
-                  <h4 style={{ color: '#fff' }}>Spaks India Business Solution Pvt Ltd </h4>
-                  <p className="footer-one__text">
-                    We are here to help you find the answers and make the most of your potential. As
-                    the first step, get in touch with us.
-                  </p>
+                  <h4 style={{ color: '#fff' }}>{settings.companyName} </h4>
+                  <p className="footer-one__text">{settings.footerAboutText}</p>
                 </div>
                 {/* /.footer-one_widget */}
               </div>
@@ -35,7 +49,7 @@ export function PublicFooter() {
                     <li className="footer-one__contact-list-item">
                       {' '}
                       <i className="fa fa-envelope" aria-hidden="true"></i>{' '}
-                      spakshomeopathy@gmail.com{' '}
+                      {settings.contactEmail}{' '}
                     </li>
                   </ul>
                   {/* /.footer-one__contact-list */}
@@ -53,7 +67,7 @@ export function PublicFooter() {
                           space renders as ONE space between icon and text.
                           JSX drops newline-containing whitespace, so it is
                           reproduced explicitly. */}
-                      <i className="fa fa-phone" aria-hidden="true"></i> +91 8700458818
+                      <i className="fa fa-phone" aria-hidden="true"></i> {settings.contactPhone}
                     </li>
                   </ul>
                   {/* /.footer-one__contact-list */}
@@ -69,8 +83,7 @@ export function PublicFooter() {
                   <ul className="footer-one__contact-list">
                     <li className="footer-one__contact-list-item">
                       {/* OI-13: Blade emits `</i>\n E-38, …` — see above. */}
-                      <i className="fa fa-map-marker" aria-hidden="true"></i> E-38, Budh Vihar,
-                      Badarpur, New Delhi 110044
+                      <i className="fa fa-map-marker" aria-hidden="true"></i> {settings.address}
                     </li>
                   </ul>
                   {/* /.footer-one__contact-list */}
@@ -89,7 +102,7 @@ export function PublicFooter() {
       <br /> <br />
       <div className="footer-one__bottom">
         <div className="container">
-          <p className="footer-one__copy-text">&copy; 2020 spakshomeopathy | All Right Reserved</p>
+          <p className="footer-one__copy-text">{settings.copyrightText}</p>
           {/* /.copy-text */}
 
           <div className="social-accounts">
@@ -100,7 +113,7 @@ export function PublicFooter() {
               <li>
                 {/* No rel="noreferrer" — Laravel's source omits it; contract
                     F-9 forbids adding unrequested security hardening. */}
-                <a href="https://www.facebook.com/spaks.homeopathy.16" target="_blank">
+                <a href={settings.facebookUrl} target="_blank">
                   <img
                     src="https://www.neweraeducation.in/assets/images007/social-media/fb.svg"
                     style={{ width: '30px' }}
@@ -109,7 +122,7 @@ export function PublicFooter() {
                 </a>
               </li>{' '}
               <li>
-                <a href="https://www.instagram.com/spakshomeopathy38/" target="_blank">
+                <a href={settings.instagramUrl} target="_blank">
                   <img
                     src="https://www.neweraeducation.in/assets/images007/social-media/instagram-icon.svg"
                     style={{ width: '30px' }}
@@ -120,7 +133,7 @@ export function PublicFooter() {
               {/* <li><a href="" target="_blank"><img src="https://www.neweraeducation.in/assets/images007/social-media/Twitter.svg" style="width: 30px;" alt="twitter"></a></li> */}
               {/* <li><a href="" target="_blank"><img src="https://www.neweraeducation.in/assets/images007/social-media/Linkdin.svg" style="width: 30px;" alt="linkedin"></a></li> */}
               <li>
-                <a href="https://www.youtube.com/channel/UCheXjhoIQFgLMyOY027cGEQ" target="_blank">
+                <a href={settings.youtubeUrl} target="_blank">
                   <img
                     src="https://www.neweraeducation.in/assets/images007/social-media/Youtube.svg"
                     style={{ width: '30px' }}

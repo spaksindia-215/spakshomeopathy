@@ -31,6 +31,47 @@
  * session identically, but `/logout`'s redirect target (`/home`, the
  * public storefront) left a signed-out admin looking at the public site
  * instead of the login screen. See `user-logout/route.ts`'s own header.
+ *
+ * ADDED (Site Settings feature): "Site Settings" appended inside the
+ * existing "Setting" treeview, after "Change Password" — links the new
+ * `/admin/site-settings` screen (header/footer/contact-page content, see
+ * `src/lib/settings/schema.ts`'s header). Placed in this existing group
+ * rather than a new top-level item since it's conceptually the same
+ * "Setting" menu, not a new module.
+ *
+ * ADDED (About Page editor feature): "About Page" appended inside the
+ * existing "Content" treeview, after "Pages" — links the new
+ * `/admin/edit-about` screen (see `src/lib/about/schema.ts`'s header for
+ * why About has its own structured editor instead of joining the raw-
+ * HTML-blob `pages` CMS).
+ *
+ * ADDED (Cosmetics CRUD feature): a new top-level "Cosmetics" treeview
+ * item, appended after "Homeopathy List" — links `/admin/add-cosmetics`,
+ * `/admin/cosmetics-list` (see `src/lib/cosmetics/db/schema.ts`'s
+ * header). `/homeopathy/cosmetics` previously had no product source at
+ * all and its own code comment pointed at exactly this admin panel as
+ * "not built yet" — this closes that gap, modeled on the existing Mother
+ * Tincture admin-add pattern.
+ *
+ * ADDED (Diseases CRUD feature): a new top-level "Diseases" treeview item,
+ * appended after "Homeopathy List" — links `/admin/add-disease` and
+ * `/admin/diseases-list` (see `src/lib/diseases/schema.ts`'s header). Not
+ * merged into "Homeopathy List" since that manages the separate
+ * `homeopathyMaster` medicine catalog, not the `/all-diseases` hair-
+ * condition cards this feature makes editable.
+ *
+ * ADDED (Videos CRUD feature): "Videos" appended inside the existing
+ * "Content" treeview, after "About Page" — links `/admin/add-video` and
+ * `/admin/videos-list` (see `src/lib/videos/schema.ts`'s header). For the
+ * real `/video` listing page only — NOT `/videos` (plural), which is a
+ * separate, deliberately-broken page this feature does not touch.
+ *
+ * ADDED (Herbs Learn CRUD feature): "Testimonials" and "Herb Articles"
+ * appended inside the existing "Content" treeview, after "Videos" — link
+ * `/admin/testimonials-list` (see `src/lib/testimonials/schema.ts`'s
+ * header — one shared pool feeding both the Herbs and Homeopathy
+ * storefronts) and `/admin/herb-articles-list` (see
+ * `src/lib/herbArticles/schema.ts`'s header).
  */
 export function AdminSidebar() {
   return (
@@ -188,6 +229,11 @@ export function AdminSidebar() {
                 </a>
               </li>
               <li>
+                <a href="/admin/site-settings">
+                  <i className="fa fa-circle-o"></i> Site Settings
+                </a>
+              </li>
+              <li>
                 <a href="/admin/user-logout">
                   <i className="fa fa-circle-o"></i> Logout
                 </a>
@@ -264,6 +310,52 @@ export function AdminSidebar() {
             </ul>
           </li>
 
+          {/* Cosmetics CRUD feature addition — see file header. */}
+          <li className="treeview">
+            <a href="#">
+              <i className="fa fa-magic"></i>
+              <span>Cosmetics</span>
+              <span className="pull-right-container">
+                <i className="fa fa-angle-left pull-right"></i>
+              </span>
+            </a>
+            <ul className="treeview-menu">
+              <li>
+                <a href="/admin/add-cosmetics">
+                  <i className="fa fa-circle-o"></i> Add Cosmetics Product
+                </a>
+              </li>
+              <li>
+                <a href="/admin/cosmetics-list">
+                  <i className="fa fa-circle-o"></i> Cosmetics List
+                </a>
+              </li>
+            </ul>
+          </li>
+
+          {/* Diseases CRUD feature addition — see file header. */}
+          <li className="treeview">
+            <a href="#">
+              <i className="fa fa-medkit"></i>
+              <span>Diseases</span>
+              <span className="pull-right-container">
+                <i className="fa fa-angle-left pull-right"></i>
+              </span>
+            </a>
+            <ul className="treeview-menu">
+              <li>
+                <a href="/admin/add-disease">
+                  <i className="fa fa-circle-o"></i> Add Disease
+                </a>
+              </li>
+              <li>
+                <a href="/admin/diseases-list">
+                  <i className="fa fa-circle-o"></i> Diseases List
+                </a>
+              </li>
+            </ul>
+          </li>
+
           {/* CR-006 Phase 7 addition — see docs/CR-006-PHASE-7-PLAN.md.
               Media Library and Redirects added CR-006 Phase 8 — see
               docs/CR-006-PHASE-8-PLAN.md. */}
@@ -279,6 +371,26 @@ export function AdminSidebar() {
               <li>
                 <a href="/admin/pages-list">
                   <i className="fa fa-circle-o"></i> Pages
+                </a>
+              </li>
+              <li>
+                <a href="/admin/edit-about">
+                  <i className="fa fa-circle-o"></i> About Page
+                </a>
+              </li>
+              <li>
+                <a href="/admin/videos-list">
+                  <i className="fa fa-circle-o"></i> Videos
+                </a>
+              </li>
+              <li>
+                <a href="/admin/testimonials-list">
+                  <i className="fa fa-circle-o"></i> Testimonials
+                </a>
+              </li>
+              <li>
+                <a href="/admin/herb-articles-list">
+                  <i className="fa fa-circle-o"></i> Herb Articles
                 </a>
               </li>
               <li>

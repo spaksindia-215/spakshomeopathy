@@ -3,6 +3,8 @@ import { PublicHeader } from '@/components/layout/PublicHeader';
 import { PublicFooter } from '@/components/layout/PublicFooter';
 import { PublicScripts } from '@/components/layout/PublicScripts';
 import { PublicStylesheets } from '@/components/layout/PublicStylesheets';
+import { getDb } from '@/lib/mongodb/client';
+import { getAboutPage } from '@/lib/about/repository';
 
 /**
  * `/about` — ported from `about.blade.php`.
@@ -15,6 +17,15 @@ import { PublicStylesheets } from '@/components/layout/PublicStylesheets';
  *     block is reproduced here verbatim.
  *   - Body text "MHMS" -> "BHMS": the local backup has a typo that
  *     production does not currently have. The DEPLOYED value governs.
+ *
+ * ABOUT PAGE EDITOR WIRING (About Page editor feature): every content
+ * region below (heading, paragraphs, image, clinic block, doctor block,
+ * CTA button URLs) now reads from `getAboutPage()`
+ * (`src/lib/about/repository.ts`), admin-editable at `/admin/edit-about`.
+ * `DEFAULT_ABOUT_PAGE` there is copied verbatim from this file's own
+ * previously-hardcoded values, so nothing changes until an admin edits
+ * something. `<title>`/meta description above are unchanged (SEO
+ * metadata admin control is a separate, not-yet-built gap).
  */
 export const metadata: Metadata = {
   title: 'About Spaks Homeopathy | Trusted Homeopathy Clinic in India',
@@ -27,7 +38,9 @@ export const metadata: Metadata = {
   },
 };
 
-export default function AboutPage() {
+export default async function AboutPage() {
+  const db = await getDb();
+  const about = await getAboutPage(db);
   return (
     <>
       <div className="page-wrapper">
@@ -60,39 +73,14 @@ export default function AboutPage() {
               <div className="col-lg-7 col-md-7 colsm-7">
                 <div className="aboutleft">
                   <div className="block-title">
-                    <h2 className="block-title__title mb-3">
-                      Spaks India Business Solution Pvt. Ltd. – Trusted Homeopathy Clinic in India
-                    </h2>
-                    <p>
-                      Spaks India Business Solution Pvt. Ltd. is a trusted name in holistic
-                      healthcare, providing the best homeopathic treatment through safe, natural,
-                      and personalized homeopathy medicines. Under the brand Spaks Homeopathy, we
-                      are committed to delivering high-quality homeopathic care to patients across
-                      India and worldwide.
-                    </p>
-                    <p>
-                      Spaks Homeopathy is recognized as one of the leading online homeopathy
-                      resources, offering reliable treatment guidance, consultation services, and
-                      homeopathy medicines to thousands of patients every year. Our platform has
-                      been successfully serving patients since 2015, making us a trusted destination
-                      for online and clinic-based homeopathic treatment.
-                    </p>
-                    <h2 className="block-title__title  mb-3">
-                      Best Homeopathy Clinic in Delhi NCR, India
-                    </h2>{' '}
-                    <p>
-                      At Spaks Homeopathy Clinic India, our team consists of some of the best
-                      homeopathic doctors in Delhi NCR, India. Our experienced and qualified
-                      homeopathy specialists focus on treating the root cause of disease, not just
-                      the visible symptoms.
-                    </p>
-                    <p>
-                      We strongly believe in providing the best homeopathic treatment for chronic
-                      diseases, especially conditions that do not respond effectively to
-                      conventional allopathic medicines. Each patient receives an individualized
-                      treatment plan based on their physical condition, medical history, lifestyle,
-                      and emotional well-being.
-                    </p>
+                    <h2 className="block-title__title mb-3">{about.heading}</h2>
+                    {about.introParagraphs.map((paragraph, i) => (
+                      <p key={i}>{paragraph}</p>
+                    ))}
+                    <h2 className="block-title__title  mb-3">{about.subheading}</h2>{' '}
+                    {about.secondaryParagraphs.map((paragraph, i) => (
+                      <p key={i}>{paragraph}</p>
+                    ))}
                     <p>
                       {' '}
                       <span>
@@ -108,7 +96,7 @@ export default function AboutPage() {
 
               <div className="col-lg-5 col-md-5 col-sm-5 aboutimg">
                 {' '}
-                <img src="assets/images/about1.jpg" alt="Awesome Image" className="wow fadeInUp " />
+                <img src={about.heroImage} alt="Awesome Image" className="wow fadeInUp " />
               </div>
             </div>
             {/* /.row */}
@@ -121,33 +109,29 @@ export default function AboutPage() {
                 <div className="about-help">
                   <h5>Our Homeopathy Clinic Address</h5>
                   <h4>
-                    <strong>Spaks Homeopathy</strong>
+                    <strong>{about.clinicName}</strong>
                   </h4>
-                  <span>
-                    {
-                      'E-38, Budh Vihar Rd,\nBadarpur Extension,\nTajpur, Badarpur, New Delhi - 110044'
-                    }
-                  </span>
+                  <span>{about.clinicAddress}</span>
                   <br />
-                  <span>Call Us : +91-87004 58818</span>
+                  <span>Call Us : {about.clinicPhone}</span>
                 </div>
               </div>
             </div>
           </div>
           <div className="jumbotron text-center">
-            <h2 className="display-4"> DR. SK MEENA </h2>
-            <p className="lead text-center">BHMS , MD (Homeopathy) </p>
+            <h2 className="display-4"> {about.doctorName} </h2>
+            <p className="lead text-center">{about.doctorCredentials} </p>
             <hr className="my-4" />
             {/* OI-14: Blade emits `</a>\n<a ...>` between the two buttons; the
                 newline renders as ONE space. `.btn` is display:inline-block, so
                 that space is layout — production measures a 3px gap, without it
                 the gap is 0. Same defect class as OI-13; reproduced explicitly
                 as {' '}. No CSS or margin is introduced. */}
-            <a href="#" className="btn btn-success">
+            <a href={about.videoAppointmentUrl} className="btn btn-success">
               {' '}
               Book a Video Appointment{' '}
             </a>{' '}
-            <a href="http://www.spakshomeopathy.com/consultancy" className="btn btn-info">
+            <a href={about.clinicAppointmentUrl} className="btn btn-info">
               {' '}
               Book an In-Clinic Appointment
             </a>

@@ -71,6 +71,9 @@ const ADMIN_UTYPE = 1;
 /** utype=3 is the only buyer value — see BUYER GUARD section below. */
 const BUYER_UTYPE = 3;
 
+/** utype=5 is the only partner value — see PARTNER GUARD section below. */
+const PARTNER_UTYPE = 5;
+
 /**
  * Server-side admin guard. Call at the top of a Server Component that
  * must only render for an authenticated admin (utype=1). Never trusts
@@ -134,6 +137,27 @@ export async function requireBuyerSession(): Promise<SessionPayload> {
 
   if (!session || session.utype !== BUYER_UTYPE) {
     redirect('/login');
+  }
+
+  return session;
+}
+
+/**
+ * PARTNER GUARD — Partner Panel feature. GENUINELY NEW, no Laravel
+ * middleware to mirror (no source `utype` value for partner exists — see
+ * `session.ts`'s `SessionPayload.utype` comment). Follows the exact same
+ * shape as `requireAdminSession`/`requireBuyerSession` above: reject when
+ * there is no session, or the session's `utype` is not 5 (partner).
+ *
+ * Used at `src/app/partner/(shell)/layout.tsx`, the same
+ * layout-level-guard architecture choice as the admin shell (see this
+ * file's header) — not `middleware.ts`.
+ */
+export async function requirePartnerSession(): Promise<SessionPayload> {
+  const session = await getSession();
+
+  if (!session || session.utype !== PARTNER_UTYPE) {
+    redirect('/partner/login');
   }
 
   return session;

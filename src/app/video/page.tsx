@@ -3,6 +3,11 @@ import { PublicHeader } from '@/components/layout/PublicHeader';
 import { PublicFooter } from '@/components/layout/PublicFooter';
 import { PublicScripts } from '@/components/layout/PublicScripts';
 import { PublicStylesheets } from '@/components/layout/PublicStylesheets';
+import { Pagination } from '@/components/ui/Pagination';
+import { getDb } from '@/lib/mongodb/client';
+import { VideoRepository } from '@/lib/videos/repository';
+
+const PAGE_SIZE = 9;
 
 /**
  * `/video` — ported from `video.blade.php`.
@@ -16,6 +21,14 @@ import { PublicStylesheets } from '@/components/layout/PublicStylesheets';
  *   - Content: local backup has only 3 embedded YouTube videos; production
  *     has 6 (three more were added live and never synced back to the
  *     backup). All 6 are reproduced, in production's order.
+ *
+ * VIDEOS CRUD WIRING (Videos CRUD feature, owner-approved 2026-09-20): the
+ * 6 hardcoded iframes are replaced by `VideoRepository` rows, admin-
+ * managed at `/admin/add-video`/`videos-list`. The empty-database
+ * fallback below reproduces the original 6 videos' exact titles/ids/order,
+ * so nothing changes for a visitor until an admin adds a real row. This
+ * is `/video` (singular) only — `/videos` (plural, `src/app/videos/`) is
+ * a separate, deliberately broken page (B-01) and is untouched.
  */
 export const metadata: Metadata = {
   title: 'Homeopathy Videos | Dr. S.K. Meena | Spaks Homeopathy',
@@ -30,7 +43,50 @@ export const metadata: Metadata = {
   },
 };
 
-export default function VideoPage() {
+/** Fallback used only when the `videos` collection has zero active rows
+ * (today's real, empty-database state) — reproduces the original 6
+ * hardcoded embeds' exact title/id/order, so a visitor sees no change
+ * until an admin adds a real row. */
+const FALLBACK_VIDEOS = [
+  { id: 'kRhNIVf6qUg', title: 'Female Hair Fall Treatment in Homeopathy | Hair Fall' },
+  { id: '_ev-w9J347g', title: 'Vaginitis - Causes, treatments, symptoms and Medicine.' },
+  {
+    id: '-cyfQkEp510',
+    title: 'क्या आपको शुगर है ?  कैसे उससे छुटकारा पाए। Sugar || मधुमेह || Diabetes',
+  },
+  {
+    id: 'ABYZYvUdiZo',
+    title:
+      '👉Why do headaches occur frequently? | Headache Causes Explained by Dr. S.K Meena #homeopathy #nat...',
+  },
+  {
+    id: 'wEJkVFnOBgo',
+    title: 'Hair Loss Solution Hair Fall | जाने बालों के झड़ने का कारण | DR. SK MEENA | #haircare #hairfall',
+  },
+  {
+    id: 'F9B4kcXNt1Q',
+    title: 'कया होम्योपैथी वाकई काम करती है? | The Untold Truth of Homoeopathy @Dr. Sk Meena #health #homeopathy',
+  },
+];
+
+export default async function VideoPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ page?: string }>;
+}) {
+  const db = await getDb();
+  const videos = await new VideoRepository(db).findActiveDescending();
+  const allItems =
+    videos.length > 0
+      ? videos.map((v) => ({ id: v.youtubeVideoId, title: v.title }))
+      : FALLBACK_VIDEOS;
+
+  const totalPages = Math.max(1, Math.ceil(allItems.length / PAGE_SIZE));
+  const { page: pageParam } = await searchParams;
+  const requestedPage = Number(pageParam) || 1;
+  const currentPage = Math.min(Math.max(1, requestedPage), totalPages);
+  const items = allItems.slice((currentPage - 1) * PAGE_SIZE, currentPage * PAGE_SIZE);
+
   return (
     <>
       <div className="page-wrapper">
@@ -68,96 +124,30 @@ export default function VideoPage() {
 
             <div className="container">
               <div className="row">
-                <div className="col-lg-4 col-md-4 col-12">
-                  <div className="home-video">
-                    <iframe
-                      width="100%"
-                      height="200px"
-                      src="https://www.youtube.com/embed/kRhNIVf6qUg"
-                      title="Female Hair Fall Treatment in Homeopathy | Hair Fall"
-                      frameBorder="0"
-                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                      allowFullScreen
-                    ></iframe>
+                {items.map((item) => (
+                  <div className="col-lg-4 col-md-4 col-12" key={item.id}>
+                    <div className="home-video">
+                      <iframe
+                        width="100%"
+                        height="200px"
+                        src={`https://www.youtube.com/embed/${item.id}`}
+                        title={item.title}
+                        frameBorder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        referrerPolicy="strict-origin-when-cross-origin"
+                        allowFullScreen
+                      ></iframe>
+                    </div>
                   </div>
-                </div>
-
-                <div className="col-lg-4 col-md-4 col-12">
-                  <div className="home-video">
-                    <iframe
-                      width="100%"
-                      height="200px"
-                      src="https://www.youtube.com/embed/_ev-w9J347g"
-                      title="Vaginitis - Causes, treatments, symptoms and Medicine."
-                      frameBorder="0"
-                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                      allowFullScreen
-                    ></iframe>
-                  </div>
-                </div>
-
-                <div className="col-lg-4 col-md-4 col-12">
-                  <div className="home-video">
-                    <iframe
-                      width="100%"
-                      height="200px"
-                      src="https://www.youtube.com/embed/-cyfQkEp510"
-                      title="क्या आपको शुगर है ?  कैसे उससे छुटकारा पाए। Sugar || मधुमेह || Diabetes"
-                      frameBorder="0"
-                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                      allowFullScreen
-                    ></iframe>
-                  </div>
-                </div>
-
-                {/* --new start-------------- */}
-
-                <div className="col-lg-4 col-md-4 col-12">
-                  <div className="home-video">
-                    <iframe
-                      width="100%"
-                      height="200px"
-                      src="https://www.youtube.com/embed/ABYZYvUdiZo"
-                      title="👉Why do headaches occur frequently? | Headache Causes Explained by Dr. S.K Meena #homeopathy #nat..."
-                      frameBorder="0"
-                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                      referrerPolicy="strict-origin-when-cross-origin"
-                      allowFullScreen
-                    ></iframe>
-                  </div>
-                </div>
-
-                <div className="col-lg-4 col-md-4 col-12">
-                  <div className="home-video">
-                    <iframe
-                      width="100%"
-                      height="200px"
-                      src="https://www.youtube.com/embed/wEJkVFnOBgo"
-                      title="Hair Loss Solution Hair Fall | जाने बालों के झड़ने का कारण | DR. SK MEENA | #haircare #hairfall"
-                      frameBorder="0"
-                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                      referrerPolicy="strict-origin-when-cross-origin"
-                      allowFullScreen
-                    ></iframe>
-                  </div>
-                </div>
-
-                <div className="col-lg-4 col-md-4 col-12">
-                  <div className="home-video">
-                    <iframe
-                      width="100%"
-                      height="200px"
-                      src="https://www.youtube.com/embed/F9B4kcXNt1Q"
-                      title="कया होम्योपैथी वाकई काम करती है? | The Untold Truth of Homoeopathy @Dr. Sk Meena #health #homeopathy"
-                      frameBorder="0"
-                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                      referrerPolicy="strict-origin-when-cross-origin"
-                      allowFullScreen
-                    ></iframe>
-                  </div>
-                </div>
+                ))}
               </div>
             </div>
+
+            <Pagination
+              currentPage={currentPage}
+              totalPages={totalPages}
+              hrefForPage={(page) => (page === 1 ? '/video' : `/video?page=${page}`)}
+            />
           </div>
           {/* /.container */}
         </section>

@@ -1,6 +1,9 @@
 import type { CSSProperties } from 'react';
 import Link from 'next/link';
 import './redesign.css';
+import { getDb } from '@/lib/mongodb/client';
+import { SliderRepository } from '@/lib/mongodb/repositories/sliderRepository';
+import { getSiteSettings } from '@/lib/settings/repository';
 
 const WHY_SPAKS = [
   {
@@ -41,25 +44,14 @@ const WHY_SPAKS = [
   },
 ];
 
-const NAV_LINKS = [{ label: 'Home', href: '/', active: true }];
-
-// Consolidated per owner request (2026-09-07, same change applied to the
-// legacy header — see PublicHeader.tsx): About, Homeopathy, Herbs, Diseases
-// and Videos no longer sit as separate top-level items here either. They're
-// grouped under one "Menu" dropdown, placed immediately before Mother
-// Tincture, same as the legacy header's consolidation.
-const NAV_MENU_LINKS = [
-  { label: 'About', href: '/about' },
-  { label: 'Homeopathy', href: '/homeopathy' },
+// Navbar reduced to only the three storefront divisions (owner request,
+// 2026-09-24). Every other link that used to live in the navbar/"Menu"
+// dropdown (About, Diseases, Videos, Mother Tincture, Potencies, Contact)
+// now lives only in the footer's "Company"/"Explore" columns below.
+const NAV_LINKS = [
   { label: 'Herbs', href: '/herbs' },
-  { label: 'Diseases', href: '/all-diseases' },
-  { label: 'Videos', href: '/videos' },
-];
-
-const NAV_LINKS_AFTER_MENU = [
-  { label: 'Mother Tincture', href: '/mother-tincture' },
-  { label: 'Potencies', href: '/mother-tincture' },
-  { label: 'Contact', href: '/contact' },
+  { label: 'Homeopathy', href: '/homeopathy' },
+  { label: 'Cosmetics', href: '/homeopathy/cosmetics' },
 ];
 
 /**
@@ -101,9 +93,25 @@ const NAV_LINKS_AFTER_MENU = [
  * "Potencies") and footer links to `/mother-tincture` are unchanged —
  * that page itself was not touched, only this homepage's dedicated
  * teaser section for it.
+ *
+ * PROMO BANNER SECTION ADDED (Site Settings feature, owner-approved
+ * 2026-09-20): a slider-driven promo strip now sits between Hero and
+ * Divisions, reading admin-managed rows from the `sliders` collection
+ * (`/admin/add-slider`, `/admin/slider-list` — previously a fully-built
+ * but unused admin feature, P-18, see `schemas/slider.ts`'s header).
+ * Renders nothing when there are no active sliders (production's default,
+ * real, empty state), so this is purely additive — no visual change until
+ * an admin adds a slider. This made the component `async` (a server
+ * component, same pattern `PublicHeader`/`PublicFooter` already use for
+ * `getSiteSettings()`), which is safe here since nothing renders this
+ * component from a client component (verified: only `page.tsx`s do).
  */
-export function RedesignedHome() {
+export async function RedesignedHome() {
   const headline = 'Natural care, rooted in classical homeopathy.';
+
+  const db = await getDb();
+  const sliders = await new SliderRepository(db).findActiveDescending();
+  const settings = await getSiteSettings(db);
 
   return (
     <div className="sp-redesign">
@@ -111,9 +119,9 @@ export function RedesignedHome() {
       <div className="sp-utility">
         <div className="sp-container">
           <div className="sp-utility-group">
-            <span>spakshomeopathy@gmail.com</span>
+            <span>{settings.contactEmail}</span>
             <span className="sp-utility-sep">|</span>
-            <span>+91 8700458818</span>
+            <span>{settings.contactPhone}</span>
           </div>
           <div className="sp-utility-group">
             <a href="/assets/Mother-Tincture-Price-list.pdf" style={{ color: 'inherit' }}>
@@ -135,23 +143,6 @@ export function RedesignedHome() {
           </Link>
           <nav className="sp-nav">
             {NAV_LINKS.map((link) => (
-              <Link key={link.label} href={link.href} className={link.active ? 'active' : undefined}>
-                {link.label}
-              </Link>
-            ))}
-            <div className="sp-nav-dropdown">
-              <button type="button" className="sp-nav-dropdown-trigger">
-                Menu
-              </button>
-              <div className="sp-nav-dropdown-panel">
-                {NAV_MENU_LINKS.map((link) => (
-                  <Link key={link.label} href={link.href}>
-                    {link.label}
-                  </Link>
-                ))}
-              </div>
-            </div>
-            {NAV_LINKS_AFTER_MENU.map((link) => (
               <Link key={link.label} href={link.href}>
                 {link.label}
               </Link>
@@ -250,6 +241,66 @@ export function RedesignedHome() {
           </div>
         </div>
       </section>
+
+      {/* Promo banners — admin-managed via /admin/add-slider, /admin/slider-list.
+          Renders nothing when there are no active sliders. */}
+      {sliders.length > 0 && (
+        <section className="sp-section" style={{ background: '#ffffff', paddingTop: 0 }}>
+          <div className="sp-container">
+            <div
+              style={{
+                display: 'grid',
+                gridTemplateColumns: `repeat(${Math.min(sliders.length, 3)}, 1fr)`,
+                gap: 20,
+              }}
+            >
+              {sliders.slice(0, 3).map((slider) => (
+                <div
+                  key={slider.legacyId}
+                  style={{
+                    position: 'relative',
+                    borderRadius: 16,
+                    overflow: 'hidden',
+                    minHeight: 220,
+                    background: '#0f4469',
+                  }}
+                >
+                  <img
+                    src={`/uploaded_files/slider/${slider.sliderImage}`}
+                    alt={slider.sliderTitle}
+                    style={{
+                      position: 'absolute',
+                      inset: 0,
+                      width: '100%',
+                      height: '100%',
+                      objectFit: 'cover',
+                    }}
+                  />
+                  <div
+                    style={{
+                      position: 'relative',
+                      padding: 20,
+                      background: 'linear-gradient(180deg, rgba(15,68,105,0) 40%, rgba(15,68,105,0.85) 100%)',
+                      minHeight: 220,
+                      display: 'flex',
+                      flexDirection: 'column',
+                      justifyContent: 'flex-end',
+                      color: '#fff',
+                    }}
+                  >
+                    <div style={{ fontWeight: 700, fontSize: 18 }}>{slider.sliderTitle}</div>
+                    {slider.sliderSubtitle && (
+                      <div style={{ fontSize: 14, opacity: 0.9, marginTop: 4 }}>
+                        {slider.sliderSubtitle}
+                      </div>
+                    )}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* Divisions */}
       <section id="divisions" className="sp-section" style={{ background: '#ffffff' }}>
@@ -655,6 +706,9 @@ export function RedesignedHome() {
                 </li>
                 <li>
                   <Link href="/herbs">Herbs Store</Link>
+                </li>
+                <li>
+                  <Link href="/homeopathy/cosmetics">Cosmetics</Link>
                 </li>
                 <li>
                   <Link href="/nutrition">Nutritional &amp; Supplements</Link>

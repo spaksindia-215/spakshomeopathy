@@ -43,8 +43,10 @@ export const SESSION_COOKIE_NAME = 'spaks_session';
 
 /**
  * `utype`: 1=admin, 2=seller (VESTIGIAL — can never log in in practice,
- * per userSchema's own header comment and blueprint §5.2), 3=buyer.
- * Mirrors `users.utype` exactly — not renamed, not re-enumerated.
+ * per userSchema's own header comment and blueprint §5.2), 3=buyer,
+ * 5=partner (Partner Panel feature, genuinely new — see `guard.ts`'s
+ * `requirePartnerSession()`). Mirrors `users.utype` exactly — not renamed,
+ * not re-enumerated.
  */
 export interface SessionPayload {
   /** `users.legacyId` (the migrated MariaDB `users.id`) — NOT the Mongo `_id`. */

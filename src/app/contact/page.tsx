@@ -5,6 +5,8 @@ import { PublicScripts } from '@/components/layout/PublicScripts';
 import { PublicStylesheets } from '@/components/layout/PublicStylesheets';
 import { readAndClearFlash } from '@/lib/auth/flash';
 import { generateCsrfToken } from '@/lib/auth/csrf';
+import { getDb } from '@/lib/mongodb/client';
+import { getSiteSettings } from '@/lib/settings/repository';
 
 /**
  * `/contact` — ported from `contact.blade.php`. Verified byte-identical to
@@ -24,6 +26,15 @@ import { generateCsrfToken } from '@/lib/auth/csrf';
  * M5-B: the `_token` hidden field (previously a placeholder, `value=""`)
  * is now a real token from `csrf.ts` — `save-enquiry/route.ts` verifies
  * it.
+ *
+ * SITE SETTINGS WIRING (Site Settings feature): the address/phone/email in
+ * "Contact Detail" now read from `getSiteSettings()`
+ * (`src/lib/settings/repository.ts`), admin-editable at
+ * `/admin/site-settings` — same wiring rationale as `PublicFooter.tsx`'s
+ * header comment. The 4 social icons below are left untouched (hardcoded
+ * `href="#"`, matching production, which has no real links here either —
+ * out of scope for this feature; see `PublicFooter.tsx`'s real social URLs
+ * for the ones production does have).
  */
 export const metadata: Metadata = {
   title: 'Spakshomeopathy - Contact Us',
@@ -36,6 +47,8 @@ export const metadata: Metadata = {
 export default async function ContactPage() {
   const message = await readAndClearFlash('message');
   const csrfToken = generateCsrfToken();
+  const db = await getDb();
+  const settings = await getSiteSettings(db);
   return (
     <>
       <div className="page-wrapper">
@@ -97,16 +110,14 @@ export default async function ContactPage() {
                   {/* /.contact-one__icon */}
                   <h3 className="contact-one__info__title">Contact Detail</h3>
                   {/* /.contact-one__info__title */}
+                  <p className="contact-one__info__text">{settings.address}</p>
+                  {/* /.contact-one__info__text */}
                   <p className="contact-one__info__text">
-                    E-38, Budh Vihar, Badarpur, New Delhi 110044
+                    <span>Call us:</span> <br /> {settings.contactPhone}
                   </p>
                   {/* /.contact-one__info__text */}
                   <p className="contact-one__info__text">
-                    <span>Call us:</span> <br /> +91 8700458818
-                  </p>
-                  {/* /.contact-one__info__text */}
-                  <p className="contact-one__info__text">
-                    <span>Mail us:</span> <br /> spakshomeopathy@gmail.com
+                    <span>Mail us:</span> <br /> {settings.contactEmail}
                   </p>
                   {/* /.contact-one__info__text */}
                   {/*

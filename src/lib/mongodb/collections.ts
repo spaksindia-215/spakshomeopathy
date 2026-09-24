@@ -31,6 +31,7 @@ export const COLLECTIONS = {
   // --- Users, buyers, admins (docs/M3-DATABASE-MAPPING.md §1.1) ---
   users: 'users',
   sellerProfiles: 'sellerProfiles', // combines seller_profile + banks, both VESTIGIAL
+  partnerProfiles: 'partnerProfiles', // GENUINELY NEW — Partner Panel feature, no MariaDB source
 
   // --- Products, categories (§1.2) ---
   products: 'products', // embeds product_images, product_review, product_specification
@@ -53,7 +54,7 @@ export const COLLECTIONS = {
   blogCategories: 'blogCategories', // was blog_category
 
   // --- Sliders, pincodes, geo (§1.8, §1.9, §2) ---
-  sliders: 'sliders', // kept empty/unused, matching P-18 exactly — do not wire into homepage
+  sliders: 'sliders', // P-18 RESOLVED (Site Settings feature, owner-approved 2026-09-20): now rendered as a promo-banner strip on the real homepage (`RedesignedHome.tsx`) — see `sliderRepository.ts`'s header
   pinCodes: 'pinCodes', // DR-03 open — see schemas/pinCode.ts
   statezones: 'statezones',
   cities: 'cities',

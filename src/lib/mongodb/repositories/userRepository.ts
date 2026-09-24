@@ -122,6 +122,26 @@ export class UserRepository extends ValidatedRepository<User> {
   }
 
   /**
+   * Partner Panel feature. GENUINELY NEW — no source equivalent. Lists
+   * every partner account (`utype===5`), for `/admin/partner-list`. Same
+   * shape as `findAllAdmins`/`findAllBuyers`/`findAllSellers` above.
+   */
+  async findAllPartners(): Promise<User[]> {
+    return this.find({ utype: 5 } as Partial<User>);
+  }
+
+  /**
+   * Partner Panel feature. Batch-fetch companion to `findByLegacyId`, same
+   * `$in` technique as `ProductRepository.findByLegacyIds` — used by
+   * `product-list/page.tsx` to resolve each partner-submitted product's
+   * `createdByUserId` to a display name in one query instead of N.
+   */
+  async findByLegacyIds(legacyIds: number[]): Promise<User[]> {
+    if (legacyIds.length === 0) return [];
+    return this.find({ legacyId: { $in: legacyIds } } as Filter<User>);
+  }
+
+  /**
    * Mirrors `AdminController::UpdateUserStatus` (AdminController.php:970-982):
    * reads the current `status`, flips 0↔1, writes it back. Used by
    * `/admin/update-user-status/{id}` (the toggle link on `view-buyer`).

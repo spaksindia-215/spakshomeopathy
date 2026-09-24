@@ -1,7 +1,8 @@
 /**
- * `sliders` data access. See `schemas/slider.ts`'s header for P-18
- * (maintained by admin, unused by the homepage — this repository does not
- * change that; nothing here is ever read by any public-facing page).
+ * `sliders` data access. See `schemas/slider.ts`'s header — P-18 (admin
+ * maintained the table but the homepage never read it) is now resolved:
+ * `findActiveDescending()` below is read by `RedesignedHome.tsx`'s promo
+ * banner section, the real homepage.
  */
 
 import type { Db } from 'mongodb';
@@ -18,6 +19,15 @@ export class SliderRepository extends ValidatedRepository<Slider> {
   async findAllDescending(): Promise<Slider[]> {
     const docs = await this.find({});
     return [...docs].sort((a, b) => b.legacyId - a.legacyId);
+  }
+
+  /** Site Settings feature addition: active (`sliderStatus === 1`) sliders
+   * only, newest first — what the homepage promo banner renders. Not a
+   * Laravel-mirrored method (no public consumer existed in source, see
+   * this file's header), so no controller to cite. */
+  async findActiveDescending(): Promise<Slider[]> {
+    const docs = await this.findAllDescending();
+    return docs.filter((doc) => doc.sliderStatus === 1);
   }
 
   /** Mirrors `AdminController::EditSlider` — `WHERE id = $id`. */

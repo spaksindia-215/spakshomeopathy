@@ -46,8 +46,10 @@ export type BuyerProfile = z.infer<typeof buyerProfileSchema>;
  * `remember_token`, `created_at`, `updated_at`.
  *
  * `utype`: 1=admin, 2=seller (VESTIGIAL — can never log in, blueprint §5.2),
- * 3=buyer, 4=unused. Preserved as a plain integer, not an enum — the source
- * has no ENUM/CHECK constraint on this column either.
+ * 3=buyer, 4=unused, 5=partner (Partner Panel feature, genuinely new — no
+ * source value, added alongside `requirePartnerSession()`/`guard.ts`).
+ * Preserved as a plain integer, not an enum — the source has no ENUM/CHECK
+ * constraint on this column either.
  *
  * `status`: 0=inactive/unverified, 1=active. Login requires status=1,
  * checked as PART OF THE CREDENTIAL MATCH itself

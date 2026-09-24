@@ -20,6 +20,7 @@
 export * from './common';
 export * from './user';
 export * from './sellerProfile';
+export * from './partnerProfile';
 export * from './product';
 export * from './category';
 export * from './order';

@@ -3,7 +3,8 @@ import { notFound } from 'next/navigation';
 import { HomeopathyShell } from '@/components/homeopathy/HomeopathyShell';
 import { HomeopathyProductDetail } from '@/components/homeopathy/HomeopathyProductDetail';
 import { getAllProducts, getProductBySlug } from '@/lib/demo/products';
-import { getRelatedHomeopathyProducts, getShortDescription } from '@/lib/homeopathy/queries';
+import { getShortDescription } from '@/lib/homeopathy/queries';
+import { getRelatedHomeopathyProducts } from '@/lib/homeopathy/liveQueries';
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -45,7 +46,7 @@ export default async function HomeopathyProductPage({ params }: Props) {
   const product = getProductBySlug(slug);
   if (!product) notFound();
 
-  const related = getRelatedHomeopathyProducts(product, 4);
+  const related = await getRelatedHomeopathyProducts(product, 4);
   const name = product.pName || product.pHeading;
 
   const productJsonLd = {

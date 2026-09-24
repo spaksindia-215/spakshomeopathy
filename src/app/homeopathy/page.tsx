@@ -11,11 +11,11 @@ import {
   TrustSection,
 } from '@/components/homeopathy/HomeopathyMarketingSections';
 import {
-  getActiveProducts,
   getHomeopathyBestsellers,
   getHomeopathyFeaturedProducts,
   getHomeopathyNewArrivals,
 } from '@/lib/homeopathy/queries';
+import { getActiveProducts } from '@/lib/homeopathy/liveQueries';
 import { getCategoriesByType } from '@/lib/demo/categories';
 
 /**
@@ -42,7 +42,7 @@ export const metadata: Metadata = {
 };
 
 export default async function HomeopathyHomePage() {
-  const products = getActiveProducts();
+  const products = await getActiveProducts();
   const categoryCount = getCategoriesByType('N', 1).length;
   const featured = getHomeopathyFeaturedProducts(8, products);
   const bestsellers = getHomeopathyBestsellers(4, products);

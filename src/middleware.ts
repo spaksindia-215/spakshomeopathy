@@ -84,10 +84,11 @@ export async function middleware(request: NextRequest): Promise<NextResponse> {
 }
 
 export const config = {
-  // Excludes admin routes (redirects must never intercept the admin
-  // panel itself), the /api/redirects endpoint this middleware itself
-  // calls (avoiding a self-referential loop), Next.js internals, and
-  // static assets — matching the common Next.js middleware matcher
-  // convention for "run on real page requests only."
-  matcher: ['/((?!admin|api|_next/static|_next/image|favicon.ico|uploaded_files).*)'],
+  // Excludes admin AND partner routes (redirects must never intercept
+  // either panel — Partner Panel feature added `partner` here alongside
+  // `admin` for the identical reason), the /api/redirects endpoint this
+  // middleware itself calls (avoiding a self-referential loop), Next.js
+  // internals, and static assets — matching the common Next.js middleware
+  // matcher convention for "run on real page requests only."
+  matcher: ['/((?!admin|partner|api|_next/static|_next/image|favicon.ico|uploaded_files).*)'],
 };

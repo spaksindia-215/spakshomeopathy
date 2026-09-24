@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import { HomeopathyShell } from '@/components/homeopathy/HomeopathyShell';
 import { HomeopathyCatalog } from '@/components/homeopathy/HomeopathyCatalog';
-import { getActiveProducts } from '@/lib/homeopathy/queries';
+import { getActiveProducts } from '@/lib/homeopathy/liveQueries';
 import { getCategoriesByType } from '@/lib/demo/categories';
 
 export const metadata: Metadata = {
@@ -28,17 +28,16 @@ interface Props {
  * empty until a filter/search is applied, per the owner's request that
  * this match the products page.
  *
- * PRODUCT POOL: plain `getActiveProducts()` (the 125-product curated
- * catalogue), NOT `getMergedMotherTinctureCatalog()` — Patents is
- * specifically the disease/condition-organised division, distinct from
- * the Mother Tincture division (which has its own `/mother-tincture`
- * page merging in admin-added Mother Tincture products). Using the
- * merged pool here would blur that division boundary the homepage's
- * copy already draws.
+ * PRODUCT POOL: plain `getActiveProducts()` (the full real catalogue),
+ * NOT `getMergedMotherTinctureCatalog()` — Patents is specifically the
+ * disease/condition-organised division, distinct from the Mother
+ * Tincture division (which has its own `/mother-tincture` page merging
+ * in admin-added Mother Tincture products). Using the merged pool here
+ * would blur that division boundary the homepage's copy already draws.
  */
 export default async function HomeopathyPatentsPage({ searchParams }: Props) {
   const { q } = await searchParams;
-  const products = getActiveProducts();
+  const products = await getActiveProducts();
   const categories = getCategoriesByType('N', 1);
 
   return (

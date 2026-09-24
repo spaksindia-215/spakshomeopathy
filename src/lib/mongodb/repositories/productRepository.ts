@@ -132,6 +132,26 @@ export class ProductRepository extends ValidatedRepository<Product> {
   }
 
   /**
+   * Partner Panel feature. Thin named wrapper over the inherited
+   * `insertOne`, for readability at call sites — same convention as
+   * `CategoryRepository.insertCategory`/`ProductCategoryRepository.
+   * insertProductCategory`. No behavior beyond the base class's own.
+   */
+  async insertProduct(doc: Product): Promise<Product> {
+    return this.insertOne(doc);
+  }
+
+  /**
+   * Partner Panel feature. GENUINELY NEW — no source column to mirror
+   * (`createdByUserId` itself is additive, see `schemas/product.ts`).
+   * Finds every product a given partner (`users.legacyId`) submitted, for
+   * the partner dashboard's own-products view.
+   */
+  async findByCreatedByUserId(userId: number): Promise<Product[]> {
+    return this.find({ createdByUserId: userId } as Filter<Product>);
+  }
+
+  /**
    * CR-006 Phase 7 — every product, unfiltered. Needed by the new
    * `/admin/review-list` screen, which must flatten EVERY product's
    * embedded `reviews` array into one list, mirroring
@@ -206,5 +226,78 @@ export class ProductRepository extends ValidatedRepository<Product> {
       { arrayFilters: [{ 'r.legacyId': reviewLegacyId }] }
     );
     await this.logMutation('update', productLegacyId, [`reviews[${reviewLegacyId}].rStatus`]);
+  }
+
+  /**
+   * Review add/edit CRUD feature addition: the next `legacyId` for a NEW
+   * review being added to one specific product's `reviews` array.
+   * `reviews.legacyId` is only unique WITHIN its own product's array (see
+   * `updateReviewStatus`'s header) — this is therefore a per-product
+   * `MAX(reviews[].legacyId) + 1`, not the base class's generic
+   * top-level-collection `nextLegacyIdGeneric()`, which would find the
+   * wrong scope entirely (it maxes over `products.legacyId`, not the
+   * nested array).
+   */
+  async nextReviewLegacyId(productLegacyId: number): Promise<number> {
+    const product = await this.findByLegacyId(productLegacyId);
+    if (!product || product.reviews.length === 0) return 1;
+    const highest = Math.max(...product.reviews.map((r) => r.legacyId));
+    return highest + 1;
+  }
+
+  /**
+   * Review add/edit CRUD feature addition: appends one new review to a
+   * product's embedded `reviews` array. Same `arrayFilters`-vs-whole-
+   * document-replace reasoning as `updateReviewStatus` above, but via
+   * `$push` since this is an insert, not an update to an existing element.
+   */
+  async insertReview(
+    productLegacyId: number,
+    review: Product['reviews'][number]
+  ): Promise<void> {
+    await this.collection.updateOne(
+      { legacyId: productLegacyId } as Filter<Product>,
+      { $push: { reviews: review } } as never
+    );
+    await this.logMutation('insert', productLegacyId, [`reviews[${review.legacyId}]`]);
+  }
+
+  /**
+   * Review add/edit CRUD feature addition: full-field edit of one
+   * existing review (name/email/rating/text/status), not just the status
+   * toggle `updateReviewStatus` already covers. Same `arrayFilters`
+   * targeting.
+   */
+  async updateReview(
+    productLegacyId: number,
+    reviewLegacyId: number,
+    fields: Omit<Product['reviews'][number], 'legacyId'>
+  ): Promise<void> {
+    await this.collection.updateOne(
+      { legacyId: productLegacyId },
+      {
+        $set: {
+          'reviews.$[r].rName': fields.rName,
+          'reviews.$[r].rEmail': fields.rEmail,
+          'reviews.$[r].rRating': fields.rRating,
+          'reviews.$[r].rReview': fields.rReview,
+          'reviews.$[r].rStatus': fields.rStatus,
+        },
+      },
+      { arrayFilters: [{ 'r.legacyId': reviewLegacyId }] }
+    );
+    await this.logMutation('update', productLegacyId, [`reviews[${reviewLegacyId}]`]);
+  }
+
+  /**
+   * Review add/edit CRUD feature addition: removes one review from a
+   * product's embedded `reviews` array via `$pull`.
+   */
+  async deleteReview(productLegacyId: number, reviewLegacyId: number): Promise<void> {
+    await this.collection.updateOne(
+      { legacyId: productLegacyId } as Filter<Product>,
+      { $pull: { reviews: { legacyId: reviewLegacyId } } } as never
+    );
+    await this.logMutation('delete', productLegacyId, [`reviews[${reviewLegacyId}]`]);
   }
 }

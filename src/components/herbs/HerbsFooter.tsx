@@ -1,14 +1,27 @@
 import Link from 'next/link';
 import { HERB_FORM_CATEGORIES, WELLNESS_CATEGORIES } from '@/lib/herbs/data/taxonomy';
 import { HerbIcon } from './HerbIcon';
+import { getDb } from '@/lib/mongodb/client';
+import { getSiteSettings } from '@/lib/settings/repository';
 
 /**
  * Herbs Store footer. New, self-contained — not a modification of
  * `@/components/layout/PublicFooter` (CR-003 §10.3). Reuses Spaks
  * business identity/contact details already public on the legacy footer
  * (same email/phone/address), not invented contact information.
+ *
+ * SITE SETTINGS WIRING (Site Settings feature follow-up, 2026-09-20): the
+ * email/phone here were a second hardcoded copy of the same values
+ * `PublicFooter.tsx` already reads from `getSiteSettings()` — now reads
+ * from the same source, so an admin editing contact info at
+ * `/admin/site-settings` updates every storefront's footer, not just the
+ * legacy one. The copyright line/brand text below are NOT touched — this
+ * footer has its own distinct copyright year/wording from the legacy
+ * footer, not a duplicate of the same field.
  */
-export function HerbsFooter() {
+export async function HerbsFooter() {
+  const db = await getDb();
+  const settings = await getSiteSettings(db);
   return (
     <div className="herbs-scope">
       <footer className="hs-footer">
@@ -21,9 +34,9 @@ export function HerbsFooter() {
                 herbs, thoughtfully sourced, for everyday wellness routines.
               </p>
               <p className="hs-footer__text" style={{ marginTop: 14 }}>
-                <HerbIcon name="support" size={14} /> spakshomeopathy@gmail.com
+                <HerbIcon name="support" size={14} /> {settings.contactEmail}
                 <br />
-                +91 8700458818
+                {settings.contactPhone}
               </p>
             </div>
             <div>

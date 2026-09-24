@@ -45,6 +45,18 @@
 
 import Link from 'next/link';
 import { getCartContent, getTotalCartItem } from '@/lib/cart';
+import { getDb } from '@/lib/mongodb/client';
+import { getSiteSettings } from '@/lib/settings/repository';
+
+/**
+ * SITE SETTINGS WIRING (Site Settings feature): the topbar email/phone
+ * (previously hardcoded below) now read from `getSiteSettings()`
+ * (`src/lib/settings/repository.ts`), admin-editable at
+ * `/admin/site-settings` — same wiring rationale as `PublicFooter.tsx`'s
+ * header comment. `PublicHeader` was already forced async by the M5 cart
+ * badge change (see file header above), so this adds no new async
+ * surface.
+ */
 
 /**
  * Shared inner markup of the sticky nav.
@@ -62,13 +74,18 @@ async function StickyNavBody() {
       <div className="container clearfix">
         {/* Brand and toggle get grouped for better mobile display */}
         <div className="logo-box clearfix">
-          <Link className="navbar-brand" href="/">
+          <a
+            className="navbar-brand"
+            href="https://spakshomeopathy.elitesfly.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             <img
               src="/assets/images/resources/logo.png"
               className="main-logo"
               alt="Awesome Image"
             />
-          </Link>
+          </a>
           <button className="menu-toggler" data-target=".main-navigation">
             <span className="fa fa-bars"></span>
           </button>
@@ -189,7 +206,9 @@ async function StickyNavBody() {
   );
 }
 
-export function PublicHeader() {
+export async function PublicHeader() {
+  const db = await getDb();
+  const settings = await getSiteSettings(db);
   return (
     <>
       <section className="topbar-one">
@@ -199,14 +218,14 @@ export function PublicHeader() {
               is layout (production gap 3px, ours was 0). Reproduced as {' '}. */}
           <ul className="topbar-one__contact col-md-10">
             <li className="topbar-one__contact-item">
-              <a href="mailto:spakshomeopathy@gmail.com">
-                <i className="material-icons">email</i> spakshomeopathy@gmail.com{' '}
+              <a href={`mailto:${settings.contactEmail}`}>
+                <i className="material-icons">email</i> {settings.contactEmail}{' '}
               </a>
             </li>{' '}
             <li className="topbar-one__contact-item">
               {' '}
-              <a href="callto:8700458818">
-                <i className="material-icons">local_phone</i>+91 8700458818
+              <a href={`callto:${settings.contactPhoneDialable}`}>
+                <i className="material-icons">local_phone</i>{settings.contactPhone}
               </a>
             </li>{' '}
             <li>

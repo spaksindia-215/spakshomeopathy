@@ -1,4 +1,4 @@
-import { getActiveProducts } from '@/lib/homeopathy/queries';
+import { getActiveProducts } from '@/lib/homeopathy/liveQueries';
 import { readMotherTinctureProductsFromDb } from './db/service';
 import type { Product } from '@/lib/mongodb/schemas';
 
@@ -36,7 +36,7 @@ import type { Product } from '@/lib/mongodb/schemas';
  * real catalogue is the trusted source of truth).
  */
 export async function getMergedMotherTinctureCatalog(): Promise<Product[]> {
-  const base = getActiveProducts();
+  const base = await getActiveProducts();
   const dbDocs = await readMotherTinctureProductsFromDb();
   if (!dbDocs || dbDocs.length === 0) return base;
 

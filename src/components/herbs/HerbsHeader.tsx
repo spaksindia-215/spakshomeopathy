@@ -105,13 +105,18 @@ export function HerbsHeader({ catalog }: HerbsHeaderProps = {}) {
             <HerbIcon name="filter" size={22} />
           </button>
 
-          <Link href="/herbs" className="hs-brand">
+          <a
+            href="https://spakshomeopathy.elitesfly.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hs-brand"
+          >
             <img src="/assets/images/resources/logo.png" alt="Spaks Homeopathy" />
             <span className="hs-brand__text">
               <span className="hs-brand__name">Spaks Herbs</span>
               <span className="hs-brand__sub">Herbal Wellness Store</span>
             </span>
-          </Link>
+          </a>
 
           <nav aria-label="Herbs store navigation">
             <ul className="hs-nav">

@@ -177,6 +177,17 @@ export const productSchema = z.object({
    * `ProductRepository.findByDiseaseCategoryIds`'s own header).
    */
   diseaseCategoryIds: z.array(z.number().int()).optional(),
+
+  /**
+   * Partner Panel feature. GENUINELY NEW, ADDITIVE — no source column,
+   * not related to `uid` (above), which stays permanently unused per its
+   * own comment. References `users.legacyId` for the partner (`utype=5`)
+   * who submitted this product via `/admin/save-product`. `null`/absent
+   * for every product created by an admin — `.optional()` so every
+   * existing product document (all of which predate this field) keeps
+   * validating unchanged.
+   */
+  createdByUserId: z.number().int().nullable().optional(),
 });
 
 export type Product = z.infer<typeof productSchema>;

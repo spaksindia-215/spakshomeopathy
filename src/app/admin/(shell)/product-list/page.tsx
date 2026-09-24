@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { AdminStylesheets } from '@/components/admin/AdminStylesheets';
 import { getDb } from '@/lib/mongodb/client';
 import { ProductRepository } from '@/lib/mongodb/repositories/productRepository';
+import { UserRepository } from '@/lib/mongodb/repositories/userRepository';
 import { readAndClearFlash } from '@/lib/auth/flash';
 
 /**
@@ -10,11 +11,12 @@ import { readAndClearFlash } from '@/lib/auth/flash';
  * (147 lines), `AdminController@ProductList`. Reads live `products` data
  * via `ProductRepository.findAll()` (real Mongo, not the fixture layer).
  *
- * PRESERVED DEFECT, verified against source: Status column `href="#"`
- * badges (Active/"Deativate", typo preserved) are genuinely dead links in
- * the original Blade template too — not a working toggle on this page
- * (contrast with `cat-list`, whose Status column IS a live toggle). Left
- * as-is; not in scope for this pass.
+ * Partner Panel feature: the Status column's badges now link to a REAL
+ * toggle handler (`/admin/toggle-product-status/[id]/route.ts`, newly
+ * built) instead of the previously dead `href="#"` — this is what lets an
+ * admin activate a partner-submitted product (created with `pStatus=0`).
+ * A "Partner" column was added showing whether `createdByUserId` is set,
+ * so admins can distinguish partner submissions from their own.
  */
 export const metadata: Metadata = {
   title: 'Admin Panel | Product List',
@@ -25,6 +27,12 @@ export default async function AdminProductListPage() {
   const repo = new ProductRepository(db);
   const products = await repo.findAll();
   const message = await readAndClearFlash('message');
+
+  const partnerIds = [
+    ...new Set(products.map((p) => p.createdByUserId).filter((id): id is number => id != null)),
+  ];
+  const partners = await new UserRepository(db).findByLegacyIds(partnerIds);
+  const partnerNameById = new Map(partners.map((p) => [p.legacyId, p.name]));
 
   return (
     <>
@@ -55,13 +63,14 @@ export default async function AdminProductListPage() {
                 <table id="example2" className="table table-bordered table-hover">
                   <thead>
                     <tr>
-                      <th style={{ width: '10%' }}>S.No</th>
-                      <th style={{ width: '25%' }}>Title</th>
+                      <th style={{ width: '8%' }}>S.No</th>
+                      <th style={{ width: '20%' }}>Title</th>
                       <th style={{ width: '10%' }}>Image</th>
                       <th style={{ width: '10%' }}>Price</th>
-                      <th style={{ width: '10%' }}>Quantity</th>
-                      <th style={{ width: '20%' }}>Status</th>
-                      <th style={{ width: '10%' }}>Action</th>
+                      <th style={{ width: '8%' }}>Quantity</th>
+                      <th style={{ width: '14%' }}>Partner</th>
+                      <th style={{ width: '15%' }}>Status</th>
+                      <th style={{ width: '15%' }}>Action</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -79,13 +88,28 @@ export default async function AdminProductListPage() {
                         <td>₹{product.pPrice}</td>
                         <td>{product.pQuantity}</td>
                         <td>
+                          {product.createdByUserId != null ? (
+                            <span className="label label-info">
+                              {partnerNameById.get(product.createdByUserId) ?? 'Partner'}
+                            </span>
+                          ) : (
+                            <em className="text-muted">Admin</em>
+                          )}
+                        </td>
+                        <td>
                           {product.pStatus === 1 && (
-                            <a href="#" className="btn btn-success">
+                            <a
+                              href={`/admin/toggle-product-status/${product.legacyId}`}
+                              className="btn btn-success"
+                            >
                               Active
                             </a>
                           )}
-                          {product.pStatus === 0 && (
-                            <a href="#" className="btn btn-danger">
+                          {product.pStatus !== 1 && (
+                            <a
+                              href={`/admin/toggle-product-status/${product.legacyId}`}
+                              className="btn btn-danger"
+                            >
                               Deativate
                             </a>
                           )}

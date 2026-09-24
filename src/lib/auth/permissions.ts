@@ -89,6 +89,9 @@ export const PERMISSIONS = {
   USERS_MANAGE: 'users.manage',
   ROLES_MANAGE: 'roles.manage',
   AUDIT_LOG_VIEW: 'audit_log.view',
+
+  // Partner Panel feature — admin-side management of partner accounts.
+  PARTNERS_MANAGE: 'partners.manage',
 } as const;
 
 export type Permission = (typeof PERMISSIONS)[keyof typeof PERMISSIONS];

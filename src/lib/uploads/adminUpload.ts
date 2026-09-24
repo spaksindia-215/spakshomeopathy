@@ -52,7 +52,7 @@
  * explicitly rather than trust that constraint silently).
  */
 
-import { writeFile, unlink } from 'fs/promises';
+import { writeFile, unlink, mkdir } from 'fs/promises';
 import { existsSync } from 'fs';
 import { join, resolve, extname } from 'path';
 
@@ -135,6 +135,18 @@ export async function saveAdminUpload(file: File, subdirectory: string): Promise
   }
 
   const buffer = Buffer.from(await file.arrayBuffer());
+  // BUG FIX (found during admin-e2e testing, 2026-09-20): every pre-
+  // existing subdirectory (`slider`, `products`, `post`, etc.) was a
+  // verbatim copy from the Laravel source, so `writeFile` always had
+  // somewhere to write. A genuinely NEW subdirectory (e.g. `diseases`,
+  // added for the Diseases CRUD feature) doesn't pre-exist on disk and
+  // was never committed with a `.gitkeep`, so `writeFile` threw ENOENT —
+  // an unhandled exception that surfaced as a raw Next.js error page
+  // instead of the intended `UploadRejectedError`-style disclosed
+  // failure. `mkdir(..., { recursive: true })` is idempotent (a no-op if
+  // the directory already exists), so this is safe to call on every
+  // upload, not just the first one to a new subdirectory.
+  await mkdir(targetDir, { recursive: true });
   await writeFile(targetPath, buffer);
 
   return filename;

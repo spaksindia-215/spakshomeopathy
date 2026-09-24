@@ -2,6 +2,9 @@ import Link from 'next/link';
 import { HerbIcon } from './HerbIcon';
 import { StarRating } from './HerbsUI';
 import { HERB_ARTICLES, HERB_TESTIMONIALS } from '@/lib/herbs/data/content';
+import { getDb } from '@/lib/mongodb/client';
+import { TestimonialRepository } from '@/lib/testimonials/repository';
+import { HerbArticleRepository } from '@/lib/herbArticles/repository';
 
 /** Trust / delivery strip (§22 of the original brief). */
 export function TrustSection() {
@@ -31,11 +34,25 @@ export function TrustSection() {
   );
 }
 
-/** Testimonials (§21) — demo/placeholder content, clearly labeled. */
-export function TestimonialsSection() {
+/**
+ * Testimonials (§21). Herbs Learn CRUD feature (owner-approved
+ * 2026-09-20): now reads from the shared `testimonials` collection
+ * (admin-managed at `/admin/testimonials-list`, tagged `sections: ['herbs']`)
+ * instead of the hardcoded, explicitly-labeled `HERB_TESTIMONIALS` demo
+ * array. Falls back to that original array when zero active herbs-tagged
+ * rows exist yet, so nothing changes until an admin adds a real one.
+ */
+export async function TestimonialsSection() {
+  const db = await getDb();
+  const rows = await new TestimonialRepository(db).findActiveForSection('herbs');
+  const items =
+    rows.length > 0
+      ? rows.map((t) => ({ id: String(t.legacyId), name: t.name, location: t.location, rating: t.rating, quote: t.quote }))
+      : HERB_TESTIMONIALS;
+
   return (
     <div className="hs-testimonial-grid">
-      {HERB_TESTIMONIALS.map((t) => (
+      {items.map((t) => (
         <div key={t.id} className="hs-testimonial">
           <StarRating rating={t.rating} size={15} />
           <p className="hs-testimonial__quote">&ldquo;{t.quote}&rdquo;</p>
@@ -47,11 +64,32 @@ export function TestimonialsSection() {
   );
 }
 
-/** Herbal education / blog teaser (§23). */
-export function HerbalEducationSection() {
+/**
+ * Herbal education / blog teaser (§23). Herbs Learn CRUD feature
+ * (owner-approved 2026-09-20): now reads from the `herbArticles`
+ * collection (admin-managed at `/admin/herb-articles-list`) instead of
+ * the hardcoded, explicitly-labeled-placeholder `HERB_ARTICLES` array.
+ * Falls back to that original array when the collection is empty, so
+ * nothing changes until an admin adds a real article.
+ */
+export async function HerbalEducationSection() {
+  const db = await getDb();
+  const rows = await new HerbArticleRepository(db).findActiveDescending();
+  const items =
+    rows.length > 0
+      ? rows.map((a) => ({
+          id: String(a.legacyId),
+          slug: a.slug,
+          category: a.category,
+          title: a.title,
+          excerpt: a.excerpt,
+          readTime: a.readTime,
+        }))
+      : HERB_ARTICLES;
+
   return (
     <div className="hs-article-grid">
-      {HERB_ARTICLES.map((a) => (
+      {items.map((a) => (
         <Link key={a.id} href={`/herbs/learn/${a.slug}`} className="hs-article-card">
           <span className="hs-article-card__cat">{a.category}</span>
           <h3 className="hs-article-card__title">{a.title}</h3>

@@ -4,18 +4,35 @@ import Link from 'next/link';
 import { HerbsShell } from '@/components/herbs/HerbsShell';
 import { HERB_ARTICLES } from '@/lib/herbs/data/content';
 import { getMergedHerbCatalog } from '@/lib/herbs/catalog';
+import { getDb } from '@/lib/mongodb/client';
+import { HerbArticleRepository } from '@/lib/herbArticles/repository';
 
 interface Props {
   params: Promise<{ slug: string }>;
 }
 
-export async function generateStaticParams() {
-  return HERB_ARTICLES.map((a) => ({ slug: a.slug }));
+/** Herbs Learn CRUD feature: looks up the DB first (admin-added
+ * articles), falling back to the original hardcoded `HERB_ARTICLES` entry
+ * for slugs that were never migrated into the database — so existing
+ * links to the 3 original placeholder articles keep working. */
+async function findArticle(slug: string) {
+  const db = await getDb();
+  const dbArticle = await new HerbArticleRepository(db).findBySlug(slug);
+  if (dbArticle && dbArticle.status === 1) {
+    return {
+      title: dbArticle.title,
+      slug: dbArticle.slug,
+      excerpt: dbArticle.excerpt,
+      readTime: dbArticle.readTime,
+      category: dbArticle.category,
+    };
+  }
+  return HERB_ARTICLES.find((a) => a.slug === slug) ?? null;
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
-  const article = HERB_ARTICLES.find((a) => a.slug === slug);
+  const article = await findArticle(slug);
   if (!article) return { title: 'Article Not Found | Spaks Herbs' };
   return {
     title: `${article.title} | Spaks Herbs`,
@@ -25,17 +42,23 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 /** ISR — see `@/lib/herbs/catalog`'s "STATIC GENERATION CAVEAT" for why
- * this exists once a real database is configured. */
+ * this exists once a real database is configured. No longer statically
+ * generated (`generateStaticParams` removed, Herbs Learn CRUD feature) —
+ * article slugs are now admin-managed and can be added without a
+ * rebuild, so this route is rendered on demand instead. */
 export const revalidate = 60;
 
 /**
  * `/herbs/learn/[slug]` — herbal education article page (§23 of the
- * original brief). Placeholder content only; no CMS/blog backend wired
- * yet, per that section's fallback instruction.
+ * original brief). Metadata (title/slug/excerpt/readTime/category) is now
+ * admin-managed via `/admin/add-herb-article`/`herb-articles-list` — see
+ * `src/lib/herbArticles/schema.ts`'s header. The body content below this
+ * point is UNCHANGED ("full article content coming soon" placeholder) —
+ * that field was deliberately not added to this feature's scope.
  */
 export default async function HerbsLearnArticlePage({ params }: Props) {
   const { slug } = await params;
-  const article = HERB_ARTICLES.find((a) => a.slug === slug);
+  const article = await findArticle(slug);
   if (!article) notFound();
 
   const catalog = await getMergedHerbCatalog();
