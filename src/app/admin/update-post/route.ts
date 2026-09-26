@@ -97,6 +97,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
         await setFlash('message', error.message);
         return redirectTo(`/admin/edit-post/${postId}`, 303);
       }
+      console.error('[admin/update-post] upload failed:', error);
       throw error;
     }
     // Source has no old-image cleanup here — correctly not calling

@@ -26,7 +26,12 @@ export async function GET(
 
   if (Number.isFinite(legacyId)) {
     const db = await getDb();
-    await deleteAdminEnquiry(db, legacyId);
+    try {
+      await deleteAdminEnquiry(db, legacyId);
+    } catch (error) {
+      console.error('[admin/destroy-enquiry] delete failed:', error);
+      throw error;
+    }
   }
 
   await setFlash('message', 'Enquiry deleted successfully.');

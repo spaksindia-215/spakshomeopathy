@@ -27,7 +27,12 @@ export async function GET(
 
   if (Number.isFinite(productLegacyId) && Number.isFinite(reviewLegacyId)) {
     const repo = new ProductRepository(db);
-    await repo.deleteReview(productLegacyId, reviewLegacyId);
+    try {
+      await repo.deleteReview(productLegacyId, reviewLegacyId);
+    } catch (error) {
+      console.error('[admin/destroy-review] delete failed:', error);
+      throw error;
+    }
   }
 
   await setFlash('message', 'Review deleted successfully.');

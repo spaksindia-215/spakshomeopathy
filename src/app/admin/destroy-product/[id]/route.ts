@@ -23,7 +23,12 @@ export async function GET(
   if (Number.isFinite(legacyId)) {
     const db = await getDb();
     const repo = new ProductRepository(db);
-    await repo.deleteByLegacyId(legacyId);
+    try {
+      await repo.deleteByLegacyId(legacyId);
+    } catch (error) {
+      console.error('[admin/destroy-product] delete failed:', error);
+      throw error;
+    }
   }
 
   await setFlash('message', 'Product deleted successfully.');

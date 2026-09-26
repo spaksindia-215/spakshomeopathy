@@ -77,6 +77,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
       await setFlash('message', error.message);
       return redirectTo('/admin/add-slider', 303);
     }
+    console.error('[admin/save-slider] upload failed:', error);
     throw error;
   }
 

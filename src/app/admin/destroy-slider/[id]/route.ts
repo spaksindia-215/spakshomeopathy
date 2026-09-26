@@ -44,7 +44,12 @@ export async function GET(
     const slider = await repo.findByLegacyId(legacyId);
     if (slider) {
       await deleteAdminUpload(slider.sliderImage, 'slider');
-      await repo.deleteSlider(legacyId);
+      try {
+        await repo.deleteSlider(legacyId);
+      } catch (error) {
+        console.error('[admin/destroy-slider] delete failed:', error);
+        throw error;
+      }
     }
     // No matching row: source's own $getSlider->slider_image would fatal
     // on null in that case (a property access on a null object) — but

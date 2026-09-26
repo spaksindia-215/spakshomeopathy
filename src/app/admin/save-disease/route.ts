@@ -47,6 +47,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
       await setFlash('message', error.message);
       return redirectTo('/admin/add-disease', 303);
     }
+    console.error('[admin/save-disease] upload failed:', error);
     throw error;
   }
 

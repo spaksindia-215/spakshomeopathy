@@ -68,6 +68,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
         await setFlash('message', error.message);
         return redirectTo('/admin/add-blog-category', 303);
       }
+      console.error('[admin/save-blog-category] upload failed:', error);
       throw error;
     }
   }

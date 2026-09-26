@@ -26,7 +26,12 @@ export async function GET(
 
   if (Number.isFinite(legacyId)) {
     const repo = new VideoRepository(db);
-    await repo.deleteVideo(legacyId);
+    try {
+      await repo.deleteVideo(legacyId);
+    } catch (error) {
+      console.error('[admin/destroy-video] delete failed:', error);
+      throw error;
+    }
   }
 
   await setFlash('message', 'Record deleted successfully.');

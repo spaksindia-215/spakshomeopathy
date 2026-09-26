@@ -58,7 +58,12 @@ export async function GET(
     const category = await repo.findByLegacyId(legacyId);
     if (category) {
       await deleteAdminUpload(category.catImage ?? '', 'product-categories');
-      await repo.deleteProductCategory(legacyId);
+      try {
+        await repo.deleteProductCategory(legacyId);
+      } catch (error) {
+        console.error('[admin/destroy-product-category] delete failed:', error);
+        throw error;
+      }
     }
   }
 

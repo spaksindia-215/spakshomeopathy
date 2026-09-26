@@ -117,6 +117,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
       await setFlash('message', error.message);
       return redirectTo('/admin/add-hurbcat', 303);
     }
+    console.error('[admin/save-cat] upload failed:', error);
     throw error;
   }
 

@@ -25,7 +25,12 @@ export async function GET(
   const { id } = await params;
 
   const repo = new RedirectRepository(db);
-  await repo.deleteById(id);
+  try {
+    await repo.deleteById(id);
+  } catch (error) {
+    console.error('[admin/destroy-redirect] delete failed:', error);
+    throw error;
+  }
 
   await setFlash('message', 'Redirect deleted successfully.');
   return redirectTo('/admin/redirects-list', 303);

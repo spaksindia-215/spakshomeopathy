@@ -44,7 +44,12 @@ export async function GET(
   if (Number.isFinite(legacyId)) {
     const db = await getDb();
     const repo = new PostRepository(db);
-    await repo.deletePost(legacyId);
+    try {
+      await repo.deletePost(legacyId);
+    } catch (error) {
+      console.error('[admin/destroy-post] delete failed:', error);
+      throw error;
+    }
   }
 
   // Mirrors redirect()->back()->with('message', 'Post deleted successfully.')

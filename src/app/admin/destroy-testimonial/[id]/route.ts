@@ -25,7 +25,12 @@ export async function GET(
 
   if (Number.isFinite(legacyId)) {
     const repo = new TestimonialRepository(db);
-    await repo.deleteTestimonial(legacyId);
+    try {
+      await repo.deleteTestimonial(legacyId);
+    } catch (error) {
+      console.error('[admin/destroy-testimonial] delete failed:', error);
+      throw error;
+    }
   }
 
   await setFlash('message', 'Record deleted successfully.');

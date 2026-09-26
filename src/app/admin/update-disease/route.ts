@@ -47,6 +47,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
         await setFlash('message', error.message);
         return redirectTo(`/admin/edit-disease/${diseaseId}`, 303);
       }
+      console.error('[admin/update-disease] upload failed:', error);
       throw error;
     }
     await deleteAdminUpload(oldImage, 'diseases');

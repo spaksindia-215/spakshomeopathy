@@ -84,6 +84,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
         await setFlash('message', error.message);
         return redirectTo(`/admin/edit-blog/${blogId}`, 303);
       }
+      console.error('[admin/update-blog] upload failed:', error);
       throw error;
     }
     // Old-image cleanup DOES correctly fire here — see file header.

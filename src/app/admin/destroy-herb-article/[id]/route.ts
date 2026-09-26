@@ -25,7 +25,12 @@ export async function GET(
 
   if (Number.isFinite(legacyId)) {
     const repo = new HerbArticleRepository(db);
-    await repo.deleteArticle(legacyId);
+    try {
+      await repo.deleteArticle(legacyId);
+    } catch (error) {
+      console.error('[admin/destroy-herb-article] delete failed:', error);
+      throw error;
+    }
   }
 
   await setFlash('message', 'Record deleted successfully.');

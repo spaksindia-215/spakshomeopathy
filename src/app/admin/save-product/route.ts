@@ -72,6 +72,7 @@ async function readSlot(
         await setFlash('message', error.message);
         return { errorResponse: redirectTo(redirectPath, 303) };
       }
+      console.error('[admin/save-product] upload failed:', error);
       throw error;
     }
   }
@@ -115,6 +116,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
         await setFlash('message', error.message);
         return redirectTo(redirectPath, 303);
       }
+      console.error('[admin/save-product] upload failed:', error);
       throw error;
     }
   }

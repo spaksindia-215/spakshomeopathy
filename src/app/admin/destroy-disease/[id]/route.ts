@@ -33,7 +33,12 @@ export async function GET(
     const disease = await repo.findByLegacyId(legacyId);
     if (disease) {
       await deleteAdminUpload(disease.image, 'diseases');
-      await repo.deleteDisease(legacyId);
+      try {
+        await repo.deleteDisease(legacyId);
+      } catch (error) {
+        console.error('[admin/destroy-disease] delete failed:', error);
+        throw error;
+      }
     }
   }
 

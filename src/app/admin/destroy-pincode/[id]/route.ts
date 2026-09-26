@@ -44,7 +44,12 @@ export async function GET(
   if (Number.isFinite(legacyId)) {
     const db = await getDb();
     const repo = new PinCodeRepository(db);
-    await repo.deletePinCode(legacyId);
+    try {
+      await repo.deletePinCode(legacyId);
+    } catch (error) {
+      console.error('[admin/destroy-pincode] delete failed:', error);
+      throw error;
+    }
   }
   // Non-numeric id: source's own where('id','=',$id)->delete() against a
   // non-matching/non-numeric id is a silent zero-row no-op (MariaDB

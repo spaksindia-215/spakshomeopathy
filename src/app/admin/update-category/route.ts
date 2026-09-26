@@ -94,6 +94,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
         await setFlash('message', error.message);
         return redirectTo(`/admin/edit-category/${id}`, 303);
       }
+      console.error('[admin/update-category] upload failed:', error);
       throw error;
     }
     // Source performs NO old-image cleanup on Update here at all (no

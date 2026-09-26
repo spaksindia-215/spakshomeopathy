@@ -42,7 +42,12 @@ export async function GET(
     const blog = await repo.findByLegacyId(legacyId);
     if (blog) {
       await deleteAdminUpload(blog.blogImage ?? '', 'blogs');
-      await repo.deleteBlog(legacyId);
+      try {
+        await repo.deleteBlog(legacyId);
+      } catch (error) {
+        console.error('[admin/destroy-blog] delete failed:', error);
+        throw error;
+      }
     }
   }
 

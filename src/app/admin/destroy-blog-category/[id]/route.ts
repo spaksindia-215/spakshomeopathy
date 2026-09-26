@@ -46,7 +46,12 @@ export async function GET(
     const category = await repo.findByLegacyId(legacyId);
     if (category) {
       await deleteAdminUpload(category.bcatImage ?? '', 'blog-categories');
-      await repo.deleteBlogCategory(legacyId);
+      try {
+        await repo.deleteBlogCategory(legacyId);
+      } catch (error) {
+        console.error('[admin/destroy-blog-category] delete failed:', error);
+        throw error;
+      }
     }
     // No matching row: same disclosed non-BROKEN-register edge as
     // destroy-slider/destroy-pincode.
