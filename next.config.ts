@@ -67,6 +67,16 @@ const nextConfig: NextConfig = {
     unoptimized: true,
   },
 
+  // DEPLOYMENT FIX (Vercel), not an application-behavior change: the
+  // upload helpers resolve `process.cwd()/public/...`, which made file
+  // tracing copy all of /public (~600 MB) into every admin function,
+  // exceeding Vercel's 250 MB function limit and the Hobby plan's
+  // 12-function cap. /public is served statically by the host, so no
+  // route needs it bundled.
+  outputFileTracingExcludes: {
+    '*': ['public/**/*'],
+  },
+
   typescript: {
     // Never suppress type errors. Build must fail on type errors.
     ignoreBuildErrors: false,

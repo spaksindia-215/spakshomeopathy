@@ -74,3 +74,4 @@ playwright/.cache/
 # asset-checksums.sha256 remain tracked as the integrity record (contract
 # S-6) and can be used to verify these bytes still match the Laravel
 # originals with `npm run assets:verify`.
+.vercel
