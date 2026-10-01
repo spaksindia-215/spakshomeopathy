@@ -14,13 +14,8 @@ const SHIPPING_FEE = 49;
  * from the Herbs Store's `HerbsCartPage.tsx` (identical layout, copy, and
  * free-shipping-threshold behavior) so both storefronts' cart experience
  * match exactly, per the owner's request.
- *
- * NO CHECKOUT PAGE EXISTS for this store yet (unlike Herbs, which has a
- * real `/herbs/checkout`) — the "Proceed to Checkout" action links back
- * to the catalogue instead of a page that doesn't exist. Wire this to a
- * real `/homeopathy/checkout` once that flow is built, rather than
- * pointing at a placeholder route.
- */
+*/
+
 export function HomeopathyCartPage() {
   const { cart, cartSubtotal, setCartQuantity, removeFromCart } = useHomeopathyStore();
 
@@ -116,7 +111,7 @@ export function HomeopathyCartPage() {
               <span>₹{total}</span>
             </div>
             <Link
-              href="/homeopathy/products"
+              href="/homeopathy/checkout"
               className="hm-btn hm-btn--primary hm-btn--full"
               style={{ marginTop: 16 }}
             >

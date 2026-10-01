@@ -498,6 +498,16 @@
   background: linear-gradient(120deg, #fdf4ea 0%, #fbead9 100%);
   color: var(--green-600);
 }
+.sp-redesign a.sp-division-card-dark,
+.sp-redesign a.sp-division-card-forest {
+  color: var(--ivory);
+}
+.sp-redesign a.sp-division-card-light {
+  color: var(--green-600);
+}
+.sp-redesign a.sp-division-card-cream {
+  color: var(--green-600);
+}
 
 .sp-division-card-copy {
   position: relative;

@@ -320,7 +320,10 @@ export async function RedesignedHome() {
           <div className="sp-divisions-stack">
             {/* Division 01 — Homeopathy, split into Medicines / Cosmetics */}
             <div className="sp-division-split">
-              <div className="sp-division-card sp-division-card-dark sp-division-card-split">
+              <Link
+                href="/homeopathy/products"
+                className="sp-division-card sp-division-card-dark sp-division-card-split"
+              >
                 <LeafBranchDecor style={{ top: -18, left: -10, transform: 'scaleX(-1)' }} />
                 <LeafBranchDecor style={{ top: -18, right: -10 }} />
                 <div className="sp-division-card-copy">
@@ -339,16 +342,16 @@ export async function RedesignedHome() {
                     Classical homeopathic medicines, prepared in the potencies our clinic
                     prescribes.
                   </p>
-                  <Link
-                    href="/homeopathy/products"
-                    className="sp-division-cta sp-division-cta-accent"
-                  >
+                  <span className="sp-division-cta sp-division-cta-accent">
                     Explore Medicines →
-                  </Link>
+                  </span>
                 </div>
-              </div>
+              </Link>
 
-              <div className="sp-division-card sp-division-card-forest sp-division-card-split">
+              <Link
+                href="/homeopathy/cosmetics"
+                className="sp-division-card sp-division-card-forest sp-division-card-split"
+              >
                 <LeafBranchDecor style={{ top: -18, left: -10, transform: 'scaleX(-1)' }} />
                 <LeafBranchDecor style={{ top: -18, right: -10 }} />
                 <div className="sp-division-card-copy">
@@ -366,18 +369,15 @@ export async function RedesignedHome() {
                   <p className="sp-division-card-desc">
                     Natural homeopathic cosmetics, gentle care for healthy, radiant you.
                   </p>
-                  <Link
-                    href="/homeopathy/cosmetics"
-                    className="sp-division-cta sp-division-cta-accent"
-                  >
+                  <span className="sp-division-cta sp-division-cta-accent">
                     Explore Cosmetics →
-                  </Link>
+                  </span>
                 </div>
-              </div>
+              </Link>
             </div>
 
             {/* Division 02 — Herbs */}
-            <div className="sp-division-card sp-division-card-light">
+            <Link href="/herbs" className="sp-division-card sp-division-card-light">
               <div className="sp-division-card-media sp-division-card-media-left">
                 <img
                   src="/assets/images/redesign/division-herbs.png"
@@ -407,9 +407,9 @@ export async function RedesignedHome() {
                     <MortarIcon /> Natural Remedies
                   </span>
                 </div>
-                <Link href="/herbs" className="sp-division-cta sp-division-cta-forest">
+                <span className="sp-division-cta sp-division-cta-forest">
                   Visit Herbs Store →
-                </Link>
+                </span>
               </div>
               <span className="sp-division-tagline sp-division-tagline-dark">
                 Pure
@@ -419,10 +419,10 @@ export async function RedesignedHome() {
                 Real Care
               </span>
               <LeafBranchDecor style={{ bottom: -12, right: 12, opacity: 0.28 }} />
-            </div>
+            </Link>
 
             {/* Division 03 — Nutritional & Supplements */}
-            <div className="sp-division-card sp-division-card-cream">
+            <Link href="/nutrition" className="sp-division-card sp-division-card-cream">
               <div className="sp-division-card-copy">
                 <div className="sp-division-card-head">
                   <span className="sp-division-badge sp-division-badge-accent">Division 03</span>
@@ -447,9 +447,9 @@ export async function RedesignedHome() {
                     <HeartIcon /> Wellness Support
                   </span>
                 </div>
-                <Link href="/nutrition" className="sp-division-cta sp-division-cta-accent">
+                <span className="sp-division-cta sp-division-cta-accent">
                   Browse division →
-                </Link>
+                </span>
               </div>
               <div className="sp-division-card-media sp-division-card-media-right">
                 <img
@@ -458,7 +458,7 @@ export async function RedesignedHome() {
                   className="sp-division-card-img"
                 />
               </div>
-            </div>
+            </Link>
           </div>
         </div>
       </section>

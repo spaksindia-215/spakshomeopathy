@@ -327,7 +327,7 @@ export function HerbsCheckoutPage() {
                   ? 'Loading payment widget…'
                   : paymentReady
                     ? `Pay ₹${total} with Razorpay`
-                    : `Place Demo Order — ₹${total}`}
+                    : `Place Order — ₹${total}`}
             </button>
           </form>
 
