@@ -29,7 +29,7 @@ export const DEMO_PRODUCTS: Product[] = [
       '<p><strong>Ankylosing spondylitis is associate degree disease that, over time, will cause a number of the vertebrae in your spine to fuse.</strong></p>\r\n\r\n<p><strong>This fusing makes the spine less versatile and may end in a hunched-forward posture.</strong></p>\r\n\r\n<p><strong>If ribs square measure affected, it is troublesome to breathe deeply.</strong></p>\r\n\r\n<p><strong>Ankylosing spondylitis affects men more often than women. Signs and symptoms typically begin in early adulthood.</strong></p>\r\n\r\n<p><strong>Inflammation can also occur in different elements of your body &mdash; most ordinarily, your eyes.</strong></p>',
     pColor: null,
     pSize: null,
-    videoLink: null,
+    videoLink: 'https://www.youtube.com/watch?v=lbK28woDbgk',
     reffNo: null,
     hsnCode: null,
     shippingTime: null,

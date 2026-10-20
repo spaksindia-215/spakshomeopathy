@@ -8,7 +8,8 @@ echo "=== 2. Installing dependencies ==="
 npm ci --include=dev
 
 echo "=== 3. Building Next.js application ==="
-npm run build
+rm -rf .next
+NODE_ENV=production npm run build
 
 echo "=== 4. Reloading PM2 process ==="
 pm2 reload ecosystem.config.cjs --update-env || pm2 start ecosystem.config.cjs

@@ -11,6 +11,7 @@
  */
 
 import type { CSSProperties } from 'react';
+import { extractYoutubeVideoId } from '@/lib/videos/schema';
 
 export interface ProductImageProps {
   /** Filename from `product.pBestimg` (or a `slot{N}.pImage`) — resolved
@@ -30,7 +31,7 @@ export function ProductImage({ filename, alt, className, style }: ProductImagePr
       src={`/uploaded_files/products/${filename}`}
       alt={alt}
       className={className}
-      style={{ objectFit: 'cover', width: '100%', height: '100%', ...style }}
+      style={{ objectFit: 'contain', width: '100%', height: '100%', ...style }}
     />
   );
 }
@@ -108,5 +109,61 @@ export function HomeopathyPlaceholder({
         opacity="0.85"
       />
     </svg>
+  );
+}
+
+export interface HomeopathyVideoEmbedProps {
+  /** A full YouTube URL (e.g. https://www.youtube.com/watch?v=...),
+   * a short URL (youtu.be/...), an embed URL, or a bare 11-char ID. */
+  urlOrId: string | null | undefined;
+  title?: string;
+  badgeLabel?: string;
+  className?: string;
+}
+
+/**
+ * YouTube video embed player for Homeopathy PDP and informational panels.
+ * Configured specifically NOT to run automatically (`autoplay=0` and no
+ * autoplay feature policy), with lazy loading and 16:9 responsive aspect ratio.
+ */
+export function HomeopathyVideoEmbed({
+  urlOrId,
+  title,
+  badgeLabel = 'Video Guide',
+  className,
+}: HomeopathyVideoEmbedProps) {
+  const videoId = extractYoutubeVideoId(urlOrId);
+  if (!videoId) return null;
+
+  return (
+    <div className={`hm-product-video ${className ?? ''}`.trim()}>
+      <div className="hm-product-video__header">
+        <span className="hm-product-video__badge">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M8 5v14l11-7z" />
+          </svg>
+          {badgeLabel}
+        </span>
+        <h3 className="hm-product-video__title">
+          {title
+            ? /guide$/i.test(title.trim())
+              ? title
+              : `${title} — Video Guide`
+            : 'Watch Video Guide'}
+        </h3>
+      </div>
+      <div className="hm-product-video__player">
+        <iframe
+          src={`https://www.youtube.com/embed/${videoId}?autoplay=0&rel=0`}
+          title={title ? `${title} Video` : 'Product Video'}
+          allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          allowFullScreen
+          loading="lazy"
+        />
+      </div>
+      <p className="hm-product-video__caption">
+        Watch Dr. S.K. Meena explain the condition, symptoms, and homeopathic treatment. Click to play.
+      </p>
+    </div>
   );
 }

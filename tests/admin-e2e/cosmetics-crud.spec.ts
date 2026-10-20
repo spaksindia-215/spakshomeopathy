@@ -38,7 +38,7 @@ test.afterEach(async ({ page }) => {
   }
 });
 
-test('add a cosmetics product, see it on /homeopathy/cosmetics, edit it, then delete it', async ({
+test('add a cosmetics product, see it on /cosmetics, edit it, then delete it', async ({
   page,
 }) => {
   // 1. Create.
@@ -54,7 +54,7 @@ test('add a cosmetics product, see it on /homeopathy/cosmetics, edit it, then de
   await expect(page.locator('tr', { hasText: NAME })).toBeVisible();
 
   // 3. Appears on the public page (previously always empty).
-  await page.goto('/homeopathy/cosmetics');
+  await page.goto('/cosmetics');
   await expect(page.locator('body')).toContainText(NAME);
 
   // 4. Edit — change the name, confirm the edit persisted publicly.
@@ -72,7 +72,7 @@ test('add a cosmetics product, see it on /homeopathy/cosmetics, edit it, then de
   await page.getByRole('button', { name: 'Save Changes' }).click();
   await expect(page.locator('.alert-success')).toBeVisible();
 
-  await page.goto('/homeopathy/cosmetics');
+  await page.goto('/cosmetics');
   await expect(page.locator('body')).toContainText(EDITED_NAME);
   await expect(page.locator('body')).not.toContainText(NAME);
 
@@ -84,7 +84,7 @@ test('add a cosmetics product, see it on /homeopathy/cosmetics, edit it, then de
   await expect(page).toHaveURL(/\/admin\/cosmetics-list/);
   await expect(page.locator('tr', { hasText: EDITED_NAME })).toHaveCount(0);
 
-  await page.goto('/homeopathy/cosmetics');
+  await page.goto('/cosmetics');
   await expect(page.locator('body')).not.toContainText(EDITED_NAME);
   await expect(page.locator('body')).toContainText('coming soon');
 });

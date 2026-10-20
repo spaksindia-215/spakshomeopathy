@@ -6,5 +6,5 @@
  * site CSS or the Herbs Store's own `herbs-theme.css`.
  */
 export function HomeopathyStylesheets() {
-  return <link rel="stylesheet" href="/homeopathy-assets/homeopathy-theme.css" precedence="high" />;
+  return <link rel="stylesheet" href="/homeopathy-assets/homeopathy-theme.css?v=2" precedence="high" />;
 }

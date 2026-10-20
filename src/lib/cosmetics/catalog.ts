@@ -1,23 +1,23 @@
 import { readCosmeticsProductsFromDb } from './db/service';
-import type { Product } from '@/lib/mongodb/schemas';
+import { CURATED_COSMETIC_PRODUCTS, type CosmeticProduct } from './curatedProducts';
 
 /**
- * SERVER-ONLY entry point for the Cosmetics product line — mirrors
- * `@/lib/motherTincture/catalog.ts#getMergedMotherTinctureCatalog()` in
- * shape, but WITHOUT merging in the real curated catalogue as a base:
- * unlike Mother Tincture (framed by the owner as "useful for adding other
- * medicines", a cross-cutting category shown alongside the main
- * catalogue), Cosmetics is its own distinct product line with no real
- * curated products behind it at all (see `/homeopathy/cosmetics/page.tsx`'s
- * prior header comment) — admin-added Cosmetics products are the ENTIRE
- * pool, not an addition to another one.
- *
- * MUST only be imported from a Server Component — it calls
- * `readCosmeticsProductsFromDb()`, which touches MongoDB and must never
- * run in the browser. Called ONCE per request from a Server Component
- * page and passed down as a prop.
+ * SERVER-ONLY entry point for the Cosmetics product line.
+ * Merges any admin-added cosmetics from the database with the curated
+ * 3-type catalog (Homeopathic, Allopathic, Ayurvedic).
  */
-export async function getCosmeticsCatalog(): Promise<Product[]> {
+export async function getCosmeticsCatalog(): Promise<CosmeticProduct[]> {
   const dbDocs = await readCosmeticsProductsFromDb();
-  return dbDocs ?? [];
+  if (!dbDocs || dbDocs.length === 0) {
+    return CURATED_COSMETIC_PRODUCTS;
+  }
+  
+  const mappedDb = dbDocs.map((p) => ({
+    ...p,
+    cosmeticType: ((p as unknown as { cosmeticType?: string }).cosmeticType || 'homeopathic') as 'homeopathic' | 'allopathic' | 'ayurvedic',
+  }));
+
+  return [...mappedDb, ...CURATED_COSMETIC_PRODUCTS];
 }
+
+export type { CosmeticProduct };

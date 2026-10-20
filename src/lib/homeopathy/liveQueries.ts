@@ -80,12 +80,99 @@ export async function filterAndSortHomeopathyProducts(
   return sorted;
 }
 
-/** Related products: same `pCat`, excluding the product itself. */
+/** Related products: same `pCat`, or other cosmetics for cosmetic items. */
 export async function getRelatedHomeopathyProducts(
   product: Product,
   limit: number
 ): Promise<Product[]> {
+  // If this is a cosmetic product, return other cosmetic products
+  if (
+    'cosmeticType' in product ||
+    (product.legacyId && product.legacyId >= 8000 && product.legacyId <= 8050)
+  ) {
+    try {
+      const { getCosmeticsCatalog } = await import('@/lib/cosmetics/catalog');
+      const cosmetics = await getCosmeticsCatalog();
+      return cosmetics.filter((p) => p.legacyId !== product.legacyId).slice(0, limit);
+    } catch {
+      // fallback
+    }
+  }
+
   if (product.pCat === null || product.pCat === undefined) return [];
   const products = await getProductsByCategoryLive(product.pCat, 1);
   return products.filter((p) => p.legacyId !== product.legacyId).slice(0, limit);
 }
+
+/**
+ * Find a product by its slug across MongoDB products collection,
+ * admin-added Mother Tincture database, cosmetics catalog, and demo fixture fallback.
+ */
+export async function getProductBySlugLive(slug: string): Promise<Product | null> {
+  if (!slug) return null;
+
+  // 1. Query MongoDB products collection (all 397+ live products)
+  try {
+    const db = await getDb();
+    const repo = new ProductRepository(db);
+    const product = await repo.findBySlug(slug);
+    if (product) return product;
+  } catch (err) {
+    console.error('Failed to query product from MongoDB by slug:', err);
+  }
+
+  // 2. Query Cosmetics catalog (curated + DB cosmetics)
+  try {
+    const { getCosmeticsCatalog } = await import('@/lib/cosmetics/catalog');
+    const cosmetics = await getCosmeticsCatalog();
+    if (cosmetics && cosmetics.length > 0) {
+      const decoded = decodeURIComponent(slug).toLowerCase();
+      const cosmetic = cosmetics.find(
+        (p) =>
+          p.pSlug === slug ||
+          p.pSlug === decodeURIComponent(slug) ||
+          p.pSlug?.toLowerCase() === decoded ||
+          String(p.legacyId) === slug
+      );
+      if (cosmetic) return cosmetic;
+    }
+  } catch (err) {
+    console.error('Failed to query cosmetic product by slug:', err);
+  }
+
+  // 3. Query admin-added Mother Tincture products
+  try {
+    const { readMotherTinctureProductsFromDb } = await import('@/lib/motherTincture/db/service');
+    const mtDocs = await readMotherTinctureProductsFromDb();
+    if (mtDocs && mtDocs.length > 0) {
+      const decoded = decodeURIComponent(slug).toLowerCase();
+      const mt = mtDocs.find(
+        (p) =>
+          p.pSlug === slug ||
+          p.pSlug === decodeURIComponent(slug) ||
+          p.pSlug?.toLowerCase() === decoded
+      );
+      if (mt) return mt;
+    }
+  } catch (err) {
+    console.error('Failed to query mother tincture product by slug:', err);
+  }
+
+  // 4. Fallback to demo fixture products
+  const { getProductBySlug: getDemoProductBySlug, getAllProducts } = await import(
+    '@/lib/demo/products'
+  );
+  const decoded = decodeURIComponent(slug);
+  const demo =
+    getDemoProductBySlug(slug) ??
+    getDemoProductBySlug(decoded) ??
+    getAllProducts().find(
+      (p) =>
+        p.pSlug?.toLowerCase() === slug.toLowerCase() ||
+        p.pSlug?.toLowerCase() === decoded.toLowerCase()
+    );
+  if (demo) return demo;
+
+  return null;
+}
+

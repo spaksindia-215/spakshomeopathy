@@ -313,6 +313,18 @@ export default async function AdminEditProductPage({
                   </div>
 
                   <div className="form-group">
+                    <label htmlFor="video_link">Product Video Link (YouTube URL or ID)</label>
+                    <input
+                      type="text"
+                      className="form-control"
+                      id="video_link"
+                      name="video_link"
+                      placeholder="e.g. https://www.youtube.com/watch?v=... or Video ID"
+                      defaultValue={product.videoLink ?? ''}
+                    />
+                  </div>
+
+                  <div className="form-group">
                     <label htmlFor="exampleInputPassword1">Product quantity</label>
                     <input
                       type="number"

@@ -30,7 +30,18 @@ export class ProductRepository extends ValidatedRepository<Product> {
    * (blueprint's own "most intricate page" framing, §22 M3).
    */
   async findBySlug(pSlug: string): Promise<Product | null> {
-    return this.findOne({ pSlug });
+    if (!pSlug) return null;
+    const direct = await this.findOne({ pSlug });
+    if (direct) return direct;
+
+    const decoded = decodeURIComponent(pSlug);
+    if (decoded !== pSlug) {
+      const decodedMatch = await this.findOne({ pSlug: decoded });
+      if (decodedMatch) return decodedMatch;
+    }
+
+    const escaped = pSlug.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    return this.findOne({ pSlug: { $regex: new RegExp(`^${escaped}$`, 'i') } });
   }
 
   /**

@@ -254,6 +254,17 @@ export default async function AdminAddProductPage() {
                   </div>
 
                   <div className="form-group">
+                    <label htmlFor="video_link">Product Video Link (YouTube URL or ID)</label>
+                    <input
+                      type="text"
+                      className="form-control"
+                      id="video_link"
+                      name="video_link"
+                      placeholder="e.g. https://www.youtube.com/watch?v=... or Video ID"
+                    />
+                  </div>
+
+                  <div className="form-group">
                     <label htmlFor="exampleInputPassword1">Product quantity</label>
                     <input
                       type="number"

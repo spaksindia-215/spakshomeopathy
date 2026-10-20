@@ -85,7 +85,7 @@ export async function HomeopathyFooter() {
 
           <div className="hm-footer__bottom">
             <span>&copy; 2026 Spaks India Business Solution Pvt Ltd | All Rights Reserved</span>
-            <span>Spaks Homeopathy — Medicine Store</span>
+            <span>Spaks Homeopathy</span>
           </div>
           <p className="hm-footer__disclaimer">
             Information on this site is provided for general informational purposes only and is not

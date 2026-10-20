@@ -52,7 +52,7 @@ export default async function AdminAddCosmeticsPage() {
               <div className="box-body">
                 <p className="text-muted" style={{ fontSize: 12.5 }}>
                   {dbConfigured
-                    ? 'Saves to the cosmeticsProducts database collection. Saved products appear on /homeopathy/cosmetics.'
+                    ? 'Saves to the cosmeticsProducts database collection. Saved products appear on /cosmetics.'
                     : 'No database is configured for Cosmetics admin-add — submissions will show a ' +
                       'clear "not saved" notice instead of persisting.'}
                 </p>

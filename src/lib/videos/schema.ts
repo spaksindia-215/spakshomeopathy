@@ -36,12 +36,20 @@ export type Video = z.infer<typeof videoSchema>;
 /** Accepts a bare 11-character YouTube video id, or a full watch/share/
  * embed URL, and extracts the id either way — so an admin can paste
  * whatever YouTube gives them without needing to know the id format. */
-export function extractYoutubeVideoId(input: string): string | null {
+export function extractYoutubeVideoId(input?: string | null): string | null {
+  if (!input) return null;
   const trimmed = input.trim();
+  if (!trimmed) return null;
   if (/^[A-Za-z0-9_-]{11}$/.test(trimmed)) return trimmed;
 
+  const iframeMatch = trimmed.match(
+    /src=["'](?:https?:)?\/\/(?:www\.)?youtube(?:-nocookie)?\.com\/embed\/([A-Za-z0-9_-]{11})/i
+  );
+  if (iframeMatch && iframeMatch[1]) return iframeMatch[1];
+
   const patterns = [
-    /(?:youtube\.com\/watch\?v=|youtube\.com\/embed\/|youtu\.be\/)([A-Za-z0-9_-]{11})/,
+    /(?:youtu\.be\/|youtube(?:-nocookie)?\.com\/(?:embed\/|v\/|shorts\/|live\/))([A-Za-z0-9_-]{11})/i,
+    /[?&]v=([A-Za-z0-9_-]{11})/i,
   ];
   for (const pattern of patterns) {
     const match = trimmed.match(pattern);

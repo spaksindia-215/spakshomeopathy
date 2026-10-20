@@ -93,7 +93,7 @@ export function AltProductCard({ product }: AltProductCardProps) {
     <div className="col-lg-2 col-md-2 col-sm-3 col-xs-3">
       <div className="product-item mb-30">
         <div className="product-thumb">
-          <a href={`/detail/${product.pSlug ?? ''}`}>
+          <a href={`/product-details/${product.pSlug ?? ''}`}>
             <img
               src={brokenImageSrc}
               className="pri-img"
@@ -119,7 +119,7 @@ export function AltProductCard({ product }: AltProductCardProps) {
         </div>
         <div className="product-caption">
           <div className="">
-            <a href={`/detail/${product.pSlug ?? ''}`}>
+            <a href={`/product-details/${product.pSlug ?? ''}`}>
               <h4 style={{ color: '#000' }}>{truncatedName}</h4>
             </a>
           </div>

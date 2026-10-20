@@ -7,8 +7,14 @@ import { Breadcrumb } from '@/components/ui/Breadcrumb';
 import { StarRating } from '@/components/ui/StarRating';
 import { AddToCartForm } from '@/components/interactive/AddToCartForm';
 import { getProductBySlug, getCategoriesByType } from '@/lib/demo';
+import { getProductBySlugLive } from '@/lib/homeopathy/liveQueries';
 import { CategoryCard } from '@/components/cards/CategoryCard';
 import type { VariantSlot } from '@/lib/mongodb/schemas';
+import { HomeopathyVideoEmbed } from '@/components/homeopathy/HomeopathyMedia';
+import { getProductRelatedVideo } from '@/lib/homeopathy/queries';
+
+export const dynamicParams = true;
+export const revalidate = 60;
 
 /**
  * `/product-details/{slug}` — ported from `product-detail.blade.php`
@@ -112,9 +118,17 @@ export default async function ProductDetailsPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const product = getProductBySlug(slug);
+  const product = (await getProductBySlugLive(slug)) ?? getProductBySlug(slug);
   if (!product) notFound();
 
+  const videoInfo = getProductRelatedVideo(product, {
+    title: product.pName || product.pHeading,
+    category: (product as { cosmeticType?: string })?.cosmeticType
+      ? `${(product as { cosmeticType?: string }).cosmeticType} Skincare Face Wash Cosmetics`
+      : undefined,
+    searchTerms: product.searchTerms,
+    sku: product.legacyId,
+  });
   const diseaseCategories = getCategoriesByType('N', 1);
 
   return (
@@ -308,7 +322,14 @@ export default async function ProductDetailsPage({
                   id="description"
                 >
                   {/* source renders p_desc unescaped via {!! !!}, matching real Blade behavior */}
-                  <p dangerouslySetInnerHTML={{ __html: product.pDesc ?? '' }} />
+                  <div dangerouslySetInnerHTML={{ __html: product.pDesc ?? '' }} />
+                  {videoInfo && (
+                    <HomeopathyVideoEmbed
+                      urlOrId={videoInfo.videoId}
+                      title={videoInfo.title}
+                      badgeLabel={videoInfo.isCustom ? 'Video Guide' : 'Related Medicine Video'}
+                    />
+                  )}
                 </div>
 
                 <div

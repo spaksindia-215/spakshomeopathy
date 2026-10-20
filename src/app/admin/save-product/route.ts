@@ -158,7 +158,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     pDesc: str(formData, 'p_desc'),
     pColor: null,
     pSize: null,
-    videoLink: null,
+    videoLink: str(formData, 'video_link'),
     reffNo: null,
     hsnCode: null,
     shippingTime: null,

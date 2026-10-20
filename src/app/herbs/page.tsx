@@ -96,6 +96,218 @@ export default async function HerbsHomePage() {
           </div>
         </section>
 
+        {/* Nutrition & Supplements Section */}
+        <section className="hs-section" id="nutrition-supplements" style={{ paddingTop: 36, paddingBottom: 20 }}>
+          <div className="container">
+            <div className="hs-section__head" style={{ marginBottom: 24, display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', flexWrap: 'wrap', gap: 16 }}>
+              <div>
+                <span
+                  style={{
+                    display: 'inline-block',
+                    fontSize: '11px',
+                    fontWeight: 700,
+                    letterSpacing: '0.08em',
+                    textTransform: 'uppercase',
+                    color: '#0a6a4b',
+                    background: 'rgba(10, 106, 75, 0.08)',
+                    padding: '4px 12px',
+                    borderRadius: '999px',
+                    marginBottom: '10px',
+                  }}
+                >
+                  Nutrition &amp; Supplement
+                </span>
+                <h2 className="hs-section__title" style={{ fontSize: '26px', fontWeight: 800, color: 'var(--herb-ink, #0f172a)', margin: '0 0 6px', letterSpacing: '-0.02em' }}>
+                  Nutrition &amp; Supplements
+                </h2>
+                <p className="hs-section__subtitle" style={{ fontSize: '14.5px', color: 'var(--herb-ink-soft, #64748b)', margin: 0, lineHeight: 1.5 }}>
+                  Essential daily nutrition, targeted vitamins and restorative herbal supplements
+                </p>
+              </div>
+              <Link
+                href="/nutrition"
+                className="hs-section__link"
+                style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: 6,
+                  color: '#0a6a4b',
+                  fontWeight: 700,
+                  fontSize: '14px',
+                  textDecoration: 'none',
+                }}
+              >
+                Explore all supplements{' '}
+                <HerbIcon name="chevron-down" size={14} style={{ transform: 'rotate(-90deg)' }} />
+              </Link>
+            </div>
+
+            {/* Single Box for Nutrition & Supplements */}
+            <Link
+              href="/nutrition"
+              className="hs-nutrition-single-card"
+              style={{
+                background: 'linear-gradient(135deg, #0a6a4b 0%, #075239 45%, #0f4469 100%)',
+                color: '#ffffff',
+                borderRadius: '20px',
+                padding: '36px 40px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                gap: '32px',
+                minHeight: '220px',
+                cursor: 'pointer',
+                textDecoration: 'none',
+                boxShadow: '0 14px 32px -8px rgba(10, 106, 75, 0.45)',
+                transition: 'all 0.25s ease',
+                position: 'relative',
+                overflow: 'hidden',
+              }}
+            >
+              <div style={{ flex: '1 1 560px', zIndex: 2 }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 14 }}>
+                  <div
+                    style={{
+                      width: '46px',
+                      height: '46px',
+                      borderRadius: '999px',
+                      background: 'rgba(255, 255, 255, 0.18)',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      color: '#ffffff',
+                      flexShrink: 0,
+                    }}
+                  >
+                    <HerbIcon name="shield" size={24} />
+                  </div>
+                  <span
+                    style={{
+                      fontSize: '11.5px',
+                      fontWeight: 700,
+                      letterSpacing: '0.08em',
+                      textTransform: 'uppercase',
+                      color: 'rgba(255, 255, 255, 0.85)',
+                    }}
+                  >
+                    Division 03 • Daily Wellness Care
+                  </span>
+                </div>
+
+                <h3
+                  style={{
+                    fontSize: '26px',
+                    fontWeight: 800,
+                    margin: '0 0 10px',
+                    color: '#ffffff',
+                    lineHeight: 1.25,
+                    letterSpacing: '-0.01em',
+                  }}
+                >
+                  Nutritional &amp; Dietary Supplements
+                </h3>
+
+                <p
+                  style={{
+                    fontSize: '14.5px',
+                    lineHeight: 1.6,
+                    color: 'rgba(255, 255, 255, 0.92)',
+                    margin: '0 0 20px',
+                    maxWidth: '680px',
+                  }}
+                >
+                  Everyday nutrition and wellness support alongside treatment. Browse genuine multivitamins,
+                  calcium complexes, standardized botanical extracts, and restorative herbal tonics.
+                </p>
+
+                {/* Sub-tags */}
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: 10, marginBottom: 22 }}>
+                  <span
+                    style={{
+                      fontSize: '12px',
+                      fontWeight: 600,
+                      background: 'rgba(255, 255, 255, 0.16)',
+                      padding: '5px 14px',
+                      borderRadius: '999px',
+                      color: '#ffffff',
+                      backdropFilter: 'blur(4px)',
+                    }}
+                  >
+                    Vitamins &amp; Minerals
+                  </span>
+                  <span
+                    style={{
+                      fontSize: '12px',
+                      fontWeight: 600,
+                      background: 'rgba(255, 255, 255, 0.16)',
+                      padding: '5px 14px',
+                      borderRadius: '999px',
+                      color: '#ffffff',
+                      backdropFilter: 'blur(4px)',
+                    }}
+                  >
+                    Herbal Dietary Extracts
+                  </span>
+                  <span
+                    style={{
+                      fontSize: '12px',
+                      fontWeight: 600,
+                      background: 'rgba(255, 255, 255, 0.16)',
+                      padding: '5px 14px',
+                      borderRadius: '999px',
+                      color: '#ffffff',
+                      backdropFilter: 'blur(4px)',
+                    }}
+                  >
+                    Superfoods &amp; Tonics
+                  </span>
+                </div>
+
+                <span
+                  style={{
+                    fontSize: '14.5px',
+                    fontWeight: 700,
+                    color: '#ffffff',
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: 8,
+                    background: 'rgba(255, 255, 255, 0.22)',
+                    padding: '9px 20px',
+                    borderRadius: '10px',
+                    transition: 'background 0.2s ease',
+                  }}
+                >
+                  Browse Nutrition Store →
+                </span>
+              </div>
+
+              {/* Media image on right */}
+              <div
+                className="hs-nutrition-single-media"
+                style={{
+                  flex: '0 0 220px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  zIndex: 2,
+                }}
+              >
+                <img
+                  src="/assets/images/redesign/division-nutrition.png"
+                  alt="Glass jar of supplement capsules surrounded by fresh green leaves"
+                  style={{
+                    maxWidth: '100%',
+                    height: 'auto',
+                    maxHeight: '190px',
+                    objectFit: 'contain',
+                    filter: 'drop-shadow(0 12px 24px rgba(0,0,0,0.25))',
+                  }}
+                />
+              </div>
+            </Link>
+          </div>
+        </section>
+
         {/* Shop by Herb Form */}
         <section className="hs-section">
           <div className="container">

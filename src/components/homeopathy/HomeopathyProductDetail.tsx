@@ -2,13 +2,13 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { ProductImage } from './HomeopathyMedia';
+import { ProductImage, HomeopathyVideoEmbed } from './HomeopathyMedia';
 import { HomeopathyIcon } from './HomeopathyIcon';
 import { RatingLine, QuantitySelector } from './HomeopathyUI';
 import { HomeopathyProductCard } from './HomeopathyProductCard';
 import { useHomeopathyStore } from './HomeopathyStoreProvider';
 import type { Product } from '@/lib/mongodb/schemas';
-import { getShortDescription } from '@/lib/homeopathy/queries';
+import { getShortDescription, getProductRelatedVideo } from '@/lib/homeopathy/queries';
 
 export interface HomeopathyProductDetailProps {
   product: Product;
@@ -53,6 +53,14 @@ export function HomeopathyProductDetail({ product, related }: HomeopathyProductD
   const outOfStock = (product.pQuantity ?? 0) <= 0;
   const name = product.pName || product.pHeading;
   const shortDescription = getShortDescription(product, 220);
+  const videoInfo = getProductRelatedVideo(product, {
+    title: product.pName || product.pHeading,
+    category: (product as { cosmeticType?: string })?.cosmeticType
+      ? `${(product as { cosmeticType?: string }).cosmeticType} Skincare Face Wash Cosmetics`
+      : undefined,
+    searchTerms: product.searchTerms,
+    sku: product.legacyId,
+  });
 
   return (
     <>
@@ -185,12 +193,22 @@ export function HomeopathyProductDetail({ product, related }: HomeopathyProductD
               ))}
             </div>
             <div className="hm-tabs__panel" role="tabpanel">
-              {tab === 'description' &&
-                (product.pDesc ? (
-                  <div dangerouslySetInnerHTML={{ __html: product.pDesc }} />
-                ) : (
-                  <p>{shortDescription}</p>
-                ))}
+              {tab === 'description' && (
+                <div className="hm-tabs__description">
+                  {product.pDesc ? (
+                    <div dangerouslySetInnerHTML={{ __html: product.pDesc }} />
+                  ) : (
+                    <p>{shortDescription}</p>
+                  )}
+                  {videoInfo && (
+                    <HomeopathyVideoEmbed
+                      urlOrId={videoInfo.videoId}
+                      title={videoInfo.title}
+                      badgeLabel={videoInfo.isCustom ? 'Video Guide' : 'Related Medicine Video'}
+                    />
+                  )}
+                </div>
+              )}
               {tab === 'dosage' && (
                 <p style={{ whiteSpace: 'pre-line' }}>
                   {product.pDesc1 || 'Dosage information is not available for this product.'}

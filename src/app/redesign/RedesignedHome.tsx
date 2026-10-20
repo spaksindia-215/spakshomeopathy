@@ -4,6 +4,8 @@ import './redesign.css';
 import { getDb } from '@/lib/mongodb/client';
 import { SliderRepository } from '@/lib/mongodb/repositories/sliderRepository';
 import { getSiteSettings } from '@/lib/settings/repository';
+import { LanguageSwitcher } from '@/components/layout/LanguageSwitcher';
+import { SiteHeader } from '@/components/layout/SiteHeader';
 
 const WHY_SPAKS = [
   {
@@ -49,9 +51,10 @@ const WHY_SPAKS = [
 // dropdown (About, Diseases, Videos, Mother Tincture, Potencies, Contact)
 // now lives only in the footer's "Company"/"Explore" columns below.
 const NAV_LINKS = [
-  { label: 'Herbs', href: '/herbs' },
+  { label: 'Home', href: '/' },
   { label: 'Homeopathy', href: '/homeopathy' },
-  { label: 'Cosmetics', href: '/homeopathy/cosmetics' },
+  { label: 'Cosmetics', href: '/cosmetics' },
+  { label: 'Herbs', href: '/herbs' },
 ];
 
 /**
@@ -115,57 +118,11 @@ export async function RedesignedHome() {
 
   return (
     <div className="sp-redesign">
-      {/* Utility bar */}
-      <div className="sp-utility">
-        <div className="sp-container">
-          <div className="sp-utility-group">
-            <span>{settings.contactEmail}</span>
-            <span className="sp-utility-sep">|</span>
-            <span>{settings.contactPhone}</span>
-          </div>
-          <div className="sp-utility-group">
-            <a href="/assets/Mother-Tincture-Price-list.pdf" style={{ color: 'inherit' }}>
-              Diseases Catalogue (PDF)
-            </a>
-            <span className="sp-utility-sep">|</span>
-            <Link href="/consultancy" style={{ color: '#f6fbff', fontWeight: 600 }}>
-              Dr. Consultancy
-            </Link>
-          </div>
-        </div>
-      </div>
-
-      {/* Header */}
-      <header className="sp-header">
-        <div className="sp-container">
-          <Link href="/" className="sp-logo">
-            <img src="/assets/images/resources/logo.png" alt="Spaks Homeopathy" />
-          </Link>
-          <nav className="sp-nav">
-            {NAV_LINKS.map((link) => (
-              <Link key={link.label} href={link.href}>
-                {link.label}
-              </Link>
-            ))}
-          </nav>
-          <div className="sp-header-actions">
-            <button type="button" className="sp-icon-btn" aria-label="Search">
-              <SearchIcon />
-            </button>
-            <button type="button" className="sp-icon-btn" aria-label="Cart, 0 items">
-              <CartIcon />
-              <span className="sp-cart-badge">0</span>
-            </button>
-            <Link href="/products" className="sp-btn sp-btn-primary" style={{ padding: '13px 22px', fontSize: 14 }}>
-              Explore Products
-            </Link>
-            <button type="button" className="sp-mobile-toggle" aria-label="Open menu">
-              <span />
-              <span />
-            </button>
-          </div>
-        </div>
-      </header>
+      {/* Universal Site Header */}
+      <SiteHeader
+        contactEmail={settings.contactEmail}
+        contactPhone={settings.contactPhone}
+      />
 
       {/* Hero */}
       <section className="sp-hero">
@@ -349,7 +306,7 @@ export async function RedesignedHome() {
               </Link>
 
               <Link
-                href="/homeopathy/cosmetics"
+                href="/cosmetics"
                 className="sp-division-card sp-division-card-forest sp-division-card-split"
               >
                 <LeafBranchDecor style={{ top: -18, left: -10, transform: 'scaleX(-1)' }} />
@@ -708,7 +665,7 @@ export async function RedesignedHome() {
                   <Link href="/herbs">Herbs Store</Link>
                 </li>
                 <li>
-                  <Link href="/homeopathy/cosmetics">Cosmetics</Link>
+                  <Link href="/cosmetics">Cosmetics</Link>
                 </li>
                 <li>
                   <Link href="/nutrition">Nutritional &amp; Supplements</Link>

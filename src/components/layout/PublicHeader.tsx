@@ -47,6 +47,8 @@ import Link from 'next/link';
 import { getCartContent, getTotalCartItem } from '@/lib/cart';
 import { getDb } from '@/lib/mongodb/client';
 import { getSiteSettings } from '@/lib/settings/repository';
+import { LanguageSwitcher } from './LanguageSwitcher';
+import { SiteHeader } from './SiteHeader';
 
 /**
  * SITE SETTINGS WIRING (Site Settings feature): the topbar email/phone
@@ -76,7 +78,7 @@ async function StickyNavBody() {
         <div className="logo-box clearfix">
           <a
             className="navbar-brand"
-            href="https://spakshomeopathy.elitesfly.com/"
+            href="https://www.spakshomeopathy.com/"
             target="_blank"
             rel="noopener noreferrer"
           >
@@ -209,122 +211,14 @@ async function StickyNavBody() {
 export async function PublicHeader() {
   const db = await getDb();
   const settings = await getSiteSettings(db);
+  const cartContent = await getCartContent();
+  const totalCartItem = getTotalCartItem(cartContent);
+
   return (
-    <>
-      <section className="topbar-one">
-        <div className="container">
-          {/* OI-13: newline between each `</li>`/`<li>` in the Blade source
-              renders as one space; these items are inline-block, so the space
-              is layout (production gap 3px, ours was 0). Reproduced as {' '}. */}
-          <ul className="topbar-one__contact col-md-10">
-            <li className="topbar-one__contact-item">
-              <a href={`mailto:${settings.contactEmail}`}>
-                <i className="material-icons">email</i> {settings.contactEmail}{' '}
-              </a>
-            </li>{' '}
-            <li className="topbar-one__contact-item">
-              {' '}
-              <a href={`callto:${settings.contactPhoneDialable}`}>
-                <i className="material-icons">local_phone</i>{settings.contactPhone}
-              </a>
-            </li>{' '}
-            <li>
-              {/* Laravel emits a literal empty style="" attribute here.
-                  React's style prop cannot produce a bare empty string;
-                  an empty style attribute applies zero declarations and
-                  is unobservable in rendered behavior (contract §7.2). */}
-              <div id="google_translate_element"></div>
-            </li>
-          </ul>
-          {/* /.topbar-one__contact */}
-
-          <div className="topbar-one__buttons col-md-2">
-            <div className="top-account">
-              {/*
-              <ul>
-              <li><a href="{{url('register')}}">Register</a></li>
-              <li><a href="{{url('login')}}">Login</a></li>
-              </ul>
-              */}
-            </div>
-
-            <div>
-              {' '}
-              <a href="/consultancy" className="topbar-one__btn">
-                Dr. Consultancy
-              </a>
-            </div>
-          </div>
-          {/* /.topbar-one__buttons */}
-        </div>
-        {/* /.container */}
-      </section>
-
-      {/*
-      {/*
-        OI-10 — STICKY-HEADER CLONE. Option 1 (server-render the clone) was
-        ATTEMPTED 2026-08-04 per the owner's architectural decision, and
-        PROVEN TECHNICALLY IMPOSSIBLE without editing theme.js. Reverted to a
-        single <nav>, matching the Blade source. See docs/GATE-REPORT-M1.md
-        §13.2 for the full evidence.
-
-        WHY IT CANNOT WORK
-        ------------------
-        `public/assets/js/theme.js:193` runs unconditionally on DOM-ready:
-
-            if ($('.stricky').length) {
-              $('.stricky').addClass('original').clone(true)
-                           .insertAfter('.stricky')
-                           .addClass('stricked-menu').removeClass('original');
-            }
-
-        The selector is `.stricky`, and BOTH the original and the clone carry
-        that class in production. Server-rendering the clone therefore makes
-        `$('.stricky')` match TWO elements, so `.clone(true)` produces TWO
-        clones instead of one — 2 navs become 4, and with React's
-        reconciliation the observed count reached SIX (measured: 2 pre-JS,
-        6 after ~700ms).
-
-        Suppressing that would require changing theme.js's selector or adding
-        a guard — i.e. modifying a production asset, which contract F-30
-        forbids (assets ship unchanged) and IR-8 forbids (no business/behavior
-        logic changes without approval).
-
-        THE ACTUAL ROOT CAUSE OF THE 20px (separate from hydration)
-        -----------------------------------------------------------
-        The missing 20px was NOT the clone. It is `.site-header{padding-top:
-        10px; padding-bottom:10px}` — a rule that exists in PRODUCTION's
-        style.css (188,980 bytes) but NOT in the stale local backup we copied
-        (182,399 bytes). Production's stylesheet is a strict superset: 39
-        selectors exist only in production, 0 only locally.
-
-        Verified 2026-08-04 by temporarily serving production's style.css:
-        header delta 0, body delta 0 — EXACT parity on /about. The stylesheet
-        was then restored so the copied assets stay checksum-clean.
-
-        This is BCN-03 (local backup ≠ deployed code) extending to assets.
-        Resolving it requires an owner decision on OI-12.
-      */}
-      <header className="site-header header-one">
-        <nav className="navbar navbar-expand-lg navbar-light header-navigation stricky">
-          <StickyNavBody />
-        </nav>
-      </header>
-
-      <script
-        type="text/javascript"
-        dangerouslySetInnerHTML={{
-          __html: `
-function googleTranslateElementInit() {
-  new google.translate.TranslateElement({pageLanguage: 'en'}, 'google_translate_element');
-}
-`,
-        }}
-      />
-      <script
-        type="text/javascript"
-        src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"
-      ></script>
-    </>
+    <SiteHeader
+      contactEmail={settings.contactEmail}
+      contactPhone={settings.contactPhone}
+      cartCountOverride={totalCartItem}
+    />
   );
 }

@@ -37,7 +37,7 @@ export function HomeopathyProductCard({ product }: HomeopathyProductCardProps) {
     <div className="hm-product-card">
       <div className="hm-product-card__media">
         <div className="hm-product-card__badges">
-          {discount && <span className="hm-badge hm-badge--sale">Sale</span>}
+          {discount && <span className="hm-badge hm-badge--sale">{discount}% OFF</span>}
           {outOfStock && <span className="hm-badge hm-badge--out">Out of Stock</span>}
         </div>
         <div className="hm-product-card__actions">
@@ -60,7 +60,7 @@ export function HomeopathyProductCard({ product }: HomeopathyProductCardProps) {
             <HomeopathyIcon name="eye" size={17} />
           </button>
         </div>
-        <Link href={`/homeopathy/product/${product.pSlug}`} aria-label={name ?? 'Product'}>
+        <Link href={`/homeopathy/product/${product.pSlug}`} className="hm-product-card__media-link" aria-label={name ?? 'Product'}>
           <ProductImage
             filename={product.pBestimg}
             alt={name ?? 'Homeopathy product'}
@@ -79,7 +79,7 @@ export function HomeopathyProductCard({ product }: HomeopathyProductCardProps) {
         <div className="hm-product-card__footer">
           <button
             type="button"
-            className="hm-btn hm-btn--ghost hm-btn--sm hm-btn--full"
+            className="hm-btn hm-btn--primary hm-btn--sm hm-btn--full hm-product-card__btn"
             disabled={outOfStock}
             onClick={() => addToCart(product, 1)}
           >

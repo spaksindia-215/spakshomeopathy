@@ -579,7 +579,7 @@
    ========================================================================== */
 .homeopathy-scope .hm-division-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(2, 1fr);
   gap: 20px;
 }
 .homeopathy-scope .hm-division-card {
@@ -605,6 +605,23 @@
 }
 .homeopathy-scope .hm-division-card--cosmetics {
   background: linear-gradient(135deg, var(--hm-amber), var(--hm-amber-dark));
+}
+.homeopathy-scope .hm-division-grid--3 {
+  grid-template-columns: repeat(3, 1fr);
+}
+.homeopathy-scope .hm-division-card--homeopathic {
+  background: linear-gradient(135deg, #0f4469, #1a5682);
+}
+.homeopathy-scope .hm-division-card--allopathic {
+  background: linear-gradient(135deg, #0284c7, #075985);
+}
+.homeopathy-scope .hm-division-card--ayurvedic {
+  background: linear-gradient(135deg, #0a6a4b, #00bf79);
+}
+@media (max-width: 900px) {
+  .homeopathy-scope .hm-division-grid--3 {
+    grid-template-columns: 1fr;
+  }
 }
 .homeopathy-scope .hm-division-card__icon {
   width: 48px;
@@ -701,64 +718,90 @@
 }
 .homeopathy-scope .hm-product-card {
   position: relative;
-  background: #fff;
-  border: 1px solid var(--hm-border);
-  border-radius: var(--hm-radius-md);
+  background: #ffffff;
+  border: 1px solid rgba(15, 68, 105, 0.1);
+  border-radius: 16px;
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  box-shadow: 0 2px 8px rgba(15, 68, 105, 0.04);
+  transition: transform 0.22s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.22s cubic-bezier(0.2, 0.8, 0.2, 1), border-color 0.22s ease;
 }
 .homeopathy-scope .hm-product-card:hover {
-  transform: translateY(-4px);
-  box-shadow: var(--hm-shadow-md);
+  transform: translateY(-5px);
+  border-color: rgba(0, 191, 121, 0.35);
+  box-shadow: 0 14px 30px -4px rgba(15, 68, 105, 0.12), 0 4px 10px rgba(0, 191, 121, 0.08);
 }
 .homeopathy-scope .hm-product-card__media {
   position: relative;
   aspect-ratio: 1 / 1;
-  background: var(--hm-green-50);
+  background: #ffffff;
+  padding: 18px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-bottom: 1px solid rgba(15, 68, 105, 0.06);
+  overflow: hidden;
+}
+.homeopathy-scope .hm-product-card__media-link,
+.homeopathy-scope .hm-product-card__media > a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+.homeopathy-scope .hm-product-card__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain !important;
+  transition: transform 0.35s cubic-bezier(0.25, 1, 0.5, 1);
+}
+.homeopathy-scope .hm-product-card:hover .hm-product-card__media img {
+  transform: scale(1.06);
 }
 .homeopathy-scope .hm-product-card__badges {
   position: absolute;
-  top: 10px;
-  left: 10px;
+  top: 12px;
+  left: 12px;
   display: flex;
   flex-direction: column;
   gap: 6px;
-  z-index: 2;
+  z-index: 3;
 }
 .homeopathy-scope .hm-badge {
-  font-size: 10.5px;
+  font-size: 10px;
   font-weight: 800;
-  letter-spacing: 0.03em;
+  letter-spacing: 0.04em;
   text-transform: uppercase;
-  padding: 4px 8px;
-  border-radius: 6px;
+  padding: 4px 9px;
+  border-radius: 999px;
   color: #fff;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
 }
 .homeopathy-scope .hm-badge--sale {
-  background: var(--hm-danger);
+  background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
 }
 .homeopathy-scope .hm-badge--new {
-  background: var(--hm-green-600);
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
 }
 .homeopathy-scope .hm-badge--bestseller {
-  background: var(--hm-amber-dark);
+  background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
 }
 .homeopathy-scope .hm-badge--out {
-  background: #6b6b6b;
+  background: #64748b;
 }
 .homeopathy-scope .hm-product-card__actions {
   position: absolute;
-  top: 10px;
-  right: 10px;
+  top: 12px;
+  right: 12px;
   display: flex;
   flex-direction: column;
   gap: 8px;
-  z-index: 2;
+  z-index: 3;
   opacity: 0;
-  transform: translateX(6px);
-  transition: opacity 0.15s ease, transform 0.15s ease;
+  transform: translateX(8px);
+  transition: all 0.2s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 .homeopathy-scope .hm-product-card:hover .hm-product-card__actions,
 .homeopathy-scope .hm-product-card__actions:focus-within {
@@ -769,45 +812,55 @@
   width: 36px;
   height: 36px;
   border-radius: 999px;
-  background: #fff;
-  border: 1px solid var(--hm-border);
-  box-shadow: var(--hm-shadow-sm);
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(6px);
+  border: 1px solid rgba(15, 68, 105, 0.12);
+  box-shadow: 0 3px 10px rgba(15, 68, 105, 0.08);
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
   color: var(--hm-ink);
+  transition: all 0.15s ease;
 }
 .homeopathy-scope .hm-product-card__icon-btn:hover {
-  background: var(--hm-green-50);
-  color: var(--hm-green-600);
+  background: var(--hm-green-600);
+  border-color: var(--hm-green-600);
+  color: #fff;
+  transform: scale(1.08);
 }
 .homeopathy-scope .hm-product-card__icon-btn[data-active='true'] {
-  color: var(--hm-danger);
+  color: #ef4444;
+  background: #fee2e2;
+  border-color: #fca5a5;
 }
 .homeopathy-scope .hm-product-card__body {
-  padding: 14px 16px 16px;
+  padding: 16px 18px 18px;
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 8px;
   flex: 1;
+  background: #fff;
 }
 .homeopathy-scope .hm-product-card__category {
   font-size: 11px;
   font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.03em;
+  letter-spacing: 0.06em;
   color: var(--hm-green-600);
+  line-height: 1;
 }
 .homeopathy-scope .hm-product-card__title {
   font-size: 14.5px;
   font-weight: 700;
   color: var(--hm-ink);
-  line-height: 1.3;
+  line-height: 1.35;
+  min-height: 39px;
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
+  transition: color 0.15s ease;
 }
 .homeopathy-scope .hm-product-card__title:hover {
   color: var(--hm-green-600);
@@ -815,13 +868,15 @@
 .homeopathy-scope .hm-rating {
   display: flex;
   align-items: center;
-  gap: 5px;
+  gap: 6px;
   font-size: 12px;
   color: var(--hm-ink-soft);
+  margin: 1px 0;
 }
 .homeopathy-scope .hm-rating__stars {
   display: flex;
-  color: var(--hm-amber);
+  color: #f59e0b;
+  gap: 2px;
 }
 .homeopathy-scope .hm-product-card__price {
   margin-top: auto;
@@ -829,25 +884,62 @@
   align-items: baseline;
   gap: 8px;
   padding-top: 6px;
+  flex-wrap: wrap;
 }
 .homeopathy-scope .hm-price {
-  font-size: 16px;
+  font-size: 18px;
   font-weight: 800;
   color: var(--hm-ink);
+  letter-spacing: -0.01em;
 }
 .homeopathy-scope .hm-price--compare {
-  font-size: 12.5px;
-  color: var(--hm-ink-soft);
+  font-size: 13px;
+  color: #94a3b8;
   text-decoration: line-through;
   font-weight: 500;
 }
 .homeopathy-scope .hm-price--discount {
-  font-size: 12px;
+  font-size: 11.5px;
   font-weight: 700;
-  color: var(--hm-danger);
+  color: #dc2626;
+  background: #fee2e2;
+  padding: 2px 8px;
+  border-radius: 999px;
+  line-height: 1.2;
 }
 .homeopathy-scope .hm-product-card__footer {
-  margin-top: 10px;
+  margin-top: 12px;
+}
+.homeopathy-scope .hm-product-card__footer .hm-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  padding: 10px 18px;
+  font-size: 13.5px;
+  font-weight: 700;
+  border-radius: 999px;
+  background: linear-gradient(135deg, var(--hm-green-600) 0%, #009c63 100%);
+  color: #ffffff;
+  border: none;
+  box-shadow: 0 4px 12px rgba(0, 191, 121, 0.28);
+  transition: all 0.2s cubic-bezier(0.2, 0.8, 0.2, 1);
+  cursor: pointer;
+}
+.homeopathy-scope .hm-product-card__footer .hm-btn:hover:not(:disabled) {
+  background: linear-gradient(135deg, #00d688 0%, #008756 100%);
+  box-shadow: 0 6px 16px rgba(0, 191, 121, 0.4);
+  transform: translateY(-1.5px);
+}
+.homeopathy-scope .hm-product-card__footer .hm-btn:active:not(:disabled) {
+  transform: scale(0.98);
+}
+.homeopathy-scope .hm-product-card__footer .hm-btn:disabled {
+  background: #e2e8f0;
+  color: #94a3b8;
+  box-shadow: none;
+  cursor: not-allowed;
 }
 /* The real, existing `<AddToCartForm>` component (used verbatim, not
    reimplemented) renders the sitewide `.thm-btn` — already the same
@@ -1627,6 +1719,65 @@
 .homeopathy-scope .hm-tabs__panel li {
   margin-bottom: 6px;
 }
+
+/* Product Video Embed */
+.homeopathy-scope .hm-product-video {
+  margin-top: 32px;
+  padding-top: 24px;
+  border-top: 1px solid var(--hm-border);
+}
+.homeopathy-scope .hm-product-video__header {
+  margin-bottom: 14px;
+}
+.homeopathy-scope .hm-product-video__badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 12px;
+  background: rgba(0, 191, 121, 0.12);
+  color: var(--hm-green-700);
+  border-radius: 999px;
+  font-size: 11.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-bottom: 8px;
+}
+.homeopathy-scope .hm-product-video__badge svg {
+  color: var(--hm-green-600);
+}
+.homeopathy-scope .hm-product-video__title {
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--hm-ink);
+  margin: 0;
+}
+.homeopathy-scope .hm-product-video__player {
+  position: relative;
+  width: 100%;
+  max-width: 680px;
+  aspect-ratio: 16 / 9;
+  border-radius: var(--hm-radius, 12px);
+  overflow: hidden;
+  background: #0f172a;
+  box-shadow: 0 4px 20px rgba(15, 68, 105, 0.1);
+  border: 1px solid var(--hm-border);
+  margin-top: 12px;
+}
+.homeopathy-scope .hm-product-video__player iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+.homeopathy-scope .hm-product-video__caption {
+  margin-top: 10px;
+  font-size: 13px;
+  color: var(--hm-ink-muted);
+  line-height: 1.5;
+}
 .homeopathy-scope .hm-disclaimer {
   margin-top: 20px;
   padding: 14px 16px;
@@ -1883,7 +2034,7 @@
     grid-template-columns: repeat(4, 1fr);
   }
   .homeopathy-scope .hm-division-grid {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(2, 1fr);
     gap: 14px;
   }
   .homeopathy-scope .hm-trust-grid {

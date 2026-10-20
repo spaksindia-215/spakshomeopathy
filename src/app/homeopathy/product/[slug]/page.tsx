@@ -2,23 +2,47 @@ import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { HomeopathyShell } from '@/components/homeopathy/HomeopathyShell';
 import { HomeopathyProductDetail } from '@/components/homeopathy/HomeopathyProductDetail';
-import { getAllProducts, getProductBySlug } from '@/lib/demo/products';
+import { getAllProducts } from '@/lib/demo/products';
 import { getShortDescription } from '@/lib/homeopathy/queries';
-import { getRelatedHomeopathyProducts } from '@/lib/homeopathy/liveQueries';
+import {
+  getRelatedHomeopathyProducts,
+  getProductBySlugLive,
+  getActiveProducts,
+} from '@/lib/homeopathy/liveQueries';
+
+export const dynamicParams = true;
+export const revalidate = 60;
 
 interface Props {
   params: Promise<{ slug: string }>;
 }
 
 export async function generateStaticParams() {
-  return getAllProducts()
-    .filter((p) => p.pSlug)
-    .map((p) => ({ slug: p.pSlug as string }));
+  const slugs: { slug: string }[] = [];
+  try {
+    const active = await getActiveProducts();
+    if (active && active.length > 0) {
+      active.filter((p) => p.pSlug).forEach((p) => slugs.push({ slug: p.pSlug as string }));
+    }
+  } catch {
+    // fallback to demo products if DB not reachable at build time
+    getAllProducts().filter((p) => p.pSlug).forEach((p) => slugs.push({ slug: p.pSlug as string }));
+  }
+
+  try {
+    const { getCosmeticsCatalog } = await import('@/lib/cosmetics/catalog');
+    const cosmetics = await getCosmeticsCatalog();
+    cosmetics.filter((p) => p.pSlug).forEach((p) => slugs.push({ slug: p.pSlug as string }));
+  } catch {
+    // ignore
+  }
+
+  return slugs;
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
-  const product = getProductBySlug(slug);
+  const product = await getProductBySlugLive(slug);
   if (!product) return { title: 'Product Not Found | Spaks Homeopathy' };
   const name = product.pName || product.pHeading;
   const description = getShortDescription(product, 160);
@@ -39,11 +63,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
  * `/homeopathy/product/[slug]` — product detail page. Includes Product +
  * BreadcrumbList JSON-LD structured data, scoped to this route only.
  * Recreated from the Herbs Store's `/herbs/product/[slug]` page pattern,
- * over the real `Product` data (`getProductBySlug`) — no parallel schema.
+ * over the real `Product` data (`getProductBySlugLive`) — resolves across
+ * all live MongoDB products, Mother Tincture catalog, and demo fixtures.
  */
 export default async function HomeopathyProductPage({ params }: Props) {
   const { slug } = await params;
-  const product = getProductBySlug(slug);
+  const product = await getProductBySlugLive(slug);
   if (!product) notFound();
 
   const related = await getRelatedHomeopathyProducts(product, 4);

@@ -11,6 +11,7 @@
  */
 
 import type { Product } from '@/lib/mongodb/schemas';
+import { extractYoutubeVideoId } from '@/lib/videos/schema';
 
 export type SortOption = 'featured' | 'newest' | 'price-asc' | 'price-desc' | 'rating';
 
@@ -144,4 +145,233 @@ export function getShortDescription(product: Product, maxLength = 160): string {
     .trim();
   if (text.length <= maxLength) return text;
   return `${text.slice(0, maxLength).trimEnd()}…`;
+}
+
+export interface ProductVideoInfo {
+  videoId: string;
+  url: string;
+  title: string;
+  isCustom: boolean;
+}
+
+export interface ProductVideoQueryOptions {
+  /** Product title or name */
+  title?: string | null;
+  /** Primary category or type (e.g. 'Face Wash', 'Skincare', 'Cosmetics', 'Homeopathy') */
+  category?: string | null;
+  /** Active botanical / pharmaceutical ingredients (e.g. ['Echinacea', 'Thuja']) */
+  activeIngredients?: string[] | string | null;
+  /** Product tags or disease labels */
+  tags?: string[] | string | null;
+  /** SKU or product ID */
+  sku?: string | number | null;
+  /** Additional search keywords */
+  searchTerms?: string | null;
+}
+
+/**
+ * Resolves the most relevant YouTube video for any homeopathy/cosmetics product:
+ * 1. If `product.videoLink` is provided, parses and uses that custom video URL.
+ * 2. If `product.pDesc` already contains a YouTube embed, extracts its ID.
+ * 3. Dynamically filters by product title, active ingredients, category, and tags
+ *    using strict relevance checking.
+ * 4. If no strictly matching clinical or product-specific video is found, returns
+ *    `null` so the video section is hidden entirely instead of showing an
+ *    unrelated generic or clinical fallback (such as spine/back pain tutorials).
+ */
+export function getProductRelatedVideo(
+  product: Product,
+  options?: ProductVideoQueryOptions
+): ProductVideoInfo | null {
+  // 1. Explicit product videoLink
+  if (product.videoLink) {
+    const customId = extractYoutubeVideoId(product.videoLink);
+    if (customId) {
+      return {
+        videoId: customId,
+        url: `https://www.youtube.com/watch?v=${customId}`,
+        title: product.pHeading || product.pName || 'Product',
+        isCustom: true,
+      };
+    }
+  }
+
+  // 2. Check if pDesc already has a youtube embed ID
+  if (product.pDesc) {
+    const embedId = extractYoutubeVideoId(product.pDesc);
+    if (embedId) {
+      return {
+        videoId: embedId,
+        url: `https://www.youtube.com/watch?v=${embedId}`,
+        title: product.pHeading || product.pName || 'Product',
+        isCustom: true,
+      };
+    }
+  }
+
+  // 3. Compile contextual search parameters & active ingredients
+  const passedTitle = options?.title ?? product.pName ?? product.pHeading ?? '';
+  const passedCategory =
+    options?.category ??
+    (product as { cosmeticType?: string })?.cosmeticType ??
+    '';
+  const passedIngredients = Array.isArray(options?.activeIngredients)
+    ? options.activeIngredients.join(' ')
+    : options?.activeIngredients ?? '';
+  const passedTags = Array.isArray(options?.tags)
+    ? options.tags.join(' ')
+    : options?.tags ?? '';
+  const passedSearchTerms = options?.searchTerms ?? product.searchTerms ?? '';
+
+  const heading = product.pHeading || product.pName || 'Medicine';
+
+  const searchCorpus = [
+    passedTitle,
+    passedCategory,
+    passedIngredients,
+    passedTags,
+    passedSearchTerms,
+    product.pHeading ?? '',
+    product.pName ?? '',
+    product.pShortDesc ?? '',
+    product.pDesc ?? '',
+    product.pSlug ?? '',
+  ]
+    .join(' ')
+    .toLowerCase();
+
+  const matches = (pattern: RegExp) => pattern.test(searchCorpus);
+
+  // Identify skincare, face wash, cosmetics, cleanser, or topical beauty products
+  const isSkincareOrCosmetic = matches(
+    /\b(face\s*wash|cleanser|cleansing|skincare|skin\s*care|face\s*care|cosmetic|blemish|acne|pimple|blackhead|whitehead|pore|sebum|face\s*cream|glow\s*cream|sunscreen|photoprotection|spf|lotion|serum|complexion|radiance|kumkumadi|ubtan|haldi|chandan|neem|tulsi|echinacea|thuja|berberis|silicea|salicylic|niacinamide|ceramide|hyaluronic)\b/i
+  );
+
+  // Hair fall, Dandruff, Scalp, Alopecia, Hair Oil, Hair Tonic
+  if (
+    matches(
+      /\b(hair\s*fall|hair\s*loss|hair\s*tonic|hair\s*oil|dandruff|alopecia|bald|scalp|kesh|bhringraj|jaborandi)\b/i
+    )
+  ) {
+    return {
+      videoId: 'kRhNIVf6qUg',
+      url: 'https://www.youtube.com/watch?v=kRhNIVf6qUg',
+      title: `${heading} — Related Hair Care & Scalp Treatment Guide`,
+      isCustom: false,
+    };
+  }
+
+  // Back pain, Spine, Spondylitis, Sciatica (Strict check: never match skincare/cosmetics)
+  if (
+    !isSkincareOrCosmetic &&
+    matches(
+      /\b(spondyl|back\s*pain|spine|vertebra|cervical|sciatica|slip\s*disc|lumbar|sacroiliac)\b/i
+    )
+  ) {
+    return {
+      videoId: 'lbK28woDbgk',
+      url: 'https://www.youtube.com/watch?v=lbK28woDbgk',
+      title: `${heading} — Related Spine & Back Pain Care Guide`,
+      isCustom: false,
+    };
+  }
+
+  // Arthritis / Joint pain / Gout / Rheumatoid
+  if (
+    !isSkincareOrCosmetic &&
+    matches(/\b(arthritis|rheumatoid|osteoarthritis|gout|joint\s*pain|swollen\s*joint|uric\s*acid)\b/i)
+  ) {
+    return {
+      videoId: '90lb6TwFMX4',
+      url: 'https://www.youtube.com/watch?v=90lb6TwFMX4',
+      title: `${heading} — Related Arthritis & Joint Care Guide`,
+      isCustom: false,
+    };
+  }
+
+  // Female health, Vaginitis, PCOD, Periods, Leucorrhoea
+  if (
+    !isSkincareOrCosmetic &&
+    matches(
+      /\b(female|vaginit|pcod|pcos|leucorrh|uter|ovary|period|menses|menopaus|white\s*discharge)\b/i
+    )
+  ) {
+    return {
+      videoId: '_ev-w9J347g',
+      url: 'https://www.youtube.com/watch?v=_ev-w9J347g',
+      title: `${heading} — Related Women's Health Treatment Guide`,
+      isCustom: false,
+    };
+  }
+
+  // Diabetes, Sugar, Thyroid, Lifestyle, Blood Pressure
+  if (
+    !isSkincareOrCosmetic &&
+    matches(/\b(diabet|sugar|madhumeh|thyroid|obesity|hypertens|cholesterol|high\s*bp)\b/i)
+  ) {
+    return {
+      videoId: '-cyfQkEp510',
+      url: 'https://www.youtube.com/watch?v=-cyfQkEp510',
+      title: `${heading} — Related Diabetes & Lifestyle Health Guide`,
+      isCustom: false,
+    };
+  }
+
+  // Headache, Migraine, Brain, Neurological, Stress
+  if (
+    !isSkincareOrCosmetic &&
+    matches(/\b(headache|migraine|brain|stress|anxiety|insomnia|vertigo)\b/i)
+  ) {
+    return {
+      videoId: 'ABYZYvUdiZo',
+      url: 'https://www.youtube.com/watch?v=ABYZYvUdiZo',
+      title: `${heading} — Related Headache & Neurological Relief Guide`,
+      isCustom: false,
+    };
+  }
+
+  // Male health, Prostate
+  if (
+    !isSkincareOrCosmetic &&
+    matches(/\b(prostate|erectile|hydrocele)\b/i)
+  ) {
+    return {
+      videoId: 'JLsDnhwTRzM',
+      url: 'https://www.youtube.com/watch?v=JLsDnhwTRzM',
+      title: `${heading} — Related Men's Health & Prostate Guide`,
+      isCustom: false,
+    };
+  }
+
+  // Stomach, Gastric, Acidity, Digestion, Piles, Liver, Cholera
+  if (
+    !isSkincareOrCosmetic &&
+    matches(
+      /\b(stomach|digest|gastric|acidity|piles|constipat|fistula|fissure|diarrh|cholera|liver|bowel|gerd|ulcer|vomit)\b/i
+    )
+  ) {
+    return {
+      videoId: 'Yklv9k_W-8A',
+      url: 'https://www.youtube.com/watch?v=Yklv9k_W-8A',
+      title: `${heading} — Related Stomach & Digestion Care Guide`,
+      isCustom: false,
+    };
+  }
+
+  // Ganglion Cysts / Wrist lumps
+  if (
+    !isSkincareOrCosmetic &&
+    matches(/\b(ganglion|ganglion\s*cyst|wrist\s*cyst|wrist\s*lump)\b/i)
+  ) {
+    return {
+      videoId: 'znEUQ1nL4DM',
+      url: 'https://www.youtube.com/watch?v=znEUQ1nL4DM',
+      title: `${heading} — Related Ganglion & Cyst Treatment Guide`,
+      isCustom: false,
+    };
+  }
+
+  // Strict relevance check: if no relevant product or clinical video matches,
+  // return null so the video section is hidden entirely.
+  return null;
 }

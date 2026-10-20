@@ -153,6 +153,7 @@ async function parseCosmeticsForm(
 }
 
 function revalidateCosmeticsPaths(): void {
+  revalidatePath('/cosmetics');
   revalidatePath('/homeopathy/cosmetics');
 }
 

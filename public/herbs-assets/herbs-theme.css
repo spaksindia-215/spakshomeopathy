@@ -524,6 +524,24 @@
 /* ==========================================================================
    Category grids
    ========================================================================== */
+.herbs-scope .hs-nutrition-card:hover,
+.herbs-scope .hs-nutrition-single-card:hover {
+  transform: translateY(-4px) !important;
+  box-shadow: 0 18px 40px -8px rgba(10, 106, 75, 0.5) !important;
+}
+
+@media (max-width: 768px) {
+  .herbs-scope .hs-nutrition-single-card {
+    flex-direction: column !important;
+    padding: 24px 20px !important;
+  }
+  .herbs-scope .hs-nutrition-single-media {
+    flex: 0 0 auto !important;
+    max-height: 140px !important;
+  }
+}
+
+
 .herbs-scope .hs-cat-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
