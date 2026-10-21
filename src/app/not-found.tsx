@@ -15,7 +15,7 @@ export default function NotFound() {
             Page Not Found
           </h1>
           <p style={{ fontSize: 16, color: '#64748b', lineHeight: 1.6, margin: '0 0 32px 0' }}>
-            The page or product you are looking for doesn't exist, may have been relocated, or is temporarily unavailable.
+            The page or product you are looking for doesn&apos;t exist, may have been relocated, or is temporarily unavailable.
           </p>
 
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: 12, justifyContent: 'center', marginBottom: 28 }}>

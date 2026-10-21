@@ -2,12 +2,10 @@ import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { HomeopathyShell } from '@/components/homeopathy/HomeopathyShell';
 import { HomeopathyProductDetail } from '@/components/homeopathy/HomeopathyProductDetail';
-import { getAllProducts } from '@/lib/demo/products';
 import { getShortDescription } from '@/lib/homeopathy/queries';
 import {
   getRelatedHomeopathyProducts,
   getProductBySlugLive,
-  getActiveProducts,
 } from '@/lib/homeopathy/liveQueries';
 
 export const dynamicParams = true;
@@ -15,29 +13,6 @@ export const revalidate = 60;
 
 interface Props {
   params: Promise<{ slug: string }>;
-}
-
-export async function generateStaticParams() {
-  const slugs: { slug: string }[] = [];
-  try {
-    const active = await getActiveProducts();
-    if (active && active.length > 0) {
-      active.filter((p) => p.pSlug).forEach((p) => slugs.push({ slug: p.pSlug as string }));
-    }
-  } catch {
-    // fallback to demo products if DB not reachable at build time
-    getAllProducts().filter((p) => p.pSlug).forEach((p) => slugs.push({ slug: p.pSlug as string }));
-  }
-
-  try {
-    const { getCosmeticsCatalog } = await import('@/lib/cosmetics/catalog');
-    const cosmetics = await getCosmeticsCatalog();
-    cosmetics.filter((p) => p.pSlug).forEach((p) => slugs.push({ slug: p.pSlug as string }));
-  } catch {
-    // ignore
-  }
-
-  return slugs;
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {

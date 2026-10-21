@@ -88,7 +88,9 @@ const eslintConfig = [
       // thousands of violations in. These are Playwright's own build
       // artifacts, not project source, and are gitignored.
       'playwright-report/**',
+      'playwright-report-*/**',
       'test-results/**',
+      'test-results-*/**',
       // OI-12 asset audit working dirs. `.audit-cache/` holds vendor JS fetched
       // verbatim from production (jQuery, Bootstrap, Isotope, …) as AUDIT
       // EVIDENCE, and `.asset-backup/` holds pre-change copies. Neither is

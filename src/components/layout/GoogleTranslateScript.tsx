@@ -4,7 +4,14 @@ import { useEffect } from 'react';
 
 declare global {
   interface Window {
-    google?: any;
+    google?: {
+      translate?: {
+        TranslateElement?: new (
+          options: { pageLanguage: string; includedLanguages: string; autoDisplay: boolean },
+          elementId: string
+        ) => void;
+      };
+    };
     googleTranslateElementInit?: () => void;
   }
 }

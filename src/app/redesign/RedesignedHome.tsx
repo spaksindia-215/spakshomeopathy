@@ -4,7 +4,6 @@ import './redesign.css';
 import { getDb } from '@/lib/mongodb/client';
 import { SliderRepository } from '@/lib/mongodb/repositories/sliderRepository';
 import { getSiteSettings } from '@/lib/settings/repository';
-import { LanguageSwitcher } from '@/components/layout/LanguageSwitcher';
 import { SiteHeader } from '@/components/layout/SiteHeader';
 
 const WHY_SPAKS = [
@@ -46,16 +45,7 @@ const WHY_SPAKS = [
   },
 ];
 
-// Navbar reduced to only the three storefront divisions (owner request,
-// 2026-09-24). Every other link that used to live in the navbar/"Menu"
-// dropdown (About, Diseases, Videos, Mother Tincture, Potencies, Contact)
-// now lives only in the footer's "Company"/"Explore" columns below.
-const NAV_LINKS = [
-  { label: 'Home', href: '/' },
-  { label: 'Homeopathy', href: '/homeopathy' },
-  { label: 'Cosmetics', href: '/cosmetics' },
-  { label: 'Herbs', href: '/herbs' },
-];
+
 
 /**
  * Homepage redesign — a from-scratch visual direction, not a migration
@@ -725,24 +715,7 @@ export async function RedesignedHome() {
   );
 }
 
-function SearchIcon({ color = 'currentColor' }: { color?: string }) {
-  return (
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2">
-      <circle cx="11" cy="11" r="7" />
-      <line x1="21" y1="21" x2="16.65" y2="16.65" />
-    </svg>
-  );
-}
 
-function CartIcon() {
-  return (
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-      <circle cx="9" cy="21" r="1" />
-      <circle cx="20" cy="21" r="1" />
-      <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6" />
-    </svg>
-  );
-}
 
 function PlayIcon() {
   return (
