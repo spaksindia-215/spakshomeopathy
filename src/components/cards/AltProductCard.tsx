@@ -107,6 +107,7 @@ export function AltProductCard({ product }: AltProductCardProps) {
               style={{ height: '250px', width: '250px' }}
             />
           </a>
+ {/* test  */}
           <div className="box-label">
             {hasDiscount && (
               <div className="box-label">
