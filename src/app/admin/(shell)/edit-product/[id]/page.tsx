@@ -4,8 +4,22 @@ import { AdminStylesheets } from '@/components/admin/AdminStylesheets';
 import { CKEditorPlaceholder } from '@/components/admin/CKEditorPlaceholder';
 import { getProductByLegacyId } from '@/lib/demo';
 import { getDb } from '@/lib/mongodb/client';
+import { ProductRepository } from '@/lib/mongodb/repositories/productRepository';
 import { CategoryRepository } from '@/lib/mongodb/repositories/categoryRepository';
+import { generateCsrfToken } from '@/lib/auth/csrf';
+import { readAndClearFlash } from '@/lib/auth/flash';
+import { requireAdminSession } from '@/lib/auth/guard';
+import { requirePermissionForSession } from '@/lib/auth/rbac-guard';
+import { PERMISSIONS } from '@/lib/auth/permissions';
 import type { VariantSlot } from '@/lib/mongodb/schemas';
+
+const EMPTY_SLOT: VariantSlot = {
+  pImage: null,
+  pName: null,
+  pMrp: null,
+  pPrice: null,
+  pDesc: null,
+};
 
 /**
  * `/admin/edit-product/[id]` — ported from `admin/edit-product.blade.php`
@@ -21,9 +35,9 @@ import type { VariantSlot } from '@/lib/mongodb/schemas';
  *
  * CR-006 Phase 4: switched to live `CategoryRepository.findAllByNameAscending()`
  * then re-sorted DESCENDING in application code — same fix as
- * `add-product`, same DESC-preservation reasoning as above; the product
- * itself (`getProductByLegacyId`) remains `@/lib/demo`-backed, unchanged,
- * per this phase's deliberately narrow scope (the dropdown only).
+ * `add-product`, same DESC-preservation reasoning as above.
+ * Live-wired to `ProductRepository.findByLegacyId()` with `@/lib/demo`
+ * fallback.
  *
  * FLAGSHIP PRESERVED BUG, verified directly this session (source lines
  * 492 and 530): the slot-9 and slot-10 "Product How to Use" textareas
@@ -59,33 +73,43 @@ export default async function AdminEditProductPage({
 }: {
   params: Promise<{ id: string }>;
 }) {
+  const session = await requireAdminSession();
+  const db = await getDb();
+  await requirePermissionForSession(db, session, PERMISSIONS.PRODUCTS_EDIT);
+
   const { id } = await params;
   const legacyId = Number(id);
-  const product = Number.isFinite(legacyId) ? getProductByLegacyId(legacyId) : undefined;
+
+  const repo = new ProductRepository(db);
+  const product = Number.isFinite(legacyId)
+    ? ((await repo.findByLegacyId(legacyId)) ?? getProductByLegacyId(legacyId))
+    : undefined;
 
   if (!product) {
     notFound();
   }
 
+  const csrfToken = generateCsrfToken();
+  const message = await readAndClearFlash('message');
+
   // Ordered `name DESC` on this page only — see file header.
-  const db = await getDb();
   const categories = (await new CategoryRepository(db).findAllByNameAscending()).sort((a, b) =>
     (b.name ?? '').localeCompare(a.name ?? '')
   );
 
   const slots: { n: number; slot: VariantSlot }[] = [
-    { n: 2, slot: product.slot2 },
-    { n: 3, slot: product.slot3 },
-    { n: 4, slot: product.slot4 },
-    { n: 5, slot: product.slot5 },
-    { n: 6, slot: product.slot6 },
-    { n: 7, slot: product.slot7 },
-    { n: 8, slot: product.slot8 },
-    { n: 9, slot: product.slot9 },
-    { n: 10, slot: product.slot10 },
+    { n: 2, slot: product.slot2 ?? EMPTY_SLOT },
+    { n: 3, slot: product.slot3 ?? EMPTY_SLOT },
+    { n: 4, slot: product.slot4 ?? EMPTY_SLOT },
+    { n: 5, slot: product.slot5 ?? EMPTY_SLOT },
+    { n: 6, slot: product.slot6 ?? EMPTY_SLOT },
+    { n: 7, slot: product.slot7 ?? EMPTY_SLOT },
+    { n: 8, slot: product.slot8 ?? EMPTY_SLOT },
+    { n: 9, slot: product.slot9 ?? EMPTY_SLOT },
+    { n: 10, slot: product.slot10 ?? EMPTY_SLOT },
   ];
 
-  const slot1OldImage = product.images[0]?.pImage ?? '';
+  const slot1OldImage = product.images?.[0]?.pImage ?? product.pBestimg ?? '';
 
   return (
     <>
@@ -110,7 +134,13 @@ export default async function AdminEditProductPage({
 
       <section className="content">
         <div className="row">
+          {message !== null && (
+            <div className="col-xs-12">
+              <div className="alert alert-success">{message}</div>
+            </div>
+          )}
           <form method="post" action="/admin/update-product" encType="multipart/form-data">
+            <input type="hidden" name="_token" value={csrfToken} />
             {/* left column */}
             <div className="col-md-6">
               <div className="box box-success">

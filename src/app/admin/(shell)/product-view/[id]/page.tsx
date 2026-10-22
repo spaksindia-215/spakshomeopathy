@@ -2,6 +2,8 @@ import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { AdminStylesheets } from '@/components/admin/AdminStylesheets';
 import { getProductByLegacyId } from '@/lib/demo';
+import { getDb } from '@/lib/mongodb/client';
+import { ProductRepository } from '@/lib/mongodb/repositories/productRepository';
 
 /**
  * `/admin/product-view/[id]` — ported from `admin/product-view.blade.php`
@@ -55,7 +57,12 @@ export default async function AdminProductViewPage({
 }) {
   const { id } = await params;
   const legacyId = Number(id);
-  const product = Number.isFinite(legacyId) ? getProductByLegacyId(legacyId) : undefined;
+
+  const db = await getDb();
+  const repo = new ProductRepository(db);
+  const product = Number.isFinite(legacyId)
+    ? ((await repo.findByLegacyId(legacyId)) ?? getProductByLegacyId(legacyId))
+    : undefined;
 
   if (!product) {
     notFound();

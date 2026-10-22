@@ -130,7 +130,9 @@ export async function saveAdminUpload(file: File, subdirectory: string): Promise
   // Defense-in-depth: confirm the resolved path still lives under the
   // intended subdirectory (guards against a future caller accidentally
   // passing a subdirectory value containing '..').
-  if (!targetPath.startsWith(targetDir + '/') && targetPath !== targetDir) {
+  const normalizedTarget = targetPath.replace(/\\/g, '/');
+  const normalizedDir = targetDir.replace(/\\/g, '/');
+  if (!normalizedTarget.startsWith(normalizedDir + '/') && normalizedTarget !== normalizedDir) {
     throw new UploadRejectedError('Resolved upload path escapes the target directory.');
   }
 

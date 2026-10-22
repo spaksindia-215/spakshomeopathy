@@ -205,8 +205,8 @@ export default async function ProductDetailsPage({
 
                   {SLOT_KEYS.map((key, i) => {
                     const slotIndex = i + 2; // slot2..slot10
-                    const slot: VariantSlot = product[key];
-                    if (!slot.pImage) return null;
+                    const slot = product[key] as VariantSlot | undefined;
+                    if (!slot || !slot.pImage) return null;
                     const useFancybox = FANCYBOX_SLOT_INDEXES.has(slotIndex);
                     const imageSrc = `/uploaded_files/products/${slot.pImage}`;
                     const img = (

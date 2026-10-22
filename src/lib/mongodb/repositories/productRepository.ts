@@ -153,6 +153,16 @@ export class ProductRepository extends ValidatedRepository<Product> {
   }
 
   /**
+   * Updates an existing product by its legacyId.
+   */
+  async updateProduct(
+    legacyId: number,
+    fields: Partial<Omit<Product, 'legacyId' | 'createdAt'>>
+  ): Promise<void> {
+    await this.updateOne({ legacyId } as Filter<Product>, fields as Partial<Product>);
+  }
+
+  /**
    * Partner Panel feature. GENUINELY NEW — no source column to mirror
    * (`createdByUserId` itself is additive, see `schemas/product.ts`).
    * Finds every product a given partner (`users.legacyId`) submitted, for
