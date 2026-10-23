@@ -21,14 +21,23 @@ export function GoogleTranslateScript() {
     // 1. Guard for server-side execution
     if (typeof window === 'undefined') return;
 
-    // 2. Define the Google Translate initialization callback
+    // Check RTL state on mount
+    const cookieMatch = document.cookie.match(/(^|;\s*)googtrans=\/en\/([a-z]{2})/i);
+    const activeLang = cookieMatch?.[2]?.toLowerCase() || localStorage.getItem('site_language');
+    if (activeLang === 'ur') {
+      document.documentElement.dir = 'rtl';
+      document.documentElement.lang = 'ur';
+      document.body.classList.add('rtl-layout');
+    }
+
+    // 2. Define the Google Translate initialization callback for top 10 Indian languages
     window.googleTranslateElementInit = () => {
       try {
         if (window.google?.translate?.TranslateElement) {
           new window.google.translate.TranslateElement(
             {
               pageLanguage: 'en',
-              includedLanguages: 'en,hi',
+              includedLanguages: 'en,hi,bn,mr,te,ta,gu,ur,kn,or',
               autoDisplay: false,
             },
             'google_translate_element'

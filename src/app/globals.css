@@ -68,3 +68,36 @@ body {
   overflow: hidden !important;
 }
 
+/* ==========================================================================
+   RTL Layout Support (Urdu) & Indian Unicode Fonts
+   ========================================================================== */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Nastaliq+Urdu:wght@400;600;700&family=Noto+Sans+Arabic:wght@400;600;700&family=Noto+Sans+Bengali:wght@400;500;600;700&family=Noto+Sans+Devanagari:wght@400;500;600;700&family=Noto+Sans+Gujarati:wght@400;500;600;700&family=Noto+Sans+Kannada:wght@400;500;600;700&family=Noto+Sans+Oriya:wght@400;500;600;700&family=Noto+Sans+Tamil:wght@400;500;600;700&family=Noto+Sans+Telugu:wght@400;500;600;700&display=swap');
+
+html[dir="rtl"],
+body.rtl-layout {
+  direction: rtl;
+  text-align: right;
+}
+
+body.rtl-layout .sp-header-container,
+body.rtl-layout .sp-utility-container {
+  flex-direction: row-reverse;
+}
+
+body.rtl-layout .sp-hero-grid {
+  direction: rtl;
+}
+
+body.rtl-layout .sp-hero-actions {
+  flex-direction: row-reverse;
+}
+
+body.rtl-layout .sp-hero-stats {
+  direction: rtl;
+}
+
+body.rtl-layout .sp-cart-badge {
+  right: auto;
+  left: -6px;
+}
+
